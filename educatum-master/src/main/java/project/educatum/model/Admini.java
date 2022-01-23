@@ -8,6 +8,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "admini", schema = "project")
 public class Admini {
+
+
+
     @Id
     @Column(name = "id_admin", nullable = false)
     private Integer id;

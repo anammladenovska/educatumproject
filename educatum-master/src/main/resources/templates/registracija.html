@@ -5,6 +5,9 @@
   <title>Title</title>
 </head>
 <body>
+<div class="container">
+  <h1 th:if="${hasErrors}" th:text="${errors}"></h1>
+</div>
 
 <div class="container">
   <form  th:method="post" th:action="@{'/register/registrirajSe'}">
