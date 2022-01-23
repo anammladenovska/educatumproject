@@ -1,31 +1,33 @@
 package project.educatum.service.impl;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import project.educatum.model.Admini;
 import project.educatum.model.Nastavnici;
 import project.educatum.model.Ucenici;
 import project.educatum.model.exceptions.InvalidArgumentsException;
 import project.educatum.model.exceptions.PasswordsDoNotMatchException;
+import project.educatum.model.exceptions.UsernameAlreadyExistsException;
+import project.educatum.repository.AdminiJpa;
 import project.educatum.repository.NastavniciJpa;
+import project.educatum.repository.UceniciJpa;
 import project.educatum.service.NastavniciService;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class NastavniciServiceImpl implements NastavniciService {
 
     private final NastavniciJpa nastavniciRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AdminiJpa adminiRepository;
+    private final UceniciJpa uceniciRepository;
 
-    public NastavniciServiceImpl(NastavniciJpa nastavniciRepository, PasswordEncoder passwordEncoder) {
+    public NastavniciServiceImpl(NastavniciJpa nastavniciRepository, PasswordEncoder passwordEncoder, AdminiJpa adminiRepository, UceniciJpa uceniciRepository) {
         this.nastavniciRepository = nastavniciRepository;
         this.passwordEncoder = passwordEncoder;
+        this.adminiRepository = adminiRepository;
+        this.uceniciRepository = uceniciRepository;
     }
 
     @Override
@@ -38,8 +40,20 @@ public class NastavniciServiceImpl implements NastavniciService {
         if(email==null || email.isEmpty() || password==null || password.isEmpty())
             throw new InvalidArgumentsException();
         if(!password.equals(repeatPassword)) throw new PasswordsDoNotMatchException();
+
+        for(Nastavnici n : nastavniciRepository.findAll()){
+            if(n.getEmail().equals(email)) throw new UsernameAlreadyExistsException("Username already exists!");
+        }
+        for(Ucenici u : uceniciRepository.findAll()){
+            if(u.getEmail().equals(email)) throw new UsernameAlreadyExistsException("Username already exists!");
+        }
+        for(Admini a : adminiRepository.findAll()){
+            if(a.getEmail().equals(email)) throw new UsernameAlreadyExistsException("Username already exists!");
+        }
+
         //String ime, String prezime, String opis, String email, String password, String telefonskiBroj
-        Nastavnici user = new Nastavnici(ime,prezime,opis,email,passwordEncoder.encode(password),telBroj);
+        Nastavnici user = new Nastavnici( ime,prezime,opis,email,passwordEncoder.encode(password),telBroj);
+        user.setIdAdmin(adminiRepository.findAll().get(0));
         nastavniciRepository.save(user);
     }
 

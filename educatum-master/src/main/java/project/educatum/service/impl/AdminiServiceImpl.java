@@ -13,6 +13,7 @@ import project.educatum.repository.NastavniciJpa;
 import project.educatum.repository.UceniciJpa;
 import project.educatum.service.AdminiService;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -59,5 +60,10 @@ public class AdminiServiceImpl implements AdminiService, UserDetailsService {
             throw new UsernameNotFoundException(email);
         }
 
+    }
+
+    @Override
+    public List<Admini> findAll() {
+        return adminiRepository.findAll();
     }
 }

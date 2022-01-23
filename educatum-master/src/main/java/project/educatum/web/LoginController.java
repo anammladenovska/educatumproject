@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/login")
 public class LoginController {
 
-    //Ana
 
     private final NastavniciService nastavniciService;
     private final UceniciService uceniciService;

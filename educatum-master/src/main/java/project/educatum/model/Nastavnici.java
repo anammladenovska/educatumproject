@@ -1,10 +1,14 @@
 package project.educatum.model;
 
+import project.educatum.repository.AdminiJpa;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "nastavnici", schema = "project")
 public class Nastavnici {
+
+
 
    public Nastavnici(){}
     @Id
@@ -36,12 +40,14 @@ public class Nastavnici {
 
 
     public Nastavnici(String ime, String prezime, String opis, String email, String password, String telefonskiBroj) {
+
         this.ime = ime;
         this.prezime = prezime;
         this.opis = opis;
         this.email = email;
         this.password = password;
         this.telefonskiBroj = telefonskiBroj;
+
     }
 
     public Admini getIdAdmin() {
