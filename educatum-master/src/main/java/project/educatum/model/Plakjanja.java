@@ -5,6 +5,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "plakjanja", schema = "project")
 public class Plakjanja {
+
+    public Plakjanja(){}
+
+    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_plakjanja", nullable = false)
