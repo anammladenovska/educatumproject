@@ -27,10 +27,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     @Autowired
     private final UserDetailsService userDetailsService;
+    private final CustomAuthenticationProvider customAuthenticationProvider;
 
-    public SecurityConfig(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
+    public SecurityConfig(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService, CustomAuthenticationProvider customAuthenticationProvider) {
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
+        this.customAuthenticationProvider = customAuthenticationProvider;
     }
 
     @Override
@@ -77,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder.encode("admin")).authorities("ROLE_ADMIN")
 //                .and().withUser("user").password(passwordEncoder.encode("user")).authorities("ROLE_USER");
 //
-        auth.userDetailsService(userDetailsService);
+        auth.authenticationProvider(customAuthenticationProvider);
     }
 
 }

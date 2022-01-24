@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class AdminiServiceImpl implements AdminiService, UserDetailsService {
+public class AdminiServiceImpl implements AdminiService {
 
     private final AdminiJpa adminiRepository;
     private final NastavniciJpa nastavniciRepository;
@@ -28,38 +28,6 @@ public class AdminiServiceImpl implements AdminiService, UserDetailsService {
         this.adminiRepository = adminiRepository;
         this.nastavniciRepository = nastavniciRepository;
         this.uceniciRepository = uceniciRepository;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Admini userAdmin = this.adminiRepository.findByEmail(email);
-        Nastavnici userNastavnik = this.nastavniciRepository.findByEmail(email);
-        Ucenici userUcenik = this.uceniciRepository.findByEmail(email);
-        if(userAdmin!=null){
-            return new org.springframework.security.core.userdetails.User(
-                    userAdmin.getEmail(),
-                    userAdmin.getPassword(),
-                    Stream.of(new SimpleGrantedAuthority("ROLE_ADMIN")).collect(Collectors.toList())
-            );
-        }
-        else if(userNastavnik!=null){
-            return new org.springframework.security.core.userdetails.User(
-                    userNastavnik.getEmail(),
-                    userNastavnik.getPassword(),
-                    Stream.of(new SimpleGrantedAuthority("ROLE_NASTAVNIK")).collect(Collectors.toList())
-            );
-        }
-        else if(userUcenik!=null){
-            return new org.springframework.security.core.userdetails.User(
-                    userUcenik.getEmail(),
-                    userUcenik.getPassword(),
-                    Stream.of(new SimpleGrantedAuthority("ROLE_UCENIK")).collect(Collectors.toList())
-            );
-        }
-        else{
-            throw new UsernameNotFoundException(email);
-        }
-
     }
 
     @Override

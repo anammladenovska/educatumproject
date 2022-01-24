@@ -17,4 +17,5 @@ import java.util.function.Function;
 @Repository
 public interface NastavniciJpa extends JpaRepository<Nastavnici, Integer> {
     Nastavnici findByEmail(String email);
+    Nastavnici findByEmailAndPassword(String email, String password);
 }

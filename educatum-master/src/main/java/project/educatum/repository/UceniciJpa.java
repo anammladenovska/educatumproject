@@ -5,4 +5,5 @@ import project.educatum.model.Ucenici;
 
 public interface UceniciJpa extends JpaRepository<Ucenici,Integer> {
 Ucenici findByEmail(String email);
+Ucenici findByEmailAndPassword(String email, String password);
 }
