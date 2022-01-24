@@ -5,4 +5,5 @@ import project.educatum.model.Admini;
 
 public interface AdminiJpa extends JpaRepository<Admini,Integer> {
     Admini findByEmail(String email);
+    Admini findByEmailAndPassword(String email, String password);
 }

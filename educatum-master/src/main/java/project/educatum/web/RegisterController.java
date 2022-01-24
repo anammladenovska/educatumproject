@@ -61,7 +61,7 @@ public class RegisterController {
         if (role.equals("ROLE_NASTAVNIK")) {
             try {
                 this.nastavniciService.register(ime, prezime, email, password, repeatPassword, telBroj, opis);
-
+               // return "redirect:/login";
             } catch (PasswordsDoNotMatchException | InvalidArgumentsException | UsernameAlreadyExistsException exception ) {
                 return "redirect:/register?error=" + exception.getMessage();
 
@@ -69,7 +69,7 @@ public class RegisterController {
         } else if (role.equals("ROLE_UCENIK")) {
             try {
                 this.uceniciService.register(ime, prezime, email, password, repeatPassword, telBroj, opis);
-
+                // return "redirect:/login";
             } catch (PasswordsDoNotMatchException | InvalidArgumentsException exception) {
                 return "redirect:/register?error=" + exception.getMessage();
 

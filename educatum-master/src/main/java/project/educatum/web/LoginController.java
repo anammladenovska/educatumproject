@@ -6,7 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import project.educatum.model.Admini;
+import project.educatum.model.Nastavnici;
+import project.educatum.model.Ucenici;
 import project.educatum.model.exceptions.InvalidUserCredentialsException;
+import project.educatum.service.AdminiService;
+import project.educatum.service.AuthService;
 import project.educatum.service.NastavniciService;
 import project.educatum.service.UceniciService;
 
@@ -19,10 +25,14 @@ public class LoginController {
 
     private final NastavniciService nastavniciService;
     private final UceniciService uceniciService;
+    private final AdminiService adminiService;
+    private final AuthService authService;
 
-    public LoginController(NastavniciService nastavniciService, UceniciService uceniciService) {
+    public LoginController(NastavniciService nastavniciService, UceniciService uceniciService, AdminiService adminiService, AuthService authService) {
         this.nastavniciService = nastavniciService;
         this.uceniciService = uceniciService;
+        this.adminiService = adminiService;
+        this.authService = authService;
     }
 
 
@@ -31,17 +41,51 @@ public class LoginController {
         return "najava";
     }
 
-//    @PostMapping
-//    public String login(HttpServletRequest request, Model model) {
-//        User user = null;
-//        try {
-//            user = authService.login(request.getParameter("username"), request.getParameter("password"));
-//            request.getSession().setAttribute("user", user);
-//            return "redirect:/home";
-//        } catch (InvalidUserCredentialsException ex) {
-//            model.addAttribute("haserror", true);
-//            model.addAttribute("error", ex.getMessage());
-//            return "login";
-//        }
-//    }
+    @PostMapping
+    public String login(HttpServletRequest request, Model model, @RequestParam String email, @RequestParam String password) {
+        String username = email;
+        for(Nastavnici n : nastavniciService.findAll()){
+            if(n.getEmail().equals(username)){
+                try {
+                    Nastavnici user = authService.loginNastavnik(email,password);
+                    request.getSession().setAttribute("user", user);
+                    return "redirect:/";
+                } catch (InvalidUserCredentialsException ex) {
+                    model.addAttribute("haserror", true);
+                    model.addAttribute("error", ex.getMessage());
+                    return "najava";
+                }
+            }
+        }
+
+        for(Ucenici u : uceniciService.findAll()){
+            if(u.getEmail().equals(username)){
+                try {
+                    Ucenici user = authService.loginUcenik(email,password);
+                    request.getSession().setAttribute("user", user);
+                    return "redirect:/";
+                } catch (InvalidUserCredentialsException ex) {
+                    model.addAttribute("haserror", true);
+                    model.addAttribute("error", ex.getMessage());
+                    return "najava";
+                }
+            }
+        }
+
+
+        for(Admini a : adminiService.findAll()){
+            if(a.getEmail().equals(username)){
+                try {
+                    Admini user = authService.loginAdmin(email,password);
+                    request.getSession().setAttribute("user", user);
+                    return "redirect:/";
+                } catch (InvalidUserCredentialsException ex) {
+                    model.addAttribute("haserror", true);
+                    model.addAttribute("error", ex.getMessage());
+                    return "najava";
+                }
+            }
+        }
+            return "najava";
+    }
 }
