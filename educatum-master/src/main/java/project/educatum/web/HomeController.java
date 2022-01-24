@@ -26,13 +26,13 @@ public class HomeController {
     }
 
     @GetMapping("/izberiPredmet")
-    public String choose(String imePredmet, Model model){
+    public String choose(String ime, Model model){
         List<Predmeti> predmeti;
-        if(imePredmet == null){
+        if(ime == null){
             predmeti = this.predmetiService.findAll();
         }
         else{
-            predmeti = this.predmetiService.findAllByNameLike(imePredmet);
+            predmeti = this.predmetiService.findAllByNameLike(ime);
         }
         model.addAttribute("predmeti",predmeti);
         return "izberiPredmeti.html";

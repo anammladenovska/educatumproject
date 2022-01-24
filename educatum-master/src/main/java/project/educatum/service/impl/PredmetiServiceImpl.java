@@ -22,9 +22,9 @@ public class PredmetiServiceImpl implements PredmetiService {
     }
 
     @Override
-    public List<Predmeti> findAllByNameLike(String imePredmet) {
-        if(imePredmet != null){
-            return this.predmetiRepository.findAllByImeLike(imePredmet);
+    public List<Predmeti> findAllByNameLike(String ime) {
+        if(ime != null){
+            return this.predmetiRepository.findAllByImeContainingIgnoreCase(ime);
         }
         else{
             return this.predmetiRepository.findAll();
