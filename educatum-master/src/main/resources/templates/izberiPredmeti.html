@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+    </script>
+</head>
+<body>
+<h3>Изберете предмети кои сакате да ги предавате</h3>
+
+<div>
+    <form id="filter-form" th:action="@{'/izberiPredmet'}">
+        <label for="ime"></label>
+        <input id="ime" type="text" placeholder="Пребарувај предмети..." name="ime"/>
+        <button id="filter" type="submit">Пребарај</button>
+    </form>
+
+    <ul>
+        <li th:each="p: ${predmeti}" th:value="${p.id}" th:text="${p.ime}"></li>
+    </ul>
+
+
+    <div>
+        <a href="/izberiPredmet/add">
+            Внеси нов предмет
+        </a>
+        <h4><i>*Доколку предметот го нема во листат, имате можност да го додадете</i> </h4>
+    </div>
+
+    <div>
+        <a href="/izberiPredmet/document">
+            Продолжи
+        </a>
+    </div>
+</div>
+</body>
+</html>

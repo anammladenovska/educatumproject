@@ -1,21 +1,19 @@
 package project.educatum.web;
 
 
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import project.educatum.model.Admini;
-import project.educatum.model.Nastavnici;
-import project.educatum.model.Ucenici;
+import project.educatum.model.Predmeti;
 import project.educatum.model.exceptions.InvalidArgumentsException;
 import project.educatum.model.exceptions.PasswordsDoNotMatchException;
 import project.educatum.model.exceptions.UsernameAlreadyExistsException;
 import project.educatum.service.AdminiService;
 import project.educatum.service.NastavniciService;
+import project.educatum.service.PredmetiService;
 import project.educatum.service.UceniciService;
 
 import java.util.List;
@@ -27,11 +25,13 @@ public class RegisterController {
     private final NastavniciService nastavniciService;
     private final UceniciService uceniciService;
     private final AdminiService adminiService;
+    private final PredmetiService predmetiService;
 
-    public RegisterController(NastavniciService nastavniciService, UceniciService uceniciService, AdminiService adminiService) {
+    public RegisterController(NastavniciService nastavniciService, UceniciService uceniciService, AdminiService adminiService, PredmetiService predmetiService) {
         this.nastavniciService = nastavniciService;
         this.uceniciService = uceniciService;
         this.adminiService = adminiService;
+        this.predmetiService = predmetiService;
     }
 
 
@@ -61,7 +61,9 @@ public class RegisterController {
         if (role.equals("ROLE_NASTAVNIK")) {
             try {
                 this.nastavniciService.register(ime, prezime, email, password, repeatPassword, telBroj, opis);
-               // return "redirect:/login";
+
+                return "redirect:/izberiPredmet";
+
             } catch (PasswordsDoNotMatchException | InvalidArgumentsException | UsernameAlreadyExistsException exception ) {
                 return "redirect:/register?error=" + exception.getMessage();
 
@@ -69,7 +71,9 @@ public class RegisterController {
         } else if (role.equals("ROLE_UCENIK")) {
             try {
                 this.uceniciService.register(ime, prezime, email, password, repeatPassword, telBroj, opis);
-                // return "redirect:/login";
+
+                return "redirect:/login";
+
             } catch (PasswordsDoNotMatchException | InvalidArgumentsException exception) {
                 return "redirect:/register?error=" + exception.getMessage();
 
@@ -78,5 +82,6 @@ public class RegisterController {
 
         return "redirect:/login";
     }
+
 }
 
