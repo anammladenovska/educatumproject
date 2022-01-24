@@ -7,5 +7,5 @@ import project.educatum.model.Predmeti;
 import java.util.List;
 
 public interface PredmetiJpa extends JpaRepository<Predmeti, Integer> {
-    List<Predmeti> findAllByImeLike(String name);
+    List<Predmeti> findAllByImeContainingIgnoreCase(String ime);
 }

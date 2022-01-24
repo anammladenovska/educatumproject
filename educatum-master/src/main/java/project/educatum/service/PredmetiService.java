@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface PredmetiService {
     List<Predmeti> findAll();
-    List<Predmeti> findAllByNameLike(String imePredmet);
+    List<Predmeti> findAllByNameLike(String ime);
 }
