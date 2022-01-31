@@ -17,9 +17,12 @@
         <button id="filter" type="submit">Пребарај</button>
     </form>
 
+
+
     <ul>
-        <li th:each="p: ${predmeti}" th:value="${p.id}" th:text="${p.ime}"></li>
+       <li th:each="p: ${predmeti}" th:value="${p.id}" th:text="${p.ime}"></li>
     </ul>
+
 
 
     <div>
