@@ -1,6 +1,9 @@
 package project.educatum.web;
 
 
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,49 +46,48 @@ public class LoginController {
 
     @PostMapping
     public String login(HttpServletRequest request, Model model, @RequestParam String email, @RequestParam String password) {
-        String username = email;
         for(Nastavnici n : nastavniciService.findAll()){
-            if(n.getEmail().equals(username)){
+            if(n.getEmail().equals(email)){
                 try {
-                    Nastavnici user = authService.loginNastavnik(email,password);
+                    UserDetails user = authService.loginNastavnik(email,password);
                     request.getSession().setAttribute("user", user);
-                    return "redirect:/";
-                } catch (InvalidUserCredentialsException ex) {
+                    return "redirect:/nastavnici";
+                } catch (BadCredentialsException ex) {
                     model.addAttribute("haserror", true);
                     model.addAttribute("error", ex.getMessage());
-                    return "najava";
+                    return "/najava";
                 }
             }
         }
 
         for(Ucenici u : uceniciService.findAll()){
-            if(u.getEmail().equals(username)){
+            if(u.getEmail().equals(email)){
                 try {
-                    Ucenici user = authService.loginUcenik(email,password);
+                    UserDetails user = authService.loginUcenik(email,password);
                     request.getSession().setAttribute("user", user);
-                    return "redirect:/";
+                    return "/nastavnici";
                 } catch (InvalidUserCredentialsException ex) {
                     model.addAttribute("haserror", true);
                     model.addAttribute("error", ex.getMessage());
-                    return "najava";
+                    return "/najava";
                 }
             }
         }
 
 
         for(Admini a : adminiService.findAll()){
-            if(a.getEmail().equals(username)){
+            if(a.getEmail().equals(email)){
                 try {
-                    Admini user = authService.loginAdmin(email,password);
+                    UserDetails user = authService.loginAdmin(email,password);
                     request.getSession().setAttribute("user", user);
-                    return "redirect:/";
+                    return "/nastavnici";
                 } catch (InvalidUserCredentialsException ex) {
                     model.addAttribute("haserror", true);
                     model.addAttribute("error", ex.getMessage());
-                    return "najava";
+                    return "/najava";
                 }
             }
         }
-            return "najava";
+          return "redirect:/home";
     }
 }

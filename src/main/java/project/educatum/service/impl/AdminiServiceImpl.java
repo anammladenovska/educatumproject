@@ -1,70 +1,33 @@
 package project.educatum.service.impl;
 
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.educatum.model.Admini;
 import project.educatum.model.Nastavnici;
 import project.educatum.model.Ucenici;
-import project.educatum.model.exceptions.InvalidArgumentsException;
 import project.educatum.repository.AdminiJpa;
 import project.educatum.repository.NastavniciJpa;
 import project.educatum.repository.UceniciJpa;
-import project.educatum.service.AuthService;
+import project.educatum.service.AdminiService;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class AuthServiceImpl implements AuthService, UserDetailsService {
+public class AdminiServiceImpl implements AdminiService, UserDetailsService {
 
-    private final NastavniciJpa nastavniciRepository;
     private final AdminiJpa adminiRepository;
+    private final NastavniciJpa nastavniciRepository;
     private final UceniciJpa uceniciRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    public AuthServiceImpl(NastavniciJpa nastavniciRepository, AdminiJpa adminiRepository, UceniciJpa uceniciRepository, PasswordEncoder passwordEncoder) {
-        this.nastavniciRepository = nastavniciRepository;
+    public AdminiServiceImpl(AdminiJpa adminiRepository, NastavniciJpa nastavniciRepository, UceniciJpa uceniciRepository) {
         this.adminiRepository = adminiRepository;
+        this.nastavniciRepository = nastavniciRepository;
         this.uceniciRepository = uceniciRepository;
-        this.passwordEncoder = passwordEncoder;
     }
-
-    @Override
-    public UserDetails loginNastavnik(String email, String password) {
-        if (email==null || email.isEmpty() || password==null || password.isEmpty()) {
-            throw new InvalidArgumentsException();
-        }
-        Nastavnici n = nastavniciRepository.findByEmail(email);
-        if(!passwordEncoder.matches(password,n.getPassword())){
-            throw new BadCredentialsException("Invalid credentials");
-        }
-        UserDetails user = loadUserByUsername(email);
-        return user;
-    }
-    @Override
-    public UserDetails loginUcenik(String email, String password) {
-        if (email==null || email.isEmpty() || password==null || password.isEmpty()) {
-            throw new InvalidArgumentsException();
-        }
-        UserDetails user = loadUserByUsername(email);
-        return user;
-    }
-
-
-    @Override
-    public UserDetails loginAdmin(String email, String password) {
-        if (email==null || email.isEmpty() || password==null || password.isEmpty()) {
-            throw new InvalidArgumentsException();
-        }
-        UserDetails user = loadUserByUsername(email);
-        return user;
-    }
-
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -95,5 +58,6 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         else{
             throw new UsernameNotFoundException(email);
         }
+
     }
 }
