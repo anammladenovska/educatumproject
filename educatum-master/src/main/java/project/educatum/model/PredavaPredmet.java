@@ -14,6 +14,15 @@ public class PredavaPredmet {
     @Column(name = "opis", nullable = false, length = 500)
     private String opis;
 
+    public PredavaPredmet(PredavaPredmetId id, String opis) {
+        this.id = id;
+        this.opis = opis;
+    }
+
+    public PredavaPredmet() {
+
+    }
+
     public String getOpis() {
         return opis;
     }

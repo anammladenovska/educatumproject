@@ -11,17 +11,32 @@
 <h3>Изберете предмети кои сакате да ги предавате</h3>
 
 <div>
-    <form id="filter-form" th:action="@{'/izberiPredmet'}">
+    <form id="filter-form" th:action="@{'/izberiPredmet'}" >
         <label for="ime"></label>
         <input id="ime" type="text" placeholder="Пребарувај предмети..." name="ime"/>
         <button id="filter" type="submit">Пребарај</button>
     </form>
 
 
+    <form th:action="@{'/nastavnici/predavaPredmet'}" th:method="post">
 
     <ul>
-       <li th:each="p: ${predmeti}" th:value="${p.id}" th:text="${p.ime}"></li>
+
+       <li style="list-style-type: none" th:each="p: ${predmeti}">
+
+           <input type="radio" name="predmetId" th:value="${p.getId()}">
+           <th:block id="courseText" th:text="${p.ime}"/>
+       </li>
+
     </ul>
+
+        <p>Внесете опис на предметот...</p>
+        <input type="text" name="tema" style="height: 50px">
+
+
+        <input type="submit" value="Продолжи">
+
+    </form>
 
 
 
@@ -32,11 +47,8 @@
         <h4><i>*Доколку предметот го нема во листат, имате можност да го додадете</i> </h4>
     </div>
 
-    <div>
-        <a href="/izberiPredmet/document">
-            Продолжи
-        </a>
-    </div>
+
+
 </div>
 </body>
 </html>
