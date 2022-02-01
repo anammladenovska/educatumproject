@@ -57,6 +57,11 @@ public class NastavniciServiceImpl implements NastavniciService {
         nastavniciRepository.save(user);
     }
 
+    @Override
+    public Nastavnici findByEmail(String email) {
+        return nastavniciRepository.findByEmail(email);
+    }
+
 //    @Override
 //    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 //        Nastavnici user = this.nastavniciRepository.findByEmail(email);

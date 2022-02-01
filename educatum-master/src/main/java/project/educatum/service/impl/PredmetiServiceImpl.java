@@ -6,6 +6,7 @@ import project.educatum.repository.PredmetiJpa;
 import project.educatum.service.PredmetiService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PredmetiServiceImpl implements PredmetiService {
@@ -29,6 +30,11 @@ public class PredmetiServiceImpl implements PredmetiService {
         else{
             return this.predmetiRepository.findAll();
         }
+    }
+
+    @Override
+    public Optional<Predmeti> findById(Integer id) {
+        return predmetiRepository.findById(id);
     }
 
 

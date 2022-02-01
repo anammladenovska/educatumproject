@@ -16,6 +16,15 @@ public class PredavaPredmetId implements Serializable {
     @Column(name = "id_predmet", nullable = false)
     private Integer idPredmet;
 
+    public PredavaPredmetId(Integer idNastavnik, Integer idPredmet) {
+        this.idNastavnik = idNastavnik;
+        this.idPredmet = idPredmet;
+    }
+
+    public PredavaPredmetId() {
+
+    }
+
     public Integer getIdPredmet() {
         return idPredmet;
     }
