@@ -14,6 +14,7 @@ import project.educatum.service.PredavaPredmetService;
 import project.educatum.service.PredmetiService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -45,4 +46,6 @@ public class NastavniciController {
         predavaPredmetService.addSubject(n.getId(), Integer.valueOf(predmetId),tema);
        return "prikaziDokument";
     }
+
+
 }

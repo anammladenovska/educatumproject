@@ -34,4 +34,9 @@ public class AdminiServiceImpl implements AdminiService {
     public List<Admini> findAll() {
         return adminiRepository.findAll();
     }
+
+    @Override
+    public List<Admini> listAll() {
+        return this.adminiRepository.findAll();
+    }
 }

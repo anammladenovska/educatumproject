@@ -1,7 +1,9 @@
 package project.educatum.service.impl;
 
 import org.springframework.stereotype.Service;
+import project.educatum.model.Admini;
 import project.educatum.model.Predmeti;
+import project.educatum.repository.AdminiJpa;
 import project.educatum.repository.PredmetiJpa;
 import project.educatum.service.PredmetiService;
 
@@ -12,9 +14,11 @@ import java.util.Optional;
 public class PredmetiServiceImpl implements PredmetiService {
 
     private final PredmetiJpa predmetiRepository;
+    private final AdminiJpa adminiRepository;
 
-    public PredmetiServiceImpl(PredmetiJpa predmetiRepository) {
+    public PredmetiServiceImpl(PredmetiJpa predmetiRepository, AdminiJpa adminiRepository) {
         this.predmetiRepository = predmetiRepository;
+        this.adminiRepository = adminiRepository;
     }
 
     @Override
@@ -37,5 +41,10 @@ public class PredmetiServiceImpl implements PredmetiService {
         return predmetiRepository.findById(id);
     }
 
-
+    @Override
+    public Predmeti create(String ime, List<Integer> idAdmin) {
+        List<Admini> adminId = this.adminiRepository.findAllById(idAdmin);
+        Predmeti predmeti = new Predmeti(ime,adminId);
+        return this.predmetiRepository.save(predmeti);
+    }
 }
