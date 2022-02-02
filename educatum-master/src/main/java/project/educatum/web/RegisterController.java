@@ -73,7 +73,7 @@ public class RegisterController {
             try {
                 this.uceniciService.register(ime, prezime, email, password, repeatPassword, telBroj, opis);
 
-                return "redirect:/login";
+                return "redirect:/slusajPredmet";
 
             } catch (PasswordsDoNotMatchException | InvalidArgumentsException exception) {
                 return "redirect:/register?error=" + exception.getMessage();
