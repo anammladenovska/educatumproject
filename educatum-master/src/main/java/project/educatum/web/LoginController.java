@@ -51,7 +51,7 @@ public class LoginController {
                 try {
                     UserDetails user = authService.loginNastavnik(email,password);
                     request.getSession().setAttribute("user", user);
-                    return "redirect:/nastavnici";
+                    return "redirect:/nastavnici/allStudents";
                 } catch (BadCredentialsException ex) {
                     model.addAttribute("haserror", true);
                     model.addAttribute("error", ex.getMessage());

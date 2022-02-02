@@ -10,11 +10,21 @@ import java.util.Objects;
 
 @Embeddable
 public class PredavaNaId implements Serializable {
+    public PredavaNaId(Integer idNastavnik, Integer idUcenik) {
+        this.idNastavnik = idNastavnik;
+        this.idUcenik = idUcenik;
+    }
+
     private static final long serialVersionUID = -3956016538071516037L;
     @Column(name = "id_nastavnik", nullable = false)
     private Integer idNastavnik;
     @Column(name = "id_ucenik", nullable = false)
     private Integer idUcenik;
+
+    public PredavaNaId() {
+
+    }
+
 
     public Integer getIdUcenik() {
         return idUcenik;

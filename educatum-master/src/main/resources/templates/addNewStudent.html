@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Нов студент</title>
+</head>
+<body>
+
+
+<section>
+    <form th:method="post" th:action="@{/nastavnici/addStudent}">
+        <label for='email'>Email:</label><input id='email' type='text' name='email'/><br/>
+        <label for='price'>Цена по час:</label><input id='price' type='text' name='price'/><br/>
+        <label for='numClasses'>Број на часови по договор:</label><input id='numClasses' type='text' name='numClasses'/><br/>
+        <input type='submit' value='Submit' s/>
+    </form>
+</section>
+
+
+
+</body>
+</html>

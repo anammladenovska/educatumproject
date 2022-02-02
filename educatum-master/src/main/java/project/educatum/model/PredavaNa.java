@@ -8,6 +8,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "predava_na", schema = "project")
 public class PredavaNa {
+
+    public PredavaNa(PredavaNaId id, Integer cenaPoCas, Integer brojCasoviPoDogovor) {
+        this.id = id;
+        this.cenaPoCas = cenaPoCas;
+        this.brojCasoviPoDogovor = brojCasoviPoDogovor;
+    }
+
     @EmbeddedId
     private PredavaNaId id;
 
@@ -16,6 +23,10 @@ public class PredavaNa {
 
     @Column(name = "broj_casovi_po_dogovor", nullable = false)
     private Integer brojCasoviPoDogovor;
+
+    public PredavaNa() {
+
+    }
 
     public Integer getBrojCasoviPoDogovor() {
         return brojCasoviPoDogovor;
