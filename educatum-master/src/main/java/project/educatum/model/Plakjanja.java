@@ -8,8 +8,6 @@ public class Plakjanja {
 
     public Plakjanja(){}
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_plakjanja", nullable = false)
