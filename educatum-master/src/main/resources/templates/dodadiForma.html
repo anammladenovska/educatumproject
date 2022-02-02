@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<H3>Додади предмет што го нема во листата на понудени предмети</H3>
+
+<form method="POST" th:action="@{'/izberiPredmet'}">
+
+    <div>
+        <label for="ime">Ime</label>
+        <input type="text"
+               id="ime"
+               name="ime"
+               th:value="${izberiPredmet?.ime}"
+               required>
+    </div>
+
+    <div>
+        <label>Admini</label><br/>
+        <select id="adminiList" name="adminiList" >
+            <!-- For each category you should have one <option> like below  -->
+            <option th:each="a: ${adminiList}" th:value="${a.id}" th:text="${a.ime}"> [a.ime]</option>
+        </select>
+    </div>
+
+    <button id="submit" type="submit">Додај го предметот</button>
+    <a id="back" href="/izberiPredmet" type="button">Назад кон предмети</a>
+</form>
+
+</body>
+</html>

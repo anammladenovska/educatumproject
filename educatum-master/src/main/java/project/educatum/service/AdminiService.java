@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface AdminiService {
     List<Admini> findAll();
+    List<Admini> listAll();
 }

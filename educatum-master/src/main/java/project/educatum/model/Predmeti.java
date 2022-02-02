@@ -1,6 +1,7 @@
 package project.educatum.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "predmeti", schema = "project")
@@ -16,6 +17,15 @@ public class Predmeti {
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_admin", nullable = false)
     private Admini idAdmin;
+
+    public Predmeti(String ime, List<Admini> idAdmin) {
+        this.ime=ime;
+        this.idAdmin=getIdAdmin();
+    }
+
+    public Predmeti() {
+
+    }
 
     public Admini getIdAdmin() {
         return idAdmin;

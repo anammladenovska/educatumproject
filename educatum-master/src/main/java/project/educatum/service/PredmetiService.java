@@ -1,5 +1,6 @@
 package project.educatum.service;
 
+import project.educatum.model.Admini;
 import project.educatum.model.Predmeti;
 
 import java.util.List;
@@ -9,4 +10,6 @@ public interface PredmetiService {
     List<Predmeti> findAll();
     List<Predmeti> findAllByNameLike(String ime);
     Optional<Predmeti> findById(Integer id);
+
+    Predmeti create(String ime, List<Integer> idAdmin);
 }
