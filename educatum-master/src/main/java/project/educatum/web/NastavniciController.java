@@ -3,32 +3,31 @@ package project.educatum.web;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import project.educatum.model.Nastavnici;
 import project.educatum.model.Predmeti;
 import project.educatum.service.NastavniciService;
 import project.educatum.service.PredavaPredmetService;
 import project.educatum.service.PredmetiService;
+import project.educatum.service.UceniciService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/nastavnici")
+@RequestMapping(path = "/nastavnici", method = {RequestMethod.POST, RequestMethod.DELETE, RequestMethod.GET})
 public class NastavniciController {
 
     private final NastavniciService nastavniciService;
     private final PredmetiService predmetiService;
     private final PredavaPredmetService predavaPredmetService;
+    private final UceniciService uceniciService;
 
-    public NastavniciController(NastavniciService nastavniciService, PredmetiService predmetiService, PredavaPredmetService predavaPredmetService) {
+    public NastavniciController(NastavniciService nastavniciService, PredmetiService predmetiService, PredavaPredmetService predavaPredmetService, UceniciService uceniciService) {
         this.nastavniciService = nastavniciService;
         this.predmetiService = predmetiService;
         this.predavaPredmetService = predavaPredmetService;
+        this.uceniciService = uceniciService;
     }
 
     @GetMapping
@@ -36,6 +35,32 @@ public class NastavniciController {
         model.addAttribute("teachers",nastavniciService.findAll());
         return "nastavnici";
     }
+
+    @PostMapping("/allStudents")
+    public String getAllStudentsByTeacher(Model model, HttpServletRequest request){
+        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
+        Nastavnici nastavnik = nastavniciService.findByEmail(user.getUsername());
+        model.addAttribute("nastavnik",nastavniciService.findById(nastavnik.getId()));
+        model.addAttribute("ucenici",nastavniciService.getStudentsByTeacher(nastavnik.getId()));
+        return "evidencija";
+    }
+
+    @PostMapping("/addStudentForm")
+    public String addStudentForm(){
+        return "addNewStudent";
+    }
+
+    @PostMapping("/addStudent")
+    public String addStudent(Model model, @RequestParam String price, @RequestParam String numClasses,
+                             @RequestParam String email, HttpServletRequest request){
+        Ucenici ucenik = uceniciService.findByEmail(email);
+        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
+        Nastavnici nastavnik = nastavniciService.findByEmail(user.getUsername());
+
+        nastavniciService.addStudent(nastavnik.getId(),ucenik.getId(),Integer.valueOf(price),Integer.valueOf(numClasses));
+        return "redirect:/nastavnici/allStudents";
+    }
+
 
     @PostMapping("/predavaPredmet")
     public String predavaPredmet(@RequestParam String tema, @RequestParam String predmetId, HttpServletRequest request){
