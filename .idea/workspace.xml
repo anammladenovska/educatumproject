@@ -2,7 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="008edc7f-d5ba-40b6-8155-a38f7230b3c2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/model/Plakjanja.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/model/Plakjanja.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/model/exceptions/StudentNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/model/exceptions/TeacherNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/educatum-master/src/main/resources/templates/addNewStudent.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/educatum-master/src/main/resources/templates/dialog.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/educatum-master/src/main/resources/templates/evidencija.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/educatum-master/src/main/resources/templates/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/EducatumApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/EducatumApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/model/PredavaNa.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/model/PredavaNa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/model/PredavaNaId.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/model/PredavaNaId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/AdminiJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/AdminiJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/CasoviJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/CasoviJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/DomasniZadaciJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/DomasniZadaciJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/KvalifikaciiJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/KvalifikaciiJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/PlakjanjaJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/PlakjanjaJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/PredavaNaJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/PredavaNaJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/PredavaPredmetJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/PredavaPredmetJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/PredmetiJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/PredmetiJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/SlusanjeJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/SlusanjeJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/UceniciDomasniJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/UceniciDomasniJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/UceniciJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/UceniciJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/ZainteresiranZaJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/repository/ZainteresiranZaJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/service/NastavniciService.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/service/NastavniciService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/service/UceniciService.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/service/UceniciService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/service/impl/NastavniciServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/service/impl/NastavniciServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/service/impl/UceniciServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/service/impl/UceniciServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/web/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/web/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/web/NastavniciController.java" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/java/project/educatum/web/NastavniciController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/resources/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/resources/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educatum-master/src/main/resources/templates/najava.html" beforeDir="false" afterPath="$PROJECT_DIR$/educatum-master/src/main/resources/templates/najava.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,6 +42,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="246f6JOaWs3u0mgdThXW940fk6Y" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -33,6 +63,7 @@
       <updated>1642955780325</updated>
       <workItem from="1642955781813" duration="491000" />
       <workItem from="1642956476134" duration="633000" />
+      <workItem from="1643838096268" duration="130000" />
     </task>
     <servers />
   </component>

@@ -65,4 +65,9 @@ public class UceniciServiceImpl implements UceniciService{
     public List<Ucenici> findAll(){
         return uceniciRepository.findAll();
     }
+
+    @Override
+    public Ucenici findByEmail(String email) {
+        return uceniciRepository.findByEmail(email);
+    }
 }
