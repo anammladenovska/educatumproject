@@ -66,4 +66,17 @@ public class HomeController {
         this.predmetiService.create(ime,idAdmin);
         return "redirect:/izberiPredmet";
     }
+
+    @GetMapping("slusajPredmet")
+    public String slusajPredmet(String ime, Model model){
+        List<Predmeti> listaPredmeti;
+        if(ime == null){
+            listaPredmeti = this.predmetiService.findAll();
+        }
+        else{
+            listaPredmeti = this.predmetiService.findAllByNameLike(ime);
+        }
+        model.addAttribute("listaPredmeti",listaPredmeti);
+        return "slusajPredmet.html";
+    }
 }

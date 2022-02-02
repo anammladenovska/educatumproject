@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<div>
+    <form id="filter-form" th:action="@{'/slusajPredmet'}" >
+        <label for="ime"></label>
+        <input id="ime" type="text" placeholder="Пребарувај предмети..." name="ime"/>
+        <button id="filter" type="submit">Пребарај</button>
+    </form>
+
+    <form >
+
+        <ul>
+
+            <li style="list-style-type: none" th:each="p: ${listaPredmeti}">
+
+                <input type="radio" name="predmetId" th:value="${p.getId()}">
+                <th:block id="courseText" th:text="${p.ime}"/>
+            </li>
+
+        </ul>
+
+    </form>
+
+</div>
+
+</body>
+</html>

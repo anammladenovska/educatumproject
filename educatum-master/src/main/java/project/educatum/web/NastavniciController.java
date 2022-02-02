@@ -46,6 +46,4 @@ public class NastavniciController {
         predavaPredmetService.addSubject(n.getId(), Integer.valueOf(predmetId),tema);
        return "prikaziDokument";
     }
-
-
 }
