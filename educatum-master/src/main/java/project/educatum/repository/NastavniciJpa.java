@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Repository;
 import project.educatum.model.Nastavnici;
+import project.educatum.model.Ucenici;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
@@ -19,4 +20,6 @@ public interface NastavniciJpa extends JpaRepository<Nastavnici, Integer> {
     Nastavnici findByEmail(String email);
 
     Nastavnici findByEmailAndPassword(String email, String password);
+
+    List<Nastavnici> findAllByImeContainingIgnoreCase(String ime);
 }

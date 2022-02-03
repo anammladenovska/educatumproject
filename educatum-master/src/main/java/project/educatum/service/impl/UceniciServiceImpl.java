@@ -7,6 +7,7 @@ import project.educatum.model.Nastavnici;
 import project.educatum.model.Ucenici;
 import project.educatum.model.exceptions.InvalidArgumentsException;
 import project.educatum.model.exceptions.PasswordsDoNotMatchException;
+import project.educatum.model.exceptions.StudentNotFoundException;
 import project.educatum.model.exceptions.UsernameAlreadyExistsException;
 import project.educatum.repository.AdminiJpa;
 import project.educatum.repository.NastavniciJpa;
@@ -71,5 +72,21 @@ public class UceniciServiceImpl implements UceniciService {
                 if (u.getId().equals(u2.getId())) result.add(u2);
         }
         return new ArrayList<>(result);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        Ucenici u = uceniciRepository.findById(id).orElseThrow(StudentNotFoundException::new);
+        uceniciRepository.delete(u);
+    }
+
+    @Override
+    public Ucenici findById(Integer id) {
+        return uceniciRepository.findById(id).orElseThrow(StudentNotFoundException::new);
+    }
+
+    @Override
+    public List<Ucenici> findAllByName(String ime) {
+        return uceniciRepository.findAllByImeContainingIgnoreCase(ime);
     }
 }

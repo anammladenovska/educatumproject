@@ -3,10 +3,7 @@ package project.educatum.web;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import project.educatum.model.Nastavnici;
 import project.educatum.model.Predmeti;
 import project.educatum.model.Ucenici;
@@ -30,6 +27,11 @@ public class UceniciController {
         this.uceniciService = uceniciService;
         this.predmetiService = predmetiService;
         this.zainteresiraniZaService = zainteresiraniZaService;
+    }
+    @PostMapping("/delete/{id}")
+    public String deleteStudent(@PathVariable String id){
+        uceniciService.delete(Integer.parseInt(id));
+        return "redirect:/admini/allStudents";
     }
 
     @PostMapping("/zaintesesiranZaPredmet")

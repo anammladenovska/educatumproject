@@ -7,4 +7,5 @@ import project.educatum.model.PredavaNaId;
 
 @Repository
 public interface PredavaNaJpa extends JpaRepository<PredavaNa, PredavaNaId> {
+    PredavaNa findAllById(PredavaNaId predavaNaId);
 }

@@ -13,6 +13,6 @@ public class LogoutController {
     @GetMapping
     public String logout(HttpServletRequest request) {
         request.getSession().invalidate();
-        return "redirect:/";
+        return "redirect:/home";
     }
 }

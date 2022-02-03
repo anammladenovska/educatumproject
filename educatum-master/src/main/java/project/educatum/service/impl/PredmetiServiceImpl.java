@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import project.educatum.model.Admini;
 import project.educatum.model.Predmeti;
 import project.educatum.model.Ucenici;
+import project.educatum.model.exceptions.SubjectNotFoundException;
 import project.educatum.repository.AdminiJpa;
 import project.educatum.repository.PredmetiJpa;
 import project.educatum.service.PredmetiService;
@@ -33,6 +34,12 @@ public class PredmetiServiceImpl implements PredmetiService {
         } else {
             return this.predmetiRepository.findAll();
         }
+    }
+
+    @Override
+    public void delete(Integer id) {
+        Predmeti p = predmetiRepository.findById(id).orElseThrow(SubjectNotFoundException::new);
+        predmetiRepository.delete(p);
     }
 
     @Override

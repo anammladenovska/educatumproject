@@ -12,4 +12,10 @@ public interface UceniciService {
     Ucenici findByEmail(String email);
 
     List<Ucenici> findAllByNameLike(String ime, List<Ucenici> ucenici);
+
+    void delete(Integer id);
+
+    Ucenici findById(Integer id);
+
+    List<Ucenici> findAllByName(String ime);
 }

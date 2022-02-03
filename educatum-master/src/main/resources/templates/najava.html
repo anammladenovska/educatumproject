@@ -102,7 +102,10 @@
                    required="">
         </p>
 
-        <div th:text="${param.error}" class="text-danger"></div>
+        <div th:if="${haserror!=null}">
+            <div th:text="${error}" class="text-danger"></div>
+        </div>
+
 
         <button id="submit" class="btn btn-block btn-light" type="submit">Најави се</button>
     </form>
