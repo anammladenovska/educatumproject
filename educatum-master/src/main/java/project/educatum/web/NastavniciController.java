@@ -50,8 +50,6 @@ public class NastavniciController {
         } else {
             ucenici = this.uceniciService.findAllByNameLike(ime, nastavniciService.getStudentsByTeacher(nastavnik.getId()));
         }
-
-
         model.addAttribute("nastavnik", nastavniciService.findById(nastavnik.getId()));
         model.addAttribute("ucenici", ucenici);
         return "evidencija";

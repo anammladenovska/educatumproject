@@ -16,6 +16,15 @@ public class ZainteresiranZaId implements Serializable {
     @Column(name = "id_predmet", nullable = false)
     private Integer idPredmet;
 
+    public ZainteresiranZaId(Integer predmetId, Integer ucenikId) {
+        this.idPredmet=predmetId;
+        this.idUcenik=ucenikId;
+    }
+
+    public ZainteresiranZaId() {
+
+    }
+
     public Integer getIdPredmet() {
         return idPredmet;
     }
