@@ -56,16 +56,14 @@ public class RegisterController {
                            HttpServletRequest request) {
 
 
-
-
         if (role.equals("ROLE_NASTAVNIK")) {
             try {
                 this.nastavniciService.register(ime, prezime, email, password, repeatPassword, telBroj, opis);
-                UserDetails user = authService.loginNastavnik(email,password);
-                request.getSession().setAttribute("user",user);
+                UserDetails user = authService.loginNastavnik(email, password);
+                request.getSession().setAttribute("user", user);
                 return "redirect:/izberiPredmet";
 
-            } catch (PasswordsDoNotMatchException | InvalidArgumentsException | UsernameAlreadyExistsException exception ) {
+            } catch (PasswordsDoNotMatchException | InvalidArgumentsException | UsernameAlreadyExistsException exception) {
                 return "redirect:/register?error=" + exception.getMessage();
 
             }

@@ -36,19 +36,20 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
 
     @Override
     public UserDetails loginNastavnik(String email, String password) {
-        if (email==null || email.isEmpty() || password==null || password.isEmpty()) {
+        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
             throw new InvalidArgumentsException();
         }
         Nastavnici n = nastavniciRepository.findByEmail(email);
-        if(!passwordEncoder.matches(password,n.getPassword())){
+        if (!passwordEncoder.matches(password, n.getPassword())) {
             throw new BadCredentialsException("Invalid credentials");
         }
         UserDetails user = loadUserByUsername(email);
         return user;
     }
+
     @Override
     public UserDetails loginUcenik(String email, String password) {
-        if (email==null || email.isEmpty() || password==null || password.isEmpty()) {
+        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
             throw new InvalidArgumentsException();
         }
         UserDetails user = loadUserByUsername(email);
@@ -58,7 +59,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
 
     @Override
     public UserDetails loginAdmin(String email, String password) {
-        if (email==null || email.isEmpty() || password==null || password.isEmpty()) {
+        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
             throw new InvalidArgumentsException();
         }
         UserDetails user = loadUserByUsername(email);
@@ -71,28 +72,25 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         Admini userAdmin = this.adminiRepository.findByEmail(email);
         Nastavnici userNastavnik = this.nastavniciRepository.findByEmail(email);
         Ucenici userUcenik = this.uceniciRepository.findByEmail(email);
-        if(userAdmin!=null){
+        if (userAdmin != null) {
             return new org.springframework.security.core.userdetails.User(
                     userAdmin.getEmail(),
                     userAdmin.getPassword(),
                     Stream.of(new SimpleGrantedAuthority("ROLE_ADMIN")).collect(Collectors.toList())
             );
-        }
-        else if(userNastavnik!=null){
+        } else if (userNastavnik != null) {
             return new org.springframework.security.core.userdetails.User(
                     userNastavnik.getEmail(),
                     userNastavnik.getPassword(),
                     Stream.of(new SimpleGrantedAuthority("ROLE_NASTAVNIK")).collect(Collectors.toList())
             );
-        }
-        else if(userUcenik!=null){
+        } else if (userUcenik != null) {
             return new org.springframework.security.core.userdetails.User(
                     userUcenik.getEmail(),
                     userUcenik.getPassword(),
                     Stream.of(new SimpleGrantedAuthority("ROLE_UCENIK")).collect(Collectors.toList())
             );
-        }
-        else{
+        } else {
             throw new UsernameNotFoundException(email);
         }
     }

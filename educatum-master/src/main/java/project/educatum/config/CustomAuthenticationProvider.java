@@ -26,15 +26,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
-        if("".equals(username) || "".equals(password)){
+        if ("".equals(username) || "".equals(password)) {
             throw new BadCredentialsException("Invalid credentials!");
         }
         UserDetails userDetails = this.authService.loadUserByUsername(username);
-        if(!passwordEncoder.matches(password,userDetails.getPassword())){
+        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Invalid credentials!");
         }
         return new UsernamePasswordAuthenticationToken(userDetails,
-                userDetails.getPassword(),userDetails.getAuthorities());
+                userDetails.getPassword(), userDetails.getAuthorities());
     }
 
     @Override

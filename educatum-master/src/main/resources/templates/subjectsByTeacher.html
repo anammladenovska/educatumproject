@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Евиденција на ученици</title>
+    <title>Предмети</title>
 
     <style>
 
@@ -162,7 +162,7 @@
 
         <nav>
             <ul>
-                <li><a href="/nastavnici/allClasses">РАСПОРЕД</a></li>
+                <li><a href="#">РАСПОРЕД</a></li>
                 <li><a href="/nastavnici/allSubjects">ПРЕДМЕТИ</a></li>
                 <li><a href="/nastavnici/allStudents">УЧЕНИЦИ</a></li>
                 <li><a href="#">ПРОФИЛ</a></li>
@@ -171,24 +171,23 @@
         </nav>
     </div>
 </header>
-<h3>Евиденција на ученици</h3>
-<form id="filter-form" th:action="@{'/nastavnici/allStudents'}">
-    <label for="search"></label>
-    <input id="search" type="text" placeholder="Пребарувај ученик..." name="ime"/>
+<h3>Ваши предмети</h3>
+<form id="filter-form" th:action="@{'/nastavnici/allSubjects'}">
+    <label for="ime"></label>
+    <input id="ime" type="text" placeholder="Пребарувај предмет..." name="ime"/>
     <button id="filter" type="submit">Пребарај</button>
 </form>
 
 
-<form action="/nastavnici/addStudentForm" method="post">
-    <input type="submit" value="Внеси нов ученик">
+<form action="/nastavnici/addSubjectForm" method="post">
+    <input type="submit" value="Внеси нов предмет">
 </form>
 
 
-<ul class="Accordion" th:each="u:${ucenici}">
+<ul class="Accordion" th:each="p:${predmeti}">
     <li class="Accordion-item">
-     <a href="/plakjanja/" method="post"> <label for="radios-menu1"><th:block th:text="${u.getIme()}"></th:block>
-         <th:block th:text="${u.getPrezime()}"></th:block></label>
-     </a>
+        <label for="radios-menu1"><th:block th:text="${p.getIme()}"></th:block>
+         </label>
         <input id="radios-menu1" type="radio" name="menu" />
 
     </li>
