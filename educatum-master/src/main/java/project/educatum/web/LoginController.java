@@ -2,7 +2,6 @@ package project.educatum.web;
 
 
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,11 +44,13 @@ public class LoginController {
     }
 
     @PostMapping
-    public String login(HttpServletRequest request, Model model, @RequestParam String email, @RequestParam String password) {
-        for(Nastavnici n : nastavniciService.findAll()){
-            if(n.getEmail().equals(email)){
+    public String login(HttpServletRequest request, Model model, @RequestParam String username, @RequestParam String password) {
+        String email = username;
+
+        for (Nastavnici n : nastavniciService.findAll()) {
+            if (n.getEmail().equals(email)) {
                 try {
-                    UserDetails user = authService.loginNastavnik(email,password);
+                    UserDetails user = authService.loginNastavnik(email, password);
                     request.getSession().setAttribute("user", user);
                     return "redirect:/nastavnici/allStudents";
                 } catch (BadCredentialsException ex) {
@@ -60,10 +61,10 @@ public class LoginController {
             }
         }
 
-        for(Ucenici u : uceniciService.findAll()){
-            if(u.getEmail().equals(email)){
+        for (Ucenici u : uceniciService.findAll()) {
+            if (u.getEmail().equals(email)) {
                 try {
-                    UserDetails user = authService.loginUcenik(email,password);
+                    UserDetails user = authService.loginUcenik(email, password);
                     request.getSession().setAttribute("user", user);
                     return "/nastavnici";
                 } catch (InvalidUserCredentialsException ex) {
@@ -75,10 +76,10 @@ public class LoginController {
         }
 
 
-        for(Admini a : adminiService.findAll()){
-            if(a.getEmail().equals(email)){
+        for (Admini a : adminiService.findAll()) {
+            if (a.getEmail().equals(email)) {
                 try {
-                    UserDetails user = authService.loginAdmin(email,password);
+                    UserDetails user = authService.loginAdmin(email, password);
                     request.getSession().setAttribute("user", user);
                     return "/nastavnici";
                 } catch (InvalidUserCredentialsException ex) {
@@ -88,6 +89,9 @@ public class LoginController {
                 }
             }
         }
-          return "redirect:/home";
+
+        model.addAttribute("haserror", true);
+        model.addAttribute("error", "Bad credentials!");
+        return "/najava";
     }
 }

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Часови</title>
+
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap');
+
+        * {
+            background-color: whitesmoke;
+            font-family: 'Zen Antique', serif;
+        }
+
+        th {
+
+        }
+
+        a:link, a:visited {
+            background-color: lightblue;
+            color: white;
+            padding: 14px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a:hover, a:active {
+            background-color: cornflowerblue;
+        }
+
+        body {
+            width: 800px;
+            margin: auto;
+        }
+
+        li {
+            position: relative;
+            left: -33px;
+            width: 500px;
+        }
+
+
+        input[type=button], input[type=submit] {
+            background-color: lightblue;
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        input[type=text] {
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+            width: 70%;
+        }
+
+        #cEdit, #cDelete {
+            display: inline;
+        }
+
+
+        #right {
+            margin-bottom: 20px;
+            position: relative;
+            right: -27px;
+        }
+
+        form {
+            position: center;
+        }
+
+        #navbar li{
+            display: inline;
+            width: 50px;
+
+        }
+        table {
+            width: 100%;
+        }
+        table,th,td{
+            border: 1px solid black;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+
+<h1>Часови</h1>
+
+<table style="table-border-color-dark: black">
+    <th>Тема</th>
+    <th>Почеток на час</th>
+    <th></th>
+    <ul>
+
+        <li style="list-style-type: none" th:each="c : ${casovi}">
+            <tr>
+                <td><th:block th:text="${c.getTema()}"></th:block></td>
+                <td><th:block th:text="${c.getVremePocetok()}"></th:block></td>
+                <td><a href="/casovi/addStudentsToClass">Додај студенти кои го слушале часот</a></td>
+            </tr>
+        </li>
+    </ul>
+</table>
+
+
+</body>
+</html>

@@ -26,57 +26,55 @@ public class HomeController {
     }
 
     @GetMapping
-    public String getHomePage(){
+    public String getHomePage() {
         return "home";
     }
 
     @GetMapping("/izberiPredmet")
-    public String choose(String ime, Model model){
+    public String choose(@RequestParam String ime, Model model) {
         List<Predmeti> predmeti;
-        if(ime == null){
+        if (ime == null) {
             predmeti = this.predmetiService.findAll();
-        }
-        else{
+        } else {
             predmeti = this.predmetiService.findAllByNameLike(ime);
         }
-        model.addAttribute("predmeti",predmeti);
+        model.addAttribute("predmeti", predmeti);
         return "izberiPredmeti.html";
     }
 
     @GetMapping("/izberiPredmet/document")
-    public String document(){
+    public String document() {
         return "prikaziDokument.html";
     }
 
     @GetMapping("/izberiPredmet/document/potvrda")
-    public String potvrdaZaNastavnik(){
+    public String potvrdaZaNastavnik() {
         return "potvrdaNastavnik.html";
     }
 
     @GetMapping("/izberiPredmet/add")
     public String dodadiPredmet(Model model) {
         List<Admini> adminiList = this.adminiService.listAll();
-        model.addAttribute("adminiList",adminiList);
+        model.addAttribute("adminiList", adminiList);
         return "dodadiForma.html";
     }
 
     @PostMapping("/izberiPredmet")
     public String kreirajPredmet(@RequestParam String ime,
                                  @RequestParam List<Integer> idAdmin) {
-        this.predmetiService.create(ime,idAdmin);
+        this.predmetiService.create(ime, idAdmin);
         return "redirect:/izberiPredmet";
     }
 
     @GetMapping("slusajPredmet")
-    public String slusajPredmet(String ime, Model model){
+    public String slusajPredmet(String ime, Model model) {
         List<Predmeti> listaPredmeti;
-        if(ime == null){
+        if (ime == null) {
             listaPredmeti = this.predmetiService.findAll();
-        }
-        else{
+        } else {
             listaPredmeti = this.predmetiService.findAllByNameLike(ime);
         }
-        model.addAttribute("listaPredmeti",listaPredmeti);
+        model.addAttribute("listaPredmeti", listaPredmeti);
         return "slusajPredmet.html";
     }
 }

@@ -8,8 +8,12 @@ import java.util.Optional;
 
 public interface PredmetiService {
     List<Predmeti> findAll();
+
     List<Predmeti> findAllByNameLike(String ime);
+
     Optional<Predmeti> findById(Integer id);
+
+    List<Predmeti> findAllByNameAndTeacherLike(String ime, List<Predmeti> predmeti);
 
     Predmeti create(String ime, List<Integer> idAdmin);
 }
