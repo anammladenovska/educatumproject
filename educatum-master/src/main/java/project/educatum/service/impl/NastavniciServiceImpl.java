@@ -68,6 +68,17 @@ public class NastavniciServiceImpl implements NastavniciService {
     }
 
     @Override
+    public List<Nastavnici> findAllByNameLike(String ime) {
+        return nastavniciRepository.findAllByImeContainingIgnoreCase(ime);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        Nastavnici n = nastavniciRepository.findById(id).orElseThrow(TeacherNotFoundException::new);
+        nastavniciRepository.delete(n);
+    }
+
+    @Override
     public List<Ucenici> getStudentsByTeacher(Integer id){
         List<Ucenici> ucenici = new ArrayList<>();
         List<PredavaNa> nastavniciUcenici = predavaNaJpa.findAll();

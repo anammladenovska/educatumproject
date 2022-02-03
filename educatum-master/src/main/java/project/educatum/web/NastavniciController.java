@@ -8,10 +8,7 @@ import project.educatum.model.Casovi;
 import project.educatum.model.Nastavnici;
 import project.educatum.model.Predmeti;
 import project.educatum.model.Ucenici;
-import project.educatum.service.NastavniciService;
-import project.educatum.service.PredavaPredmetService;
-import project.educatum.service.PredmetiService;
-import project.educatum.service.UceniciService;
+import project.educatum.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -26,12 +23,16 @@ public class NastavniciController {
     private final PredmetiService predmetiService;
     private final PredavaPredmetService predavaPredmetService;
     private final UceniciService uceniciService;
+    private final PlakjanjaService plakjanjaService;
+    private final PredavaNaService predavaNaService;
 
-    public NastavniciController(NastavniciService nastavniciService, PredmetiService predmetiService, PredavaPredmetService predavaPredmetService, UceniciService uceniciService) {
+    public NastavniciController(NastavniciService nastavniciService, PredmetiService predmetiService, PredavaPredmetService predavaPredmetService, UceniciService uceniciService, PlakjanjaService plakjanjaService, PredavaNaService predavaNaService) {
         this.nastavniciService = nastavniciService;
         this.predmetiService = predmetiService;
         this.predavaPredmetService = predavaPredmetService;
         this.uceniciService = uceniciService;
+        this.plakjanjaService = plakjanjaService;
+        this.predavaNaService = predavaNaService;
     }
 
     @GetMapping
@@ -55,13 +56,36 @@ public class NastavniciController {
         return "evidencija";
     }
 
+    @PostMapping("/delete/{id}")
+    public String deleteTeacher(@PathVariable String id){
+        nastavniciService.delete(Integer.parseInt(id));
+        return "redirect:/admini/allTeachers";
+    }
+
+
+    @PostMapping("/payments/{id}")
+    public String paymentForStudent(@PathVariable String id, Model model, HttpServletRequest request) {
+        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
+        Nastavnici nastavnik = nastavniciService.findByEmail(user.getUsername());
+        Integer dolzi = plakjanjaService.studentTeacherLoan(Integer.valueOf(id), nastavnik.getId());
+        model.addAttribute("dolzi", dolzi);
+        Integer brojCasoviPoDogovor = predavaNaService.find(nastavnik.getId(),Integer.valueOf(id)).getBrojCasoviPoDogovor();
+        model.addAttribute("brojCasoviPoDogovor",brojCasoviPoDogovor);
+        Integer cenaPoCas = predavaNaService.find(nastavnik.getId(),Integer.valueOf(id)).getCenaPoCas();
+        model.addAttribute("cenaPoCas",cenaPoCas);
+        Integer brojSlusaniCasovi = plakjanjaService.brojSlusaniCasovi(Integer.valueOf(id),nastavnik.getId());
+        model.addAttribute("brojSlusaniCasovi",brojSlusaniCasovi);
+        return "vnesPlakjanje";
+    }
+
+
     @GetMapping("/allClasses")
-    public String timetable(Model model, HttpServletRequest request){
+    public String timetable(Model model, HttpServletRequest request) {
         UserDetails user = (UserDetails) request.getSession().getAttribute("user");
         Nastavnici nastavnik = nastavniciService.findByEmail(user.getUsername());
         List<Casovi> casovi = nastavniciService.getClassesByTeacher(nastavnik.getId());
         model.addAttribute("nastavnik", nastavniciService.findById(nastavnik.getId()));
-        model.addAttribute("casovi",casovi);
+        model.addAttribute("casovi", casovi);
         return "raspored";
     }
 
@@ -77,7 +101,7 @@ public class NastavniciController {
             predmeti = this.predmetiService.findAllByNameAndTeacherLike(ime, nastavniciService.getSubjectsByTeacher(nastavnik.getId()));
         }
         model.addAttribute("nastavnik", nastavniciService.findById(nastavnik.getId()));
-        model.addAttribute("predmeti", nastavniciService.getSubjectsByTeacher(nastavnik.getId()));
+        model.addAttribute("predmeti", predmeti);
         return "subjectsByTeacher";
     }
 

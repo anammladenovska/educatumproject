@@ -81,7 +81,7 @@ public class LoginController {
                 try {
                     UserDetails user = authService.loginAdmin(email, password);
                     request.getSession().setAttribute("user", user);
-                    return "/nastavnici";
+                    return "redirect:/admini/allTeachers";
                 } catch (InvalidUserCredentialsException ex) {
                     model.addAttribute("haserror", true);
                     model.addAttribute("error", ex.getMessage());

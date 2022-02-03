@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Предмети</title>
+
+  <style>
+
+    @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600');
+    body {
+      margin: 0;
+      background: white;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 800;
+    }
+
+    .container {
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    header {
+      background: white;
+    }
+
+    header::after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+
+    .logo {
+      float: left;
+      padding: 10px 0;
+    }
+
+    nav {
+      float: right;
+    }
+
+    nav ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    nav li {
+      display: inline-block;
+      margin-left: 70px;
+      padding-top: 23px;
+
+      position: relative;
+    }
+
+    nav a {
+      color: #444;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #000;
+    }
+
+    nav a::before {
+      content: '';
+      display: block;
+      height: 5px;
+      background-color: #444;
+
+      position: absolute;
+      top: 0;
+      width: 0%;
+
+      transition: all ease-in-out 250ms;
+    }
+
+    nav a:hover::before {
+      width: 100%;
+    }
+
+
+
+
+    .Accordion {
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .Accordion + .Accordion {
+      margin-top: 1em;
+    }
+
+    .Accordion input[type="radio"],
+    .Accordion input[type="checkbox"] {
+      display: none;
+    }
+
+    .Accordion input:checked + .Accordion-subElements > .Accordion-subElement {
+      height: 2em;
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+
+    .Accordion-item label {
+      display: block;
+      padding: 1em;
+      background-color: lightsteelblue;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .Accordion-item label:hover {
+      background-color: cornflowerblue;
+    }
+
+    .Accordion-subElements {
+      padding-left: 0;
+      background-color: #ecf0f1;
+    }
+
+    .Accordion-subElement {
+      height: 0;
+      -webkit-transform-origin: 0 0;
+      transform-origin: 0 0;
+      -webkit-transform: scale(0);
+      transform: scale(0);
+      font-size: 0.9em;
+      line-height: 2;
+      color: #555;
+      transition-property: height, -webkit-transform;
+      transition-property: transform, height;
+      transition-property: transform, height, -webkit-transform;
+      transition-duration: 0.3s;
+      overflow: hidden;
+    }
+
+    .Accordion-subElement:hover {
+      background-color: #bdc3c7;
+      color: #111;
+    }
+
+    .Accordion-subElement a {
+      display: block;
+      padding-left: 2em;
+      color: inherit;
+      text-decoration: none;
+    }
+
+
+  </style>
+
+</head>
+<body>
+<header>
+  <div class="container">
+    <h3 class="logo">EDUCATUM</h3>
+
+    <nav>
+      <ul>
+        <li><a href="/admini/allTeachers">НАСТАВНИЦИ</a></li>
+        <li><a href="/admini/allSubjects">ПРЕДМЕТИ</a></li>
+        <li><a href="/admini/allStudents">УЧЕНИЦИ</a></li>
+        <li><a href="#">ПРОФИЛ</a></li>
+        <li  sec:authorize="isAuthenticated()"><a href="/logout">ОДЈАВИ СЕ</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<h3>Сите предмети</h3>
+<form id="filter-form" th:action="@{'/admini/allSubjects'}">
+  <label for="search"></label>
+  <input id="search" type="text" placeholder="Пребарувај предмет..." name="ime"/>
+  <button id="filter" type="submit">Пребарај</button>
+</form>
+
+
+<ul>
+
+
+  <li style="list-style-type: none;" th:each="s : ${subjects}">
+    <div id="left">
+      <th:block id="studentName" th:text="${s.getIme()}"/>
+
+    </div>
+    <div id="right">
+
+      <div id="cDelete">
+        <a th:href="@{'/predmeti/delete/{id}' (id=${s.getId()})}"
+           th:method="POST" th:value="${s.getId()}"
+           style="background-color: #e61030;
+                                        padding: 2px 2px;">Delete</a>
+      </div>
+
+    </div>
+
+  </li>
+
+</ul>
+
+
+
+
+</body>
+</html>

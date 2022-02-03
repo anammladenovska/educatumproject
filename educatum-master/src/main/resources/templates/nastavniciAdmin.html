@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Предмети</title>
+    <title>Наставници</title>
 
     <style>
 
@@ -162,35 +162,45 @@
 
         <nav>
             <ul>
-                <li><a href="/nastavnici/allClasses">РАСПОРЕД</a></li>
-                <li><a href="/nastavnici/allSubjects">ПРЕДМЕТИ</a></li>
-                <li><a href="/nastavnici/allStudents">УЧЕНИЦИ</a></li>
+                <li><a href="/admini/allTeachers">НАСТАВНИЦИ</a></li>
+                <li><a href="/admini/allSubjects">ПРЕДМЕТИ</a></li>
+                <li><a href="/admini/allStudents">УЧЕНИЦИ</a></li>
                 <li><a href="#">ПРОФИЛ</a></li>
-                <li><a href="/logout">ОДЈАВИ СЕ</a></li>
+                <li  sec:authorize="isAuthenticated()"><a href="/logout">ОДЈАВИ СЕ</a></li>
             </ul>
         </nav>
     </div>
 </header>
-<h3>Ваши предмети</h3>
-<form id="filter-form" th:action="@{'/nastavnici/allSubjects'}">
-    <label for="ime"></label>
-    <input id="ime" type="text" placeholder="Пребарувај предмет..." name="ime"/>
+<h3>Сите наставници</h3>
+<form id="filter-form" th:action="@{'/admini/allTeachers'}">
+    <label for="search"></label>
+    <input id="search" type="text" placeholder="Пребарувај наставник..." name="ime"/>
     <button id="filter" type="submit">Пребарај</button>
 </form>
 
 
-<form action="/nastavnici/addSubjectForm" method="post">
-    <input type="submit" value="Внеси нов предмет">
-</form>
+<ul>
 
 
-<ul class="Accordion" th:each="p:${predmeti}">
-    <li class="Accordion-item">
-        <label for="radios-menu1"><th:block th:text="${p.getIme()}"></th:block>
-         </label>
-        <input id="radios-menu1" type="radio" name="menu" />
+    <li style="list-style-type: none;" th:each="t : ${teachers}">
+        <div id="left">
+            <th:block id="teacherName" th:text="${t.getIme()}"/>
+            <th:block id="teacherSurname" th:text="${t.getPrezime()}"/>
+            <th:block id="teacherEmail" th:text="${t.getEmail()}"/>
+        </div>
+        <div id="right">
+
+            <div id="cDelete">
+                <a th:href="@{'/nastavnici/delete/{id}' (id=${t.getId()})}"
+                   th:method="POST" th:value="${t.getId()}"
+                   style="background-color: #e61030;
+                                        padding: 2px 2px;">Delete</a>
+            </div>
+
+        </div>
 
     </li>
+
 </ul>
 
 

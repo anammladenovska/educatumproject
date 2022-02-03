@@ -14,7 +14,7 @@ import project.educatum.service.PredmetiService;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/home")
 public class HomeController {
 
     private final PredmetiService predmetiService;

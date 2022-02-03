@@ -20,7 +20,7 @@
         }
 
         header {
-            background: midnightblue;
+            background: white;
         }
 
         header::after {
@@ -184,14 +184,16 @@
 </form>
 
 
-<ul class="Accordion" th:each="u:${ucenici}">
-    <li class="Accordion-item">
-     <a href="/plakjanja/" method="post"> <label for="radios-menu1"><th:block th:text="${u.getIme()}"></th:block>
-         <th:block th:text="${u.getPrezime()}"></th:block></label>
-     </a>
-        <input id="radios-menu1" type="radio" name="menu" />
+<ul>
 
-    </li>
+
+    <li style="list-style-type: none;" th:each="u : ${ucenici}">
+        <div id="left">
+            <a th:href="@{'/nastavnici/payments/{id}' (id=${u.getId()})}" th:method="post"><th:block th:text="${u.getIme()}"></th:block>
+                <th:block th:text="${u.getPrezime()}"></th:block>
+            </a>
+        </div>
+
 </ul>
 
 

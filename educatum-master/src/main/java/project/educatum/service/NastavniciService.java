@@ -21,6 +21,9 @@ public interface NastavniciService {
     Nastavnici findByEmail(String email);
 
     List<Casovi> getClassesByTeacher(Integer id);
+    List<Nastavnici> findAllByNameLike(String ime);
+
+    void delete(Integer id);
 
     void addStudent(Integer nastavnikId, Integer ucenikId, Integer cenaPoCas, Integer brojCasoviPoDogovor);
 }
