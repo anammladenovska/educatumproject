@@ -66,7 +66,7 @@ public class HomeController {
         return "redirect:/izberiPredmet";
     }
 
-    @GetMapping("slusajPredmet")
+    @GetMapping("/slusajPredmet")
     public String slusajPredmet(String ime, Model model) {
         List<Predmeti> listaPredmeti;
         if (ime == null) {
@@ -77,4 +77,5 @@ public class HomeController {
         model.addAttribute("listaPredmeti", listaPredmeti);
         return "slusajPredmet.html";
     }
+
 }

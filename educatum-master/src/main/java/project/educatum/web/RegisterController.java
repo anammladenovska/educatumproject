@@ -70,7 +70,8 @@ public class RegisterController {
         } else if (role.equals("ROLE_UCENIK")) {
             try {
                 this.uceniciService.register(ime, prezime, email, password, repeatPassword, telBroj, opis);
-
+                UserDetails user = authService.loginUcenik(email, password);
+                request.getSession().setAttribute("user", user);
                 return "redirect:/slusajPredmet";
 
             } catch (PasswordsDoNotMatchException | InvalidArgumentsException exception) {

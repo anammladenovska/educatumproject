@@ -52,6 +52,10 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
             throw new InvalidArgumentsException();
         }
+        Ucenici u = uceniciRepository.findByEmail(email);
+        if (!passwordEncoder.matches(password, u.getPassword())) {
+            throw new BadCredentialsException("Invalid credentials");
+        }
         UserDetails user = loadUserByUsername(email);
         return user;
     }

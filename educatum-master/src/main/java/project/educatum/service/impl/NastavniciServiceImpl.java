@@ -63,6 +63,11 @@ public class NastavniciServiceImpl implements NastavniciService {
     }
 
     @Override
+    public List<Casovi> getClassesByTeacher(Integer id) {
+        return null;
+    }
+
+    @Override
     public List<Ucenici> getStudentsByTeacher(Integer id){
         List<Ucenici> ucenici = new ArrayList<>();
         List<PredavaNa> nastavniciUcenici = predavaNaJpa.findAll();
@@ -74,6 +79,11 @@ public class NastavniciServiceImpl implements NastavniciService {
             }
         }
         return ucenici;
+    }
+
+    @Override
+    public List<Predmeti> getSubjectsByTeacher(Integer id) {
+        return null;
     }
 
     @Override
