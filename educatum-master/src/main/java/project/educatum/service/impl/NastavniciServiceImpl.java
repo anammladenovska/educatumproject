@@ -4,15 +4,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.educatum.model.*;
 import project.educatum.model.exceptions.*;
-import project.educatum.repository.AdminiJpa;
-import project.educatum.repository.NastavniciJpa;
-import project.educatum.repository.PredavaNaJpa;
-import project.educatum.repository.UceniciJpa;
+import project.educatum.repository.*;
 import project.educatum.service.NastavniciService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class NastavniciServiceImpl implements NastavniciService {
@@ -22,13 +18,15 @@ public class NastavniciServiceImpl implements NastavniciService {
     private final AdminiJpa adminiRepository;
     private final UceniciJpa uceniciRepository;
     private final PredavaNaJpa predavaNaJpa;
+    private final PredavaPredmetJpa predavaPredmetRepository;
 
-    public NastavniciServiceImpl(NastavniciJpa nastavniciRepository, PasswordEncoder passwordEncoder, AdminiJpa adminiRepository, UceniciJpa uceniciRepository, PredavaNaJpa predavaNaJpa) {
+    public NastavniciServiceImpl(NastavniciJpa nastavniciRepository, PasswordEncoder passwordEncoder, AdminiJpa adminiRepository, UceniciJpa uceniciRepository, PredavaNaJpa predavaNaJpa, PredavaPredmetJpa predavaPredmetRepository) {
         this.nastavniciRepository = nastavniciRepository;
         this.passwordEncoder = passwordEncoder;
         this.adminiRepository = adminiRepository;
         this.uceniciRepository = uceniciRepository;
         this.predavaNaJpa = predavaNaJpa;
+        this.predavaPredmetRepository = predavaPredmetRepository;
     }
 
     @Override
@@ -110,6 +108,20 @@ public class NastavniciServiceImpl implements NastavniciService {
 
         PredavaNaId pId = new PredavaNaId(nastavnik.getId(),ucenik.getId());
         predavaNaJpa.save(new PredavaNa(pId, cenaPoCas, brojCasoviPoDogovor));
+    }
+
+    @Override
+    public List<Nastavnici> getAllTeachersBySubject(Integer id) {
+        List<Nastavnici> nastavnici = new ArrayList<>();
+        List<PredavaPredmet> predavaPredmet = predavaPredmetRepository.findAll();
+        for(PredavaPredmet pp : predavaPredmet){
+            PredavaPredmetId ppId = pp.getId();
+            if(ppId.getIdPredmet().equals(id)){
+                Integer idNastavnik = ppId.getIdNastavnik();
+                nastavnici.add(nastavniciRepository.findById(idNastavnik).orElseThrow(TeacherNotFoundException::new));
+            }
+        }
+        return nastavnici;
     }
 
 }

@@ -26,4 +26,6 @@ public interface NastavniciService {
     void delete(Integer id);
 
     void addStudent(Integer nastavnikId, Integer ucenikId, Integer cenaPoCas, Integer brojCasoviPoDogovor);
+
+    List<Nastavnici> getAllTeachersBySubject(Integer id);
 }
