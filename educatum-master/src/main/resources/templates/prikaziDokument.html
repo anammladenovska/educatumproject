@@ -5,14 +5,19 @@
     <title>Title</title>
 </head>
 <body>
-<div>
-    <h2>Прикачете скениран документ (диплома, сертификат), како доказ односно потврда за вашите квалификации/знаење</h2>
-    <input type="file">
-    <div>
-        <a href="/izberiPredmet/document/potvrda">
-            Продолжи
-        </a>
-    </div>
-</div>
+
+<h2>Прикачете скениран документ (диплома, сертификат), како доказ односно потврда за вашите квалификации/знаење</h2>
+<form method="POST" action="/home/upload" enctype="multipart/form-data">
+    <input type="file" name="file" /><br/><br/>
+    <input type="submit" value="Продолжи" />
+</form>
+
+<!--    <input type="file">-->
+<!--    <div>-->
+<!--        <a href="/izberiPredmet/document/potvrda">-->
+<!--            Продолжи-->
+<!--        </a>-->
+<!--    </div>-->
+
 </body>
 </html>

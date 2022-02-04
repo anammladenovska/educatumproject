@@ -25,7 +25,7 @@
        <li style="list-style-type: none" th:each="p: ${predmeti}">
 
            <input type="radio" name="predmetId" th:value="${p.getId()}">
-           <th:block id="courseText" th:text="${p.ime}"/>
+           <th:block id="courseText" th:text="${p.getIme()}"/>
        </li>
 
     </ul>
@@ -41,7 +41,7 @@
 
 
     <div>
-        <a href="/izberiPredmet/add">
+        <a href="/home/add">
             Внеси нов предмет
         </a>
         <h4><i>*Доколку предметот го нема во листат, имате можност да го додадете</i> </h4>

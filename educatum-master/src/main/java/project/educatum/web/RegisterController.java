@@ -61,7 +61,7 @@ public class RegisterController {
                 this.nastavniciService.register(ime, prezime, email, password, repeatPassword, telBroj, opis);
                 UserDetails user = authService.loginNastavnik(email, password);
                 request.getSession().setAttribute("user", user);
-                return "redirect:/izberiPredmet";
+                return "redirect:/home/izberiPredmet";
 
             } catch (PasswordsDoNotMatchException | InvalidArgumentsException | UsernameAlreadyExistsException exception) {
                 return "redirect:/register?error=" + exception.getMessage();
@@ -72,7 +72,7 @@ public class RegisterController {
                 this.uceniciService.register(ime, prezime, email, password, repeatPassword, telBroj, opis);
                 UserDetails user = authService.loginUcenik(email, password);
                 request.getSession().setAttribute("user", user);
-                return "redirect:/slusajPredmet";
+                return "redirect:/home/slusajPredmet";
 
             } catch (PasswordsDoNotMatchException | InvalidArgumentsException exception) {
                 return "redirect:/register?error=" + exception.getMessage();
