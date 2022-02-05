@@ -18,9 +18,10 @@ public class Predmeti {
     @JoinColumn(name = "id_admin", nullable = false)
     private Admini idAdmin;
 
-    public Predmeti(String ime, List<Admini> idAdmin) {
-        this.ime=ime;
-        this.idAdmin=getIdAdmin();
+    public Predmeti(String ime, Admini idAdmin) {
+
+        this.ime = ime;
+        this.idAdmin = idAdmin;
     }
 
     public Predmeti() {

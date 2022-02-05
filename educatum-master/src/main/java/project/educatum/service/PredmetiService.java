@@ -10,10 +10,12 @@ public interface PredmetiService {
     List<Predmeti> findAll();
 
     List<Predmeti> findAllByNameLike(String ime);
+
     void delete(Integer id);
+
     Optional<Predmeti> findById(Integer id);
 
     List<Predmeti> findAllByNameAndTeacherLike(String ime, List<Predmeti> predmeti);
 
-    Predmeti create(String ime, List<Integer> idAdmin);
+    Predmeti create(String ime);
 }

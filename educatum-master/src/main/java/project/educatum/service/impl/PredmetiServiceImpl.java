@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import project.educatum.model.Admini;
 import project.educatum.model.Predmeti;
 import project.educatum.model.Ucenici;
+import project.educatum.model.exceptions.AdminNotFoundException;
 import project.educatum.model.exceptions.SubjectNotFoundException;
 import project.educatum.repository.AdminiJpa;
 import project.educatum.repository.PredmetiJpa;
@@ -59,9 +60,9 @@ public class PredmetiServiceImpl implements PredmetiService {
     }
 
     @Override
-    public Predmeti create(String ime, List<Integer> idAdmin) {
-        List<Admini> adminId = this.adminiRepository.findAllById(idAdmin);
-        Predmeti predmeti = new Predmeti(ime, adminId);
+    public Predmeti create(String ime) {
+       Admini admin = adminiRepository.findById(1).orElseThrow(AdminNotFoundException::new);
+        Predmeti predmeti = new Predmeti(ime, admin);
         return this.predmetiRepository.save(predmeti);
     }
 }

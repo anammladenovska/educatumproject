@@ -5,6 +5,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "kvalifikacii", schema = "project")
 public class Kvalifikacii {
+
+
+
     public Kvalifikacii(){}
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +25,13 @@ public class Kvalifikacii {
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_admin", nullable = false)
     private Admini idAdmin;
+
+
+    public Kvalifikacii(String dokument, Nastavnici idNastavnik, Admini idAdmin) {
+        this.dokument = dokument;
+        this.idNastavnik = idNastavnik;
+        this.idAdmin = idAdmin;
+    }
 
     public Admini getIdAdmin() {
         return idAdmin;
