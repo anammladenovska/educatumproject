@@ -32,7 +32,7 @@ public class HomeController {
     private final AdminiService adminiService;
     private final NastavniciService nastavniciService;
     private final KvalifikaciiService kvalifikaciiService;
-private static String UPLOADED_FOLDER = "C://Users//Acer//Desktop//dok//";
+    private static String UPLOADED_FOLDER = "C://Users//Acer//Desktop//dok//";
 //private static String UPLOADED_FOLDER = "C://Users//User//OneDrive//Desktop//kvalifikacii//";
     public HomeController(PredmetiService predmetiService, AdminiService adminiService, NastavniciService nastavniciService, KvalifikaciiService kvalifikaciiService) {
         this.predmetiService = predmetiService;
@@ -118,6 +118,15 @@ private static String UPLOADED_FOLDER = "C://Users//Acer//Desktop//dok//";
             listaPredmeti = this.predmetiService.findAllByNameLike(ime);
         }
         model.addAttribute("listaPredmeti", listaPredmeti);
+        model.addAttribute("nastavnici",nastavniciService.findAll());
+        return "slusajPredmet";
+    }
+
+    @PostMapping("/vidiPredmeti")
+    public String getAllTeachersBySubject(Model model, @RequestParam String predmetId){
+        model.addAttribute("predmet",predmetiService.findById(Integer.valueOf(predmetId)));
+        model.addAttribute("predmeti",predmetiService.findAll());
+        model.addAttribute("nastavnici",nastavniciService.getAllTeachersBySubject(Integer.valueOf(predmetId)));
         return "slusajPredmet";
     }
 

@@ -6,60 +6,63 @@
 </head>
 <body>
 
-<form method="post" action="/nastavnici/vidiNastavnici">
-    <select id="predmetId" name="predmetId" onchange="this.form.submit()">
-        <option value="" selected disabled hidden>Селектирај предмет</option>
-        <option th:if="${nastavnik} == null"
-                th:each="p : ${predmeti}"
-                th:value="${p.getId()}"
-                th:text="${p.getIme()}">
-        </option>
-
-    </select>
-
-</form>
 
 
-<div id="container" style="position: center">
-    <form th:method="post" th:action="@{'/nastavnici/vidiNastavnici'}">
-        <table style="position: center">
-            <ul>
-                <tr>
-                    <li style="list-style-type: none;" th:each="nastavnik : ${nastavnici}">
-                        <div id="left">
-                            <input type="radio" name="nastavnikId" th:value="${nastavnik.getId()}">
-                            <th:block id="courseText" th:text="${nastavnik.getIme()}"/>
-                        </div>
-                    </li>
-                </tr>
-            </ul>
-        </table>
-        <br/>
-        <br/>
+<main>
+    <form id="filter-form" th:action="@{'/home/slusajPredmet'}" >
+        <label for="ime"></label>
+        <input id="ime" type="text" placeholder="Пребарувај предмети..." name="ime"/>
+        <button id="filter" type="submit">Пребарај</button>
     </form>
-</div>
 
-<form id="filter-form" th:action="@{'/home/slusajPredmet'}" >
-    <label for="ime"></label>
-    <input id="ime" type="text" placeholder="Пребарувај предмети..." name="ime"/>
-    <button id="filter" type="submit">Пребарај</button>
-</form>
+    <h3 th:if="${nastavnici.size()} >0">Селектирај од листа наставници</h3>
 
-<form th:action="@{'/ucenici/zaintesesiranZaPredmet'}" th:method="post">
+    <form method="post" action="/home/vidiPredmeti">
+        <select id="predmetId" name="predmetId" onchange="this.form.submit()">
+            <option value="" selected disabled hidden>Селектирај предмет</option>
+            <option th:if="${nastavnik} == null"
+                    th:each="p : ${predmeti}"
+                    th:value="${p.getId()}"
+                    th:text="${p.getIme()}">
+            </option>
 
-    <ul>
+        </select>
+    </form>
 
-        <li style="list-style-type: none" th:each="p: ${listaPredmeti}">
+    <div id="container" style="position: center">
+        <form th:method="post" th:action="@{'/ucenici/zaintesesiranZaPredmet'}">
+            <table style="position: center">
+                <ul>
+                    <tr>
+                        <li style="list-style-type: none;" th:each="nastavnik : ${nastavnici}">
+                            <div id="left">
+                                <input type="radio" name="nastavnikId" th:value="${nastavnik.getId()}">
+                                <th:block id="courseText" th:text="${nastavnik.getIme()}"/>
+                            </div>
+                        </li>
+                    </tr>
+                </ul>
+            </table>
+            <br/>
+            <br/>
+            <input type="submit" value="Избери професор">
+        </form>
+    </div>
 
-            <input type="radio" name="predmetId" th:value="${p.getId()}">
-            <th:block  th:text="${p.ime}"/>
-        </li>
+<!--    <form th:action="@{'/ucenici/zaintesesiranZaPredmet'}" th:method="post">-->
 
-    </ul>
+<!--        <ul>-->
 
-    <input type="submit" value="Продолжи">
+<!--            <li style="list-style-type: none" th:each="p: ${listaPredmeti}">-->
 
-</form>
+<!--                <input type="radio" name="predmetId" th:value="${p.getId()}">-->
+<!--                <th:block  th:text="${p.ime}"/>-->
+<!--            </li>-->
 
+<!--        </ul>-->
+<!--        <input type="submit" value="Продолжи">-->
+<!--    </form>-->
+
+</main>
 </body>
 </html>

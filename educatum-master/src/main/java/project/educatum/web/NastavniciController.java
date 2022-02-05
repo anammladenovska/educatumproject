@@ -133,12 +133,6 @@ public class NastavniciController {
         return "redirect:/home/document";
     }
 
-    @PostMapping("/vidiNastavnici")
-    public String getAllTeachersBySubject(Model model, @RequestParam String predmetId){
-        model.addAttribute("predmet",predmetiService.findById(Integer.valueOf(predmetId)));
-        model.addAttribute("predmeti",predmetiService.findAll());
-        model.addAttribute("nastavnici",nastavniciService.getAllTeachersBySubject(Integer.valueOf(predmetId)));
-        return "listTeachers";
-    }
+
 
 }
