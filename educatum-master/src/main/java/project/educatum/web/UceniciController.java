@@ -37,12 +37,11 @@ public class UceniciController {
     @PostMapping("/zaintesesiranZaPredmet")
     public String zaintesesiranZaPredmet(@RequestParam String predmetId,
                                          HttpServletRequest request) {
-
         UserDetails user = (UserDetails) request.getSession().getAttribute("user");
         LocalDate localDate = LocalDate.now();
         String username = user.getUsername();
         Ucenici u = uceniciService.findByEmail(username);
         zainteresiraniZaService.addSubjectStudent(Integer.valueOf(predmetId),u.getId(),localDate );
-        return "listaNastavnicPredmet.html";
+        return "redirect:/zaintesesiranZaPredmet";
     }
 }
