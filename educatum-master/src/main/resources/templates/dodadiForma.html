@@ -19,13 +19,13 @@
                required>
     </div>
 
-    <div>
-        <label>Admini</label><br/>
-        <select id="adminiList" name="adminiList" >
-            <!-- For each category you should have one <option> like below  -->
-            <option th:each="a: ${adminiList}" th:value="${a.id}" th:text="${a.ime}"> [a.ime]</option>
-        </select>
-    </div>
+<!--    <div>-->
+<!--        <label>Admini</label><br/>-->
+<!--        <select id="adminiList" name="adminiList" >-->
+<!--            &lt;!&ndash; For each category you should have one <option> like below  &ndash;&gt;-->
+<!--            <option th:each="a: ${adminiList}" th:value="${a.id}" th:text="${a.ime}" name="idAdmin"> [a.ime]</option>-->
+<!--        </select>-->
+<!--    </div>-->
 
     <button id="submit" type="submit">Додај го предметот</button>
     <a id="back" href="/home/izberiPredmet" type="button">Назад кон предмети</a>

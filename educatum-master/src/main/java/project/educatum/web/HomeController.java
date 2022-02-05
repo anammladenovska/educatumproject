@@ -1,5 +1,6 @@
 package project.educatum.web;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +10,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.educatum.model.Admini;
+import project.educatum.model.Nastavnici;
 import project.educatum.model.Predmeti;
 import project.educatum.service.AdminiService;
+import project.educatum.service.KvalifikaciiService;
 import project.educatum.service.NastavniciService;
 import project.educatum.service.PredmetiService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,12 +31,14 @@ public class HomeController {
     private final PredmetiService predmetiService;
     private final AdminiService adminiService;
     private final NastavniciService nastavniciService;
-    private static String UPLOADED_FOLDER = "C://Users//Acer//Desktop//dok//";
-
-    public HomeController(PredmetiService predmetiService, AdminiService adminiService, NastavniciService nastavniciService) {
+    private final KvalifikaciiService kvalifikaciiService;
+private static String UPLOADED_FOLDER = "C://Users//Acer//Desktop//dok//";
+//private static String UPLOADED_FOLDER = "C://Users//User//OneDrive//Desktop//kvalifikacii//";
+    public HomeController(PredmetiService predmetiService, AdminiService adminiService, NastavniciService nastavniciService, KvalifikaciiService kvalifikaciiService) {
         this.predmetiService = predmetiService;
         this.adminiService = adminiService;
         this.nastavniciService = nastavniciService;
+        this.kvalifikaciiService = kvalifikaciiService;
     }
 
     @GetMapping
@@ -59,7 +65,7 @@ public class HomeController {
 
     @PostMapping("/upload")
     public String singleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
+                                   RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Внесете задолжително документ");
@@ -71,7 +77,9 @@ public class HomeController {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
             Files.write(path, bytes);
-
+            UserDetails userDetails = (UserDetails) request.getSession().getAttribute("user");
+            Nastavnici n = nastavniciService.findByEmail(userDetails.getUsername());
+            kvalifikaciiService.insert(String.valueOf(path),n.getId());
             redirectAttributes.addFlashAttribute("message",
                     "Ви благодариме за регистрацијата! Ќе добиете известување на e-mail кога вашиот профил ќе виде активиран.");
 
@@ -94,11 +102,11 @@ public class HomeController {
         return "dodadiForma.html";
     }
 
+
     @PostMapping("/izberiPredmet")
-    public String kreirajPredmet(@RequestParam String ime,
-                                 @RequestParam List<Integer> idAdmin) {
-        this.predmetiService.create(ime, idAdmin);
-        return "redirect:/izberiPredmet";
+    public String kreirajPredmet(@RequestParam String ime) {
+        this.predmetiService.create(ime);
+        return "redirect:/home/izberiPredmet";
     }
 
     @GetMapping("/slusajPredmet")
