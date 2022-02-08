@@ -5,12 +5,11 @@
     <title>Евиденција на ученици</title>
 
     <style>
-
-        @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600');
+        @import url('https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap');
         body {
             margin: 0;
-            background: white;
-            font-family: 'Work Sans', sans-serif;
+            background: whitesmoke;
+            font-family: 'Zen Antique', serif;
             font-weight: 800;
         }
 
@@ -20,7 +19,7 @@
         }
 
         header {
-            background: white;
+            background: whitesmoke;
         }
 
         header::after {
@@ -80,16 +79,6 @@
             width: 100%;
         }
 
-
-
-
-        .Accordion {
-            margin-top: 0;
-            margin-bottom: 0;
-            padding-left: 0;
-            list-style: none;
-        }
-
         .Accordion + .Accordion {
             margin-top: 1em;
         }
@@ -118,31 +107,72 @@
             background-color: cornflowerblue;
         }
 
-        .Accordion-subElements {
-            padding-left: 0;
-            background-color: #ecf0f1;
+        button {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: black;
+            border: none;
+            color: snow;
+            text-align: center;
+            font-size: 18px;
+            padding: 10px;
+            width: 100px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+
+
         }
 
-        .Accordion-subElement {
-            height: 0;
-            -webkit-transform-origin: 0 0;
-            transform-origin: 0 0;
-            -webkit-transform: scale(0);
-            transform: scale(0);
-            font-size: 0.9em;
-            line-height: 2;
-            color: #555;
-            transition-property: height, -webkit-transform;
-            transition-property: transform, height;
-            transition-property: transform, height, -webkit-transform;
-            transition-duration: 0.3s;
-            overflow: hidden;
+         input[type=submit], input[type=reset],input[type=password],input[type=number] {
+            background-color: snow;
+            border: none;
+            color: black;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        footer {
+            text-align: center;
+            padding: 3px;
+            color: white;
+        }
+        *{
+            background-color: whitesmoke;
+            font-family: 'Zen Antique', serif;
+        }
+        a:link, a:visited {
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .Accordion-subElement:hover {
-            background-color: #bdc3c7;
-            color: #111;
+
+        #search{
+            background-color: whitesmoke;
+            border-style: solid;
+            border-width: thin;
+            border-color: black;
+            color: black;
+            padding: 12px 20px;
+            text-decoration: none;
+            margin: 8px 0;
+
+            cursor: pointer;
         }
+
+        input[type=text],input[type=password],input[type=number]{
+            width: 60%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+        input[type=text]:focus,input[type=password]:focus,input[type=number]{
+            background-color: snow;
+        }
+
 
         .Accordion-subElement a {
             display: block;
@@ -158,36 +188,39 @@
 <body>
 <header>
     <div class="container">
-        <h3 class="logo">EDUCATUM</h3>
+        <h3 class="logo"></h3>
 
         <nav>
             <ul>
-                <li><a href="/nastavnici/allClasses">РАСПОРЕД</a></li>
-                <li><a href="/nastavnici/allSubjects">ПРЕДМЕТИ</a></li>
-                <li><a href="/nastavnici/allStudents">УЧЕНИЦИ</a></li>
-                <li><a href="#">ПРОФИЛ</a></li>
-                <li><a href="/logout">ОДЈАВИ СЕ</a></li>
+                <li><a href="/nastavnici/allClasses" style="font-weight: bold">РАСПОРЕД</a></li>
+                <li><a href="/nastavnici/allSubjects" style="font-weight: bold">ПРЕДМЕТИ</a></li>
+                <li><a href="/nastavnici/allStudents" style="font-weight: bold">УЧЕНИЦИ</a></li>
+                <li><a href="/nastavnici/profile" style="font-weight: bold">ПРОФИЛ</a></li>
+                <li><a href="/logout" style="font-weight: bold">ОДЈАВИ СЕ</a></li>
             </ul>
         </nav>
     </div>
 </header>
-<h3>Евиденција на ученици</h3>
+<div style="height: 50px"></div>
+<h3 style="text-align: center; font-weight: bold">ЕВИДЕНЦИЈА НА СИТЕ УЧЕНИЦИ</h3>
+<div class="container" style="position: relative;  right:-150px;">
 <form id="filter-form" th:action="@{'/nastavnici/allStudents'}">
     <label for="search"></label>
     <input id="search" type="text" placeholder="Пребарувај ученик..." name="ime"/>
-    <button id="filter" type="submit">Пребарај</button>
+    <button id="filter" type="submit" style="position: relative; bottom: -2px;">Пребарај</button>
 </form>
 
 
 <form action="/nastavnici/addStudentForm" method="post">
-    <input type="submit" value="Внеси нов ученик">
+    <input type="submit" value="+ НОВ УЧЕНИК">
 </form>
 
 
 <ul>
 
 
-    <li style="list-style-type: none;" th:each="u : ${ucenici}">
+    <li style="list-style-type: none; text-align: center;
+        padding: 5px; font-size: 18px;" th:each="u : ${ucenici}">
         <div id="left">
             <a th:href="@{'/nastavnici/payments/{id}' (id=${u.getId()})}" th:method="post"><th:block th:text="${u.getIme()}"></th:block>
                 <th:block th:text="${u.getPrezime()}"></th:block>
@@ -197,7 +230,7 @@
 </ul>
 
 
-
+</div>
 
 </body>
 </html>

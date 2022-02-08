@@ -2,66 +2,192 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>EDUCATUM - РЕГИСТРИРАЈ СЕ</title>
+  <style type = "text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap');
+
+    body {
+      width: 800px;
+      margin: auto;
+    }
+    table {
+      width:100%;
+    }
+    table, td, th {
+      border: 1px solid black;
+      padding:3px 2px;
+    }
+    section {
+      float: left;
+      margin: 0 1.5%;
+      width: 63%;
+    }
+    aside {
+      float: right;
+      margin: 0 1.5%;
+      width: 30%;
+    }
+
+    button {
+      display: inline-block;
+      border-radius: 4px;
+      background-color: black;
+      border: none;
+      color: snow;
+      text-align: center;
+      font-size: 18px;
+      padding: 10px;
+      width: 300px;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 5px;
+
+
+    }
+
+    button span {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: 0.5s;
+    }
+
+    button span:after {
+      content: '\00bb';
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -20px;
+      transition: 0.5s;
+    }
+
+    button:hover span {
+      padding-right: 25px;
+    }
+
+    button:hover span:after {
+      opacity: 1;
+      right: 0;
+    }
+
+    input[type=button], input[type=submit], input[type=reset],input[type=password],input[type=number] {
+      background-color: snow;
+      border: none;
+      color: black;
+      padding: 16px 32px;
+      text-decoration: none;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      padding: 3px;
+      color: white;
+    }
+    *{
+      background-color: whitesmoke;
+      font-family: 'Zen Antique', serif;
+    }
+    a:link, a:visited {
+      color: black;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    a:hover, a:active {
+      background-color: snow;
+    }
+
+    input[type=text],input[type=password],input[type=number]{
+      width: 60%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+    }
+    input[type=text]:focus,input[type=password]:focus,input[type=number]{
+      background-color: snow;
+    }
+    li{
+      position: relative;
+      left: -33px;
+    }
+    #search{
+      background-color: whitesmoke;
+      border-style: solid;
+      border-color: snow;
+      color: black;
+      padding: 12px 20px;
+      text-decoration: none;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    #navbar li{
+      display: inline-block;
+    }
+    .container{
+      margin: 25px;
+      position: relative;
+      right:-150px;
+      height: 200px;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-  <h1 th:if="${hasErrors}" th:text="${errors}"></h1>
-</div>
 
+<div >
+  <h2 style="text-align: center">REGISTER</h2>
+
+</div>
 <div class="container">
   <form  th:method="post" th:action="@{'/register/registrirajSe'}">
-    <h2>Register</h2>
+
 
     <p>
-      <label for="ime" class="sr-only">Име</label>
-      <input type="text" id="ime" name="ime" placeholder="Внесете име" required="" autofocus="">
+      <input type="text" id="ime" name="ime" placeholder="ИМЕ" required="" autofocus="">
     </p>
 
     <p>
-      <label for="prezime">Презиме</label>
-      <input type="text" id="prezime" name="prezime" placeholder="Внесете презиме" required="" autofocus="">
+      <input type="text" id="prezime" name="prezime" placeholder="ПРЕЗИМЕ" required="" autofocus="">
     </p>
 
     <p>
-      <label for="email" >Email</label>
-      <input type="text" id="email" name="email"  placeholder="Внесете e-mail" required="" autofocus="">
+      <input type="text" id="email" name="email"  placeholder="E-MAIL" required="" autofocus="">
     </p>
 
     <p>
-      <label for="password" >Password</label>
-      <input type="password" id="password" name="password" placeholder="Password" required="" autofocus="">
+      <input type="password" id="password" name="password" placeholder="PASSWORD" required="" autofocus="">
     </p>
     <p>
-      <label for="repeatPassword" >Password</label>
-      <input type="password" id="repeatPassword" name="repeatPassword" placeholder="Repeat password" required="" autofocus="">
+      <input type="password" id="repeatPassword" name="repeatPassword" placeholder="REPEAT PASSWORD" required="" autofocus="">
     </p>
 
     <p>
-      <label >Избери една опција*</label>
+      <label >Изберете една опција*</label>
       <input type="radio" name="role" th:value="ROLE_NASTAVNIK" th:text="Наставник">
       <input type="radio" name="role" th:value="ROLE_UCENIK" th:text="Ученик">
     </p>
 
     <p>
-      <label for="telBroj" >Телефонски број</label>
-      <input type="number" id="telBroj" name="telBroj"  placeholder="Телефонски број" required="" autofocus="">
+      <input type="number" id="telBroj" name="telBroj"  placeholder="ТЕЛЕФОНСКИ БРОЈ" required="" autofocus="">
     </p>
 
     <p>
-      <label for="opis" >Опис</label>
-      <label><input type="text" maxlength="500" id="opis" name="opis" placeholder="Максимум 500 карактери" required="" autofocus=""></label>
+      <input type="text" maxlength="500" id="opis" name="opis" placeholder="ОПИС" required="" autofocus="">
     </p>
 
-<!--    <p>-->
-<!--      <label><input type="checkbox" id="zapomnime" name="zapomnime" class="form-control" placeholder="zapomnime" required="" autofocus="">Запомни ме</label>-->
-<!--    </p>-->
+    <div style="height: 25px;">
+      <div style="text-align: center;" th:if="${hasErrors!=null}" th:text="${errors}" class="text-danger"></div>
+    </div>
 
-    <button  type="submit">Регистрирај се</button>
+    <button id="submit" class="btn btn-block btn-light" type="submit" style="position: relative;
+right: -70px;">Регистрирај се</button>
   </form>
-  <a href="/login">Веќе си член? Најави се тука!</a>
-</div>
+  <p id="login"
+     style="position: relative; right: -110px;">Веќе си член?
+    <a href="/login"> Најави се тука!</a></p>
 
+</div>
 
 </body>
 </html>
