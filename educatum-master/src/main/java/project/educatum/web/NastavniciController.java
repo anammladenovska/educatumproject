@@ -111,8 +111,14 @@ public class NastavniciController {
         return "addNewStudent";
     }
 
+    @PostMapping("/addSubjectForm")
+    public String addSubjectForm(Model model) {
+        model.addAttribute("predmeti",predmetiService.findAll());
+        return "addNewSubject";
+    }
+
     @PostMapping("/addStudent")
-    public String addStudent(Model model, @RequestParam String price, @RequestParam String numClasses,
+    public String addStudent(@RequestParam String price, @RequestParam String numClasses,
                              @RequestParam String email, HttpServletRequest request) {
         Ucenici ucenik = uceniciService.findByEmail(email);
         UserDetails user = (UserDetails) request.getSession().getAttribute("user");
@@ -121,6 +127,31 @@ public class NastavniciController {
         nastavniciService.addStudent(nastavnik.getId(), ucenik.getId(), Integer.valueOf(price), Integer.valueOf(numClasses));
         return "redirect:/nastavnici/allStudents";
     }
+
+
+    @PostMapping("/addSubject")
+    public String addSubject(Model model, HttpServletRequest request,
+                             @RequestParam String subjectId,
+                             @RequestParam String desc) {
+
+        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
+        Nastavnici nastavnik = nastavniciService.findByEmail(user.getUsername());
+        nastavniciService.addSubject(nastavnik.getId(), Integer.valueOf(subjectId),desc);
+
+        return "redirect:/nastavnici/allSubjects";
+    }
+
+    @PostMapping("/profile")
+    public String showProfile(Model model, HttpServletRequest request){
+        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
+        Nastavnici nastavnik = nastavniciService.findByEmail(user.getUsername());
+        model.addAttribute("ime",nastavnik.getIme()+" "+nastavnik.getPrezime());
+        model.addAttribute("opis",nastavnik.getOpis());
+        model.addAttribute("email",nastavnik.getEmail());
+        model.addAttribute("tel",nastavnik.getTelefonskiBroj());
+        return "userInfo";
+    }
+
 
 
     @PostMapping("/predavaPredmet")

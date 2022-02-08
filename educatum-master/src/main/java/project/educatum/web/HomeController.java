@@ -32,8 +32,8 @@ public class HomeController {
     private final AdminiService adminiService;
     private final NastavniciService nastavniciService;
     private final KvalifikaciiService kvalifikaciiService;
-    private static String UPLOADED_FOLDER = "C://Users//Acer//Desktop//dok//";
-//private static String UPLOADED_FOLDER = "C://Users//User//OneDrive//Desktop//kvalifikacii//";
+//    private static String UPLOADED_FOLDER = "C://Users//Acer//Desktop//dok//";
+private static String UPLOADED_FOLDER = "C://Users//User//OneDrive//Desktop//kvalifikacii//";
     public HomeController(PredmetiService predmetiService, AdminiService adminiService, NastavniciService nastavniciService, KvalifikaciiService kvalifikaciiService) {
         this.predmetiService = predmetiService;
         this.adminiService = adminiService;

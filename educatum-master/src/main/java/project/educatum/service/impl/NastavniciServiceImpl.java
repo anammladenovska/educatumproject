@@ -19,14 +19,16 @@ public class NastavniciServiceImpl implements NastavniciService {
     private final UceniciJpa uceniciRepository;
     private final PredavaNaJpa predavaNaJpa;
     private final PredavaPredmetJpa predavaPredmetRepository;
+    private final PredmetiJpa predmetiJpa;
 
-    public NastavniciServiceImpl(NastavniciJpa nastavniciRepository, PasswordEncoder passwordEncoder, AdminiJpa adminiRepository, UceniciJpa uceniciRepository, PredavaNaJpa predavaNaJpa, PredavaPredmetJpa predavaPredmetRepository) {
+    public NastavniciServiceImpl(NastavniciJpa nastavniciRepository, PasswordEncoder passwordEncoder, AdminiJpa adminiRepository, UceniciJpa uceniciRepository, PredavaNaJpa predavaNaJpa, PredavaPredmetJpa predavaPredmetRepository, PredmetiJpa predmetiJpa) {
         this.nastavniciRepository = nastavniciRepository;
         this.passwordEncoder = passwordEncoder;
         this.adminiRepository = adminiRepository;
         this.uceniciRepository = uceniciRepository;
         this.predavaNaJpa = predavaNaJpa;
         this.predavaPredmetRepository = predavaPredmetRepository;
+        this.predmetiJpa = predmetiJpa;
     }
 
     @Override
@@ -92,12 +94,31 @@ public class NastavniciServiceImpl implements NastavniciService {
 
     @Override
     public List<Predmeti> getSubjectsByTeacher(Integer id) {
-        return null;
+        List<Predmeti> predmeti = new ArrayList<>();
+         List<PredavaPredmet> nastavniciPredmeti = predavaPredmetRepository.findAll();
+        for(PredavaPredmet predavaPredmet : nastavniciPredmeti){
+            PredavaPredmetId ppId = predavaPredmet.getId();
+            if(ppId.getIdNastavnik().equals(id)){
+                Integer idPredmet = ppId.getIdPredmet();
+                predmeti.add(predmetiJpa.findById(idPredmet).orElseThrow(SubjectNotFoundException::new));
+            }
+        }
+        return predmeti;
     }
 
     @Override
     public Nastavnici findById(Integer id) {
         return nastavniciRepository.findById(id).orElseThrow(TeacherNotFoundException::new);
+    }
+
+    @Override
+    public void addSubject(Integer teacherId, Integer subjectId, String desc){
+        Nastavnici nastavnik = nastavniciRepository.findById(teacherId).orElseThrow(TeacherNotFoundException::new);
+        Predmeti predmet = predmetiJpa.findById(subjectId).orElseThrow(SubjectNotFoundException::new);
+
+        PredavaPredmetId ppId = new PredavaPredmetId(teacherId,subjectId);
+        predavaPredmetRepository.save(new PredavaPredmet(ppId,desc));
+
     }
 
 

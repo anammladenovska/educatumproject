@@ -37,25 +37,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/h2**"); // do not remove this line
-        // TODO: If you are implementing the security requirements, remove this following line
+        web.ignoring().antMatchers("/h2**");
         web.ignoring().antMatchers("/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable()
-//                .authorizeRequests().antMatchers("/").permitAll()
-//                .anyRequest().authenticated().and()
-//                .formLogin()
-//                .failureUrl("/login?error=BadCredentials")
-//                .defaultSuccessUrl("/nastavnici", true).and()
-//                .logout()
-
-
-//                .deleteCookies("JSESSIONID")
-//                .invalidateHttpSession(true)
-//                .logoutSuccessUrl("/");
 
         http.csrf().disable()
                 .authorizeRequests()
@@ -76,9 +63,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder.encode("admin")).authorities("ROLE_ADMIN")
-//                .and().withUser("user").password(passwordEncoder.encode("user")).authorities("ROLE_USER");
-//
         auth.authenticationProvider(customAuthenticationProvider);
     }
 

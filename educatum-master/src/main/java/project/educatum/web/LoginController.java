@@ -53,7 +53,7 @@ public class LoginController {
                     UserDetails user = authService.loginNastavnik(email, password);
                     request.getSession().setAttribute("user", user);
                     return "redirect:/nastavnici/allStudents";
-                } catch (BadCredentialsException ex) {
+                } catch (BadCredentialsException | InvalidUserCredentialsException ex) {
                     model.addAttribute("haserror", true);
                     model.addAttribute("error", ex.getMessage());
                     return "/najava";
@@ -67,7 +67,7 @@ public class LoginController {
                     UserDetails user = authService.loginUcenik(email, password);
                     request.getSession().setAttribute("user", user);
                     return "/nastavnici";
-                } catch (InvalidUserCredentialsException ex) {
+                } catch (InvalidUserCredentialsException | BadCredentialsException ex) {
                     model.addAttribute("haserror", true);
                     model.addAttribute("error", ex.getMessage());
                     return "/najava";
@@ -82,7 +82,7 @@ public class LoginController {
                     UserDetails user = authService.loginAdmin(email, password);
                     request.getSession().setAttribute("user", user);
                     return "redirect:/admini/allTeachers";
-                } catch (InvalidUserCredentialsException ex) {
+                } catch (InvalidUserCredentialsException | BadCredentialsException ex) {
                     model.addAttribute("haserror", true);
                     model.addAttribute("error", ex.getMessage());
                     return "/najava";

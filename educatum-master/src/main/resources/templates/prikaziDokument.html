@@ -2,22 +2,163 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Документ за квалификација</title>
+
+
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap');
+
+        body {
+            width: 800px;
+            margin: auto;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        table, td, th {
+            border: 1px solid black;
+            padding: 3px 2px;
+        }
+
+        section {
+            float: left;
+            margin: 0 1.5%;
+            width: 63%;
+        }
+
+        aside {
+            float: right;
+            margin: 0 1.5%;
+            width: 30%;
+        }
+
+        button {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: black;
+            border: none;
+            color: snow;
+            text-align: center;
+            font-size: 18px;
+            padding: 10px;
+            width: 300px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+
+
+        }
+
+        button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        button:hover span {
+            padding-right: 25px;
+        }
+
+        button:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+
+        input[type=button], input[type=submit], input[type=reset], input[type=password] {
+            background-color: snow;
+            border: none;
+            color: black;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        * {
+            background-color: whitesmoke;
+            font-family: 'Zen Antique', serif;
+        }
+
+        a:link, a:visited {
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a:hover, a:active {
+            background-color: snow;
+        }
+
+        input[type=text], input[type=password] {
+            width: 60%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        input[type=text]:focus, input[type=password]:focus {
+            background-color: snow;
+        }
+
+        li {
+            position: relative;
+            left: -33px;
+        }
+
+        #search {
+            background-color: whitesmoke;
+            border-style: solid;
+            border-color: snow;
+            color: black;
+            padding: 12px 20px;
+            text-decoration: none;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        #navbar li {
+            display: inline-block;
+        }
+
+        .container {
+            margin: 25px;
+            position: relative;
+            right: -150px;
+            height: 200px;
+        }
+    </style>
 </head>
 <body>
 
-<h2>Прикачете скениран документ (диплома, сертификат), како доказ односно потврда за вашите квалификации/знаење</h2>
-<form method="POST" action="/home/upload" enctype="multipart/form-data">
-    <input type="file" name="file" /><br/><br/>
-    <input type="submit" value="Продолжи" />
-</form>
+<div style="height: 50px"></div>
+<h3 style="text-align: center; font-weight: bold">ПРИКАЧЕТЕ СКЕНИРАН ДОКУМЕНТ КАКО ПОТВРДА ЗА ВАШИТЕ КВАЛИФИКАЦИИ/ЗНАЕЊА</h3>
+<div class="container" style="position: relative;  right:-150px;">
 
-<!--    <input type="file">-->
-<!--    <div>-->
-<!--        <a href="/izberiPredmet/document/potvrda">-->
-<!--            Продолжи-->
-<!--        </a>-->
-<!--    </div>-->
+    <form method="POST" action="/home/upload" enctype="multipart/form-data" style="position: relative;
+right: -120px;">
+        <input type="file" name="file" /><br/><br/>
+        <input type="submit" value="Продолжи" />
+    </form>
+
+</div>
+
+
+
+
+
 
 </body>
 </html>
