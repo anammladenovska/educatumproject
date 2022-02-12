@@ -3,6 +3,7 @@ package project.educatum.web;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.educatum.model.Nastavnici;
 import project.educatum.model.Predmeti;
@@ -32,6 +33,11 @@ public class UceniciController {
     public String deleteStudent(@PathVariable String id){
         uceniciService.delete(Integer.parseInt(id));
         return "redirect:/admini/allStudents";
+    }
+
+    @PostMapping("/slusanje")
+    public String slusanje(Model model, HttpServletRequest request){
+        return "";
     }
 
     @PostMapping("/zaintesesiranZaPredmet")

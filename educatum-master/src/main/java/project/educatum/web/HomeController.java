@@ -12,10 +12,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.educatum.model.Admini;
 import project.educatum.model.Nastavnici;
 import project.educatum.model.Predmeti;
-import project.educatum.service.AdminiService;
-import project.educatum.service.KvalifikaciiService;
-import project.educatum.service.NastavniciService;
-import project.educatum.service.PredmetiService;
+import project.educatum.model.Ucenici;
+import project.educatum.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -32,13 +30,16 @@ public class HomeController {
     private final AdminiService adminiService;
     private final NastavniciService nastavniciService;
     private final KvalifikaciiService kvalifikaciiService;
-//    private static String UPLOADED_FOLDER = "C://Users//Acer//Desktop//dok//";
-private static String UPLOADED_FOLDER = "C://Users//User//OneDrive//Desktop//kvalifikacii//";
-    public HomeController(PredmetiService predmetiService, AdminiService adminiService, NastavniciService nastavniciService, KvalifikaciiService kvalifikaciiService) {
+    private final UceniciService uceniciService;
+    //    private static String UPLOADED_FOLDER = "C://Users//Acer//Desktop//dok//";
+    private static String UPLOADED_FOLDER = "C://Users//User//OneDrive//Desktop//kvalifikacii//";
+
+    public HomeController(PredmetiService predmetiService, AdminiService adminiService, NastavniciService nastavniciService, KvalifikaciiService kvalifikaciiService, UceniciService uceniciService) {
         this.predmetiService = predmetiService;
         this.adminiService = adminiService;
         this.nastavniciService = nastavniciService;
         this.kvalifikaciiService = kvalifikaciiService;
+        this.uceniciService = uceniciService;
     }
 
     @GetMapping
@@ -79,9 +80,9 @@ private static String UPLOADED_FOLDER = "C://Users//User//OneDrive//Desktop//kva
             Files.write(path, bytes);
             UserDetails userDetails = (UserDetails) request.getSession().getAttribute("user");
             Nastavnici n = nastavniciService.findByEmail(userDetails.getUsername());
-            kvalifikaciiService.insert(String.valueOf(path),n.getId());
+            kvalifikaciiService.insert(String.valueOf(path), n.getId());
             redirectAttributes.addFlashAttribute("message",
-                    "Ви благодариме за регистрацијата! Ќе добиете известување на e-mail кога вашиот профил ќе виде активиран.");
+                    "Ви благодариме за регистрацијата!\n Ќе добиете известување на e-mail кога Вашиот профил ќе биде активиран.");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -110,23 +111,37 @@ private static String UPLOADED_FOLDER = "C://Users//User//OneDrive//Desktop//kva
     }
 
     @GetMapping("/slusajPredmet")
-    public String slusajPredmet(@RequestParam(required = false)String ime, Model model) {
-        List<Predmeti> listaPredmeti;
-        if (ime == null) {
-            listaPredmeti = this.predmetiService.findAll();
-        } else {
-            listaPredmeti = this.predmetiService.findAllByNameLike(ime);
+    public String slusajPredmet(Model model, @RequestParam(required = false) String subject,
+                                HttpServletRequest request) {
+        if(subject==null){
+            return "redirect:/zainteresiran?error=Ве%20молиме%20изберете%20предмет";
         }
-        model.addAttribute("listaPredmeti", listaPredmeti);
-        model.addAttribute("nastavnici",nastavniciService.findAll());
+        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
+        Ucenici ucenik = uceniciService.findByEmail(user.getUsername());
+        uceniciService.interestedIn(Integer.valueOf(subject), ucenik.getId());
+        model.addAttribute("predmeti", predmetiService.findAll());
+        model.addAttribute("nastavnici", nastavniciService.getAllTeachersBySubject(Integer.valueOf(subject)));
+
         return "slusajPredmet";
     }
 
+    @GetMapping("/zainteresiran")
+    public String zainteresiranZa(Model model,@RequestParam(required = false) String search) {
+        List<Predmeti> predmeti;
+        if (search == null) {
+            predmeti = this.predmetiService.findAll();
+        } else {
+            predmeti = this.predmetiService.findAllByNameLike(search);
+        }
+        model.addAttribute("predmeti", predmeti);
+        return "zainteresiran";
+    }
+
     @PostMapping("/vidiPredmeti")
-    public String getAllTeachersBySubject(Model model, @RequestParam String predmetId){
-        model.addAttribute("predmet",predmetiService.findById(Integer.valueOf(predmetId)));
-        model.addAttribute("predmeti",predmetiService.findAll());
-        model.addAttribute("nastavnici",nastavniciService.getAllTeachersBySubject(Integer.valueOf(predmetId)));
+    public String getAllTeachersBySubject(Model model, @RequestParam String predmetId) {
+        model.addAttribute("predmet", predmetiService.findById(Integer.valueOf(predmetId)));
+        model.addAttribute("predmeti", predmetiService.findAll());
+        model.addAttribute("nastavnici", nastavniciService.getAllTeachersBySubject(Integer.valueOf(predmetId)));
         return "slusajPredmet";
     }
 

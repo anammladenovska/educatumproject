@@ -6,10 +6,12 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@600&display=swap');
+
         body {
             margin: 0;
             background: whitesmoke;
-            font-family: 'Zen Antique', serif;
+            font-family: 'Cormorant Unicase', serif;
             font-weight: 800;
         }
 
@@ -140,7 +142,7 @@
         }
         *{
             background-color: whitesmoke;
-            font-family: 'Zen Antique', serif;
+            font-family: 'Cormorant Unicase', serif;
         }
         a:link, a:visited {
             color: black;
@@ -179,6 +181,16 @@
             padding-left: 2em;
             color: inherit;
             text-decoration: none;
+        }
+        textarea {
+            width: 250px;
+            height: 150px;
+            padding: 12px 20px;
+            box-sizing: border-box;
+            border: 1px solid black;
+            background-color: snow;
+            font-size: 16px;
+            resize: none;
         }
 
 
@@ -228,10 +240,13 @@
 
             </li>
         </ul>
-        <div style="height: 200px; width: 100% position: relative; bottom: -30px;">
+        <div style="height: 200px; width: 300px; position: relative; top:-250px;
+            ">
             <textarea name="tema">Внесете опис на предметот...</textarea>
         </div>
-        <input type="submit" value="Продолжи" style="position: relative; right: -300px;">
+        <button type="submit" value="Продолжи" style="position: relative; top: -250px; right:-70px;">
+            Продолжи
+        </button>
 
     </form>
 

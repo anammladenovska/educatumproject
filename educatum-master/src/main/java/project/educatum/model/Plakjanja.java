@@ -8,6 +8,11 @@ public class Plakjanja {
 
     public Plakjanja(){}
 
+    public Plakjanja(Integer iznos, Nastavnici idNastavnik) {
+        this.iznos = iznos;
+        this.idNastavnik = idNastavnik;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_plakjanja", nullable = false)

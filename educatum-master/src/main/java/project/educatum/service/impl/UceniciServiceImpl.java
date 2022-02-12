@@ -2,9 +2,7 @@ package project.educatum.service.impl;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import project.educatum.model.Admini;
-import project.educatum.model.Nastavnici;
-import project.educatum.model.Ucenici;
+import project.educatum.model.*;
 import project.educatum.model.exceptions.InvalidArgumentsException;
 import project.educatum.model.exceptions.PasswordsDoNotMatchException;
 import project.educatum.model.exceptions.StudentNotFoundException;
@@ -12,8 +10,10 @@ import project.educatum.model.exceptions.UsernameAlreadyExistsException;
 import project.educatum.repository.AdminiJpa;
 import project.educatum.repository.NastavniciJpa;
 import project.educatum.repository.UceniciJpa;
+import project.educatum.repository.ZainteresiranZaJpa;
 import project.educatum.service.UceniciService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,12 +26,14 @@ public class UceniciServiceImpl implements UceniciService {
     private final PasswordEncoder passwordEncoder;
     private final AdminiJpa adminiRepository;
     private final NastavniciJpa nastavniciRepository;
+    private final ZainteresiranZaJpa zainteresiranZaJpa;
 
-    public UceniciServiceImpl(UceniciJpa uceniciRepository, PasswordEncoder passwordEncoder, AdminiJpa adminiRepository, NastavniciJpa nastavniciRepository) {
+    public UceniciServiceImpl(UceniciJpa uceniciRepository, PasswordEncoder passwordEncoder, AdminiJpa adminiRepository, NastavniciJpa nastavniciRepository, ZainteresiranZaJpa zainteresiranZaJpa) {
         this.uceniciRepository = uceniciRepository;
         this.passwordEncoder = passwordEncoder;
         this.adminiRepository = adminiRepository;
         this.nastavniciRepository = nastavniciRepository;
+        this.zainteresiranZaJpa = zainteresiranZaJpa;
     }
 
     @Override
@@ -89,4 +91,12 @@ public class UceniciServiceImpl implements UceniciService {
     public List<Ucenici> findAllByName(String ime) {
         return uceniciRepository.findAllByImeContainingIgnoreCase(ime);
     }
+
+    @Override
+    public void interestedIn(Integer subjectId, Integer studentId){
+        ZainteresiranZaId zId = new ZainteresiranZaId(subjectId,studentId);
+        ZainteresiranZa z = new ZainteresiranZa(zId, LocalDate.now());
+        zainteresiranZaJpa.save(z);
+    }
+
 }

@@ -1,5 +1,6 @@
 package project.educatum.service;
 
+import org.springframework.data.jpa.repository.Modifying;
 import project.educatum.model.Casovi;
 import project.educatum.model.Nastavnici;
 import project.educatum.model.Predmeti;
@@ -14,7 +15,12 @@ public interface NastavniciService {
 
     List<Ucenici> getStudentsByTeacher(Integer id);
 
+
+    void updateEnabled(Integer teacherID);
+
     List<Predmeti> getSubjectsByTeacher(Integer id);
+
+    void addPayment(Integer teacherId, Integer price);
 
     Nastavnici findById(Integer id);
 
@@ -31,4 +37,6 @@ public interface NastavniciService {
     void addStudent(Integer nastavnikId, Integer ucenikId, Integer cenaPoCas, Integer brojCasoviPoDogovor);
 
     List<Nastavnici> getAllTeachersBySubject(Integer id);
+
+
 }

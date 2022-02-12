@@ -6,10 +6,12 @@
     <style>
 
         @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@600&display=swap');
+
         body {
             margin: 0;
             background: white;
-            font-family: 'Work Sans', sans-serif;
+            font-family: 'Cormorant Unicase', serif;
             font-weight: 800;
         }
 
@@ -117,32 +119,6 @@
             background-color: cornflowerblue;
         }
 
-        .Accordion-subElements {
-            padding-left: 0;
-            background-color: #ecf0f1;
-        }
-
-        .Accordion-subElement {
-            height: 0;
-            -webkit-transform-origin: 0 0;
-            transform-origin: 0 0;
-            -webkit-transform: scale(0);
-            transform: scale(0);
-            font-size: 0.9em;
-            line-height: 2;
-            color: #555;
-            transition-property: height, -webkit-transform;
-            transition-property: transform, height;
-            transition-property: transform, height, -webkit-transform;
-            transition-duration: 0.3s;
-            overflow: hidden;
-        }
-
-        .Accordion-subElement:hover {
-            background-color: #bdc3c7;
-            color: #111;
-        }
-
         .Accordion-subElement a {
             display: block;
             padding-left: 2em;
@@ -169,6 +145,8 @@
         </nav>
     </div>
 </header>
+<h1><th:block th:text="${student.getIme()}"></th:block>
+<th:block th:text="${student.getPrezime()}"></th:block></h1>
 <h3>Должи:</h3>
 <div th:text="${dolzi}"></div>
 
@@ -177,12 +155,22 @@
 
 <h3>Број на часови кои ги има слушано:</h3>
 <div th:text="${brojSlusaniCasovi}"></div>
+<a href="/ucenici/slusanje" th:value="plus">+</a>
+<a href="/ucenici/slusanje" th:value="minus">-</a>
+
+<h3>Број на часови за кои има платено:</h3>
+<div th:text="${plateniCasovi}"></div>
 
 <h3>Цена по час:</h3>
 <div th:text="${cenaPoCas}"></div>
 
-<h3></h3>
-<div></div>
+
+<form method="post" action="/nastavnici/updatePayment">
+<p>Плаќа за <input type="text" name="numPaidClasses"> часови</p>
+<input type="text" placeholder="ИЗНОС" name="price"> ден.
+    <input type="hidden" th:value="${student.getId()}" name="studentId"> </br>
+    <input type="submit" value="Submit">
+</form>
 
 
 <i><a href="/nastavnici/allStudents">Назад кон листата со ученици</a></i>

@@ -2,6 +2,7 @@ package project.educatum.model;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "casovi", schema = "project")
@@ -12,7 +13,7 @@ public class Casovi {
     private Integer id;
 
     @Column(name = "vreme_pocetok")
-    private Instant vremePocetok;
+    private LocalDateTime vremePocetok;
 
     @Column(name = "tema", nullable = false, length = 100)
     private String tema;
@@ -24,6 +25,17 @@ public class Casovi {
     @ManyToOne
     @JoinColumn(name = "id_predmet")
     private Predmeti idPredmet;
+
+    public Casovi(LocalDateTime vremePocetok, String tema, Nastavnici idNastavnik, Predmeti idPredmet) {
+        this.vremePocetok = vremePocetok;
+        this.tema = tema;
+        this.idNastavnik = idNastavnik;
+        this.idPredmet = idPredmet;
+    }
+
+    public Casovi() {
+
+    }
 
     public Predmeti getIdPredmet() {
         return idPredmet;
@@ -49,11 +61,11 @@ public class Casovi {
         this.tema = tema;
     }
 
-    public Instant getVremePocetok() {
+    public LocalDateTime getVremePocetok() {
         return vremePocetok;
     }
 
-    public void setVremePocetok(Instant vremePocetok) {
+    public void setVremePocetok(LocalDateTime vremePocetok) {
         this.vremePocetok = vremePocetok;
     }
 

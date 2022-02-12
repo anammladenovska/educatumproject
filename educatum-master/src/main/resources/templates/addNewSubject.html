@@ -6,10 +6,12 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@600&display=swap');
+
         body {
             margin: 0;
             background: whitesmoke;
-            font-family: 'Zen Antique', serif;
+            font-family: 'Cormorant Unicase', serif;
             font-weight: 800;
         }
 
@@ -243,7 +245,7 @@
 <div class="container">
 
         <form th:method="post" th:action="@{/nastavnici/addSubject}">
-            <div class="custom-select" style="width:200px; height: 400px;">
+            <div class="custom-select" style="width:200px;">
                 <select  id="subjectId" name="subjectId">
                     <option value="" selected disabled hidden>Изберете предмет</option>
                     <option th:each="p : ${predmeti}"

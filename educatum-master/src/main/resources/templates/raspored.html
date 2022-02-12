@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Часови</title>
-
+    <title>Сите часови</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@600&display=swap');
+
         body {
             margin: 0;
             background: whitesmoke;
-            font-family: 'Zen Antique', serif;
+            font-family: 'Cormorant Unicase', serif;
             font-weight: 800;
         }
 
@@ -140,7 +141,7 @@
         }
         *{
             background-color: whitesmoke;
-            font-family: 'Zen Antique', serif;
+            font-family: 'Cormorant Unicase', serif;
         }
         a:link, a:visited {
             color: black;
@@ -153,7 +154,8 @@
         #search{
             background-color: whitesmoke;
             border-style: solid;
-            border-color: snow;
+            border-width: thin;
+            border-color: black;
             color: black;
             padding: 12px 20px;
             text-decoration: none;
@@ -201,23 +203,34 @@
     </div>
 </header>
 
-<h1>СИТЕ ЧАСОВИ</h1>
 
-<table style="table-border-color-dark: black">
-    <th>Тема</th>
-    <th>Почеток на час</th>
-    <th></th>
+<div style="height: 50px"></div>
+<h3 style="text-align: center; font-weight: bold">ЧАСОВИ</h3>
+<div class="container" style="position: relative;  right:-150px;">
+
+
+    <form action="/nastavnici/addClassForm" method="post">
+        <input type="submit" value="+ НОВ ЧАС">
+    </form>
+
+
     <ul>
 
-        <li style="list-style-type: none" th:each="c : ${casovi}">
-            <tr>
-                <td><th:block th:text="${c.getTema()}"></th:block></td>
-                <td><th:block th:text="${c.getVremePocetok()}"></th:block></td>
-                <td><a href="/casovi/addStudentsToClass">Додај студенти кои го слушале часот</a></td>
-            </tr>
-        </li>
+
+        <li style="list-style-type: none;
+        padding: 5px; font-size: 18px;" th:each="c : ${casovi}">
+            <div id="left">
+                <a href=""><th:block th:text="${c.getTema()}"></th:block>
+                    <th:block th:text="${c.idPredmet.getIme()}"></th:block>
+                    <th:block th:text="${c.getVremePocetok()}"></th:block>
+                </a>
+            </div>
+
     </ul>
-</table>
+
+
+</div>
+
 
 
 </body>

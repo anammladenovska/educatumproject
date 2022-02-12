@@ -28,6 +28,11 @@ public class Predmeti {
 
     }
 
+    @Override
+    public String toString() {
+        return ime;
+    }
+
     public Admini getIdAdmin() {
         return idAdmin;
     }

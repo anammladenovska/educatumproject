@@ -2,10 +2,7 @@ package project.educatum.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import project.educatum.model.Nastavnici;
 import project.educatum.model.Predmeti;
 import project.educatum.model.Ucenici;
@@ -69,5 +66,15 @@ public class AdminiController {
         model.addAttribute("students", students);
         return "uceniciAdmin";
     }
+
+    @PostMapping("/activate/{id}")
+    public String activateAccount(@PathVariable String id){
+        Nastavnici n = nastavniciService.findById(Integer.valueOf(id));
+        if(n!=null){
+            nastavniciService.updateEnabled(Integer.valueOf(id));
+        }
+        return "redirect:/admini/allTeachers";
+    }
+
 
 }
