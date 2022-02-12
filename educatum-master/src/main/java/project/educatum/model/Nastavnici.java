@@ -41,9 +41,12 @@ public class Nastavnici implements UserDetails {
     @JoinColumn(name = "id_admin", nullable = false)
     private Admini idAdmin;
 
+    @Column(name = "enabled")
+    private Boolean enabled;
+
 
     public Nastavnici(String ime, String prezime, String opis, String email, String password, String telefonskiBroj) {
-
+        this.enabled=false;
         this.ime = ime;
         this.prezime = prezime;
         this.opis = opis;
@@ -55,6 +58,10 @@ public class Nastavnici implements UserDetails {
 
     public Admini getIdAdmin() {
         return idAdmin;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
     }
 
     public void setIdAdmin(Admini idAdmin) {
@@ -69,6 +76,10 @@ public class Nastavnici implements UserDetails {
         this.telefonskiBroj = telefonskiBroj;
     }
 
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -80,7 +91,7 @@ public class Nastavnici implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return email;
     }
 
     @Override
@@ -100,7 +111,7 @@ public class Nastavnici implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return enabled;
     }
 
     public void setPassword(String password) {

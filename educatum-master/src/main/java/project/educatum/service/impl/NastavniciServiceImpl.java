@@ -20,8 +20,9 @@ public class NastavniciServiceImpl implements NastavniciService {
     private final PredavaNaJpa predavaNaJpa;
     private final PredavaPredmetJpa predavaPredmetRepository;
     private final PredmetiJpa predmetiJpa;
+    private final PlakjanjaJpa plakjanjaJpa;
 
-    public NastavniciServiceImpl(NastavniciJpa nastavniciRepository, PasswordEncoder passwordEncoder, AdminiJpa adminiRepository, UceniciJpa uceniciRepository, PredavaNaJpa predavaNaJpa, PredavaPredmetJpa predavaPredmetRepository, PredmetiJpa predmetiJpa) {
+    public NastavniciServiceImpl(NastavniciJpa nastavniciRepository, PasswordEncoder passwordEncoder, AdminiJpa adminiRepository, UceniciJpa uceniciRepository, PredavaNaJpa predavaNaJpa, PredavaPredmetJpa predavaPredmetRepository, PredmetiJpa predmetiJpa, PlakjanjaJpa plakjanjaJpa) {
         this.nastavniciRepository = nastavniciRepository;
         this.passwordEncoder = passwordEncoder;
         this.adminiRepository = adminiRepository;
@@ -29,6 +30,7 @@ public class NastavniciServiceImpl implements NastavniciService {
         this.predavaNaJpa = predavaNaJpa;
         this.predavaPredmetRepository = predavaPredmetRepository;
         this.predmetiJpa = predmetiJpa;
+        this.plakjanjaJpa = plakjanjaJpa;
     }
 
     @Override
@@ -93,6 +95,25 @@ public class NastavniciServiceImpl implements NastavniciService {
     }
 
     @Override
+    public List<Nastavnici> getAllTeachersBySubject(Integer id) {
+        List<Nastavnici> nastavnici = new ArrayList<>();
+        List<PredavaPredmet> predavaPredmet = predavaPredmetRepository.findAll();
+        for(PredavaPredmet pp : predavaPredmet){
+            PredavaPredmetId ppId = pp.getId();
+            if(ppId.getIdPredmet().equals(id)){
+                Integer idNastavnik = ppId.getIdNastavnik();
+                nastavnici.add(nastavniciRepository.findById(idNastavnik).orElseThrow(TeacherNotFoundException::new));
+            }
+        }
+        return nastavnici;
+    }
+
+    @Override
+    public void updateEnabled(Integer teacherID){
+        nastavniciRepository.updateEnabled(teacherID);
+    }
+
+    @Override
     public List<Predmeti> getSubjectsByTeacher(Integer id) {
         List<Predmeti> predmeti = new ArrayList<>();
          List<PredavaPredmet> nastavniciPredmeti = predavaPredmetRepository.findAll();
@@ -104,6 +125,13 @@ public class NastavniciServiceImpl implements NastavniciService {
             }
         }
         return predmeti;
+    }
+
+    @Override
+    public void addPayment(Integer teacherId, Integer price){
+        Nastavnici n = nastavniciRepository.findById(teacherId).orElseThrow(TeacherNotFoundException::new);
+        Plakjanja p = new Plakjanja(price,n);
+        plakjanjaJpa.save(p);
     }
 
     @Override
@@ -131,18 +159,6 @@ public class NastavniciServiceImpl implements NastavniciService {
         predavaNaJpa.save(new PredavaNa(pId, cenaPoCas, brojCasoviPoDogovor));
     }
 
-    @Override
-    public List<Nastavnici> getAllTeachersBySubject(Integer id) {
-        List<Nastavnici> nastavnici = new ArrayList<>();
-        List<PredavaPredmet> predavaPredmet = predavaPredmetRepository.findAll();
-        for(PredavaPredmet pp : predavaPredmet){
-            PredavaPredmetId ppId = pp.getId();
-            if(ppId.getIdPredmet().equals(id)){
-                Integer idNastavnik = ppId.getIdNastavnik();
-                nastavnici.add(nastavniciRepository.findById(idNastavnik).orElseThrow(TeacherNotFoundException::new));
-            }
-        }
-        return nastavnici;
-    }
+
 
 }

@@ -75,6 +75,33 @@ public class NastavniciController {
         model.addAttribute("cenaPoCas",cenaPoCas);
         Integer brojSlusaniCasovi = plakjanjaService.brojSlusaniCasovi(Integer.valueOf(id),nastavnik.getId());
         model.addAttribute("brojSlusaniCasovi",brojSlusaniCasovi);
+        model.addAttribute("student",uceniciService.findById(Integer.valueOf(id)));
+        return "vnesPlakjanje";
+    }
+
+    @PostMapping("/updatePayment")
+    public String updatePaymentForStudent(@RequestParam String studentId, Model model, HttpServletRequest request,
+                                          @RequestParam String price, @RequestParam String numPaidClasses){
+
+
+
+
+
+
+
+
+        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
+        Nastavnici nastavnik = nastavniciService.findByEmail(user.getUsername());
+        nastavniciService.addPayment(nastavnik.getId(),Integer.valueOf(price));
+        Integer dolzi = plakjanjaService.studentTeacherLoan(Integer.valueOf(studentId), nastavnik.getId());
+        model.addAttribute("dolzi", dolzi);
+        Integer brojCasoviPoDogovor = predavaNaService.find(nastavnik.getId(),Integer.valueOf(studentId)).getBrojCasoviPoDogovor();
+        model.addAttribute("brojCasoviPoDogovor",brojCasoviPoDogovor);
+        Integer cenaPoCas = predavaNaService.find(nastavnik.getId(),Integer.valueOf(studentId)).getCenaPoCas();
+        model.addAttribute("cenaPoCas",cenaPoCas);
+        Integer brojSlusaniCasovi = plakjanjaService.brojSlusaniCasovi(Integer.valueOf(studentId),nastavnik.getId());
+        model.addAttribute("brojSlusaniCasovi",brojSlusaniCasovi);
+        model.addAttribute("student",uceniciService.findById(Integer.valueOf(studentId)));
         return "vnesPlakjanje";
     }
 
@@ -164,6 +191,23 @@ public class NastavniciController {
         return "redirect:/home/document";
     }
 
+//OVIE DVA METODI PODOLU DA SE DOVRSAT ZA DODAVANJE NA CHAS
+//
+//    @PostMapping("/addClassForm")
+//    public String addClassForm(Model model) {
+//        model.addAttribute("predmeti",predmetiService.findAll());
+//        return "addNewClass";
+//    }
+//
+//    @PostMapping("/addClass")
+//    public String addClass() {
+//        Ucenici ucenik = uceniciService.findByEmail(email);
+//        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
+//        Nastavnici nastavnik = nastavniciService.findByEmail(user.getUsername());
+//
+//        nastavniciService.addStudent(nastavnik.getId(), ucenik.getId(), Integer.valueOf(price), Integer.valueOf(numClasses));
+//        return "redirect:/nastavnici/allClasses";
+//    }
 
 
 }

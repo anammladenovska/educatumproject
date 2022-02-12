@@ -5,10 +5,13 @@
   <title>EDUCATUM - РЕГИСТРИРАЈ СЕ</title>
   <style type = "text/css">
     @import url('https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@600&display=swap');
+
 
     body {
       width: 800px;
       margin: auto;
+      font-family: 'Cormorant Unicase', serif;
     }
     table {
       width:100%;
@@ -85,8 +88,7 @@
       color: white;
     }
     *{
-      background-color: whitesmoke;
-      font-family: 'Zen Antique', serif;
+      font-family: 'Cormorant Unicase', serif;
     }
     a:link, a:visited {
       color: black;
@@ -135,7 +137,8 @@
 </head>
 <body>
 
-<div >
+
+<div>
   <h2 style="text-align: center">REGISTER</h2>
 
 </div>
@@ -176,18 +179,20 @@
       <input type="text" maxlength="500" id="opis" name="opis" placeholder="ОПИС" required="" autofocus="">
     </p>
 
-    <div style="height: 25px;">
-      <div style="text-align: center;" th:if="${hasErrors!=null}" th:text="${errors}" class="text-danger"></div>
-    </div>
-
     <button id="submit" class="btn btn-block btn-light" type="submit" style="position: relative;
 right: -70px;">Регистрирај се</button>
   </form>
+
   <p id="login"
      style="position: relative; right: -110px;">Веќе си член?
     <a href="/login"> Најави се тука!</a></p>
+  <div style="height: 25px;">
+    <div style="text-align: center;" th:if="${hasErrors!=null}" th:text="${errors}" class="text-danger"></div>
+  </div>
 
 </div>
+
+
 
 </body>
 </html>

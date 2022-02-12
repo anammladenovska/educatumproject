@@ -7,4 +7,5 @@ import project.educatum.model.Plakjanja;
 @Repository
 public interface PlakjanjaJpa extends JpaRepository<Plakjanja,Integer> {
 
+
 }

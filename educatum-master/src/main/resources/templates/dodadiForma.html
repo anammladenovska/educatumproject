@@ -1,35 +1,214 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
 
-<H3>Додади предмет што го нема во листата на понудени предмети</H3>
 
-<form method="POST" th:action="@{'/home/izberiPredmet'}">
-
-    <div>
-        <label for="ime">Ime</label>
-        <input type="text"
-               id="ime"
-               name="ime"
-               th:value="${izberiPredmet?.ime}"
-               required>
-    </div>
+<!--<form method="POST" th:action="@{'/home/izberiPredmet'}">-->
 
 <!--    <div>-->
-<!--        <label>Admini</label><br/>-->
-<!--        <select id="adminiList" name="adminiList" >-->
-<!--            &lt;!&ndash; For each category you should have one <option> like below  &ndash;&gt;-->
-<!--            <option th:each="a: ${adminiList}" th:value="${a.id}" th:text="${a.ime}" name="idAdmin"> [a.ime]</option>-->
-<!--        </select>-->
+<!--        <label for="ime">Ime</label>-->
+<!--        <input type="text"-->
+<!--               id="ime"-->
+<!--               name="ime"-->
+<!--               th:value="${izberiPredmet?.ime}"-->
+<!--               required>-->
 <!--    </div>-->
 
-    <button id="submit" type="submit">Додај го предметот</button>
-    <a id="back" href="/home/izberiPredmet" type="button">Назад кон предмети</a>
-</form>
+<!--&lt;!&ndash;    <div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <label>Admini</label><br/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <select id="adminiList" name="adminiList" >&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash; For each category you should have one <option> like below  &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            <option th:each="a: ${adminiList}" th:value="${a.id}" th:text="${a.ime}" name="idAdmin"> [a.ime]</option>&ndash;&gt;-->
+<!--&lt;!&ndash;        </select>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
 
+<!--    <button id="submit" type="submit">Додај го предметот</button>-->
+<!--    <a id="back" href="/home/izberiPredmet" type="button">Назад кон предмети</a>-->
+<!--</form>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+<!--...-->
+
+
+
+
+
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>EDUCATUM - Предмети</title>
+
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@600&display=swap');
+
+        body {
+            width: 800px;
+            margin: auto;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        table, td, th {
+            border: 1px solid black;
+            padding: 3px 2px;
+        }
+
+        section {
+            float: left;
+            margin: 0 1.5%;
+            width: 63%;
+        }
+
+        aside {
+            float: right;
+            margin: 0 1.5%;
+            width: 30%;
+        }
+
+        button {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: black;
+            border: none;
+            color: snow;
+            text-align: center;
+            font-size: 18px;
+            padding: 10px;
+            width: 300px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+
+
+        }
+
+        button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        button:hover span {
+            padding-right: 25px;
+        }
+
+        button:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+
+        input[type=button], input[type=submit], input[type=reset], input[type=password] {
+            background-color: snow;
+            border: none;
+            color: black;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        * {
+            background-color: whitesmoke;
+            font-family: 'Cormorant Unicase', serif;
+        }
+
+        a:link, a:visited {
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a:hover, a:active {
+            background-color: snow;
+        }
+
+        input[type=text], input[type=password] {
+            width: 60%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        input[type=text]:focus, input[type=password]:focus {
+            background-color: snow;
+        }
+
+        li {
+            position: relative;
+            left: -33px;
+        }
+
+        #search {
+            background-color: whitesmoke;
+            border-style: solid;
+            border-color: snow;
+            color: black;
+            padding: 12px 20px;
+            text-decoration: none;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        #navbar li {
+            display: inline-block;
+        }
+
+        .container {
+            margin: 25px;
+            position: relative;
+            right: -150px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div style="height: 50px;"></div>
+<div>
+    <h1 style="text-align: center">Додадете предмет кој го нема во листата на понудени предмети</h1>
+</div>
+<div class="container" xmlns:th="http://www.thymeleaf.org">
+    <form class="form-signin mt-xl-5" method="POST" th:action="@{'/home/izberiPredmet'}">
+        <div>
+            <input type="text"
+                   id="ime"
+                   name="ime"
+                   th:value="${izberiPredmet?.ime}"
+                   placeholder="Име на предметот"
+                   required>
+        </div>
+        <div>
+            <div th:if="${haserror!=null}" th:text="${error}" class="text-danger"></div>
+        </div>
+        <button id="submit" class="btn btn-block btn-light" type="submit" style="position: relative;
+                right: -70px;">Submit
+        </button>
+    </form>
+    <p id="back"
+       style="position: relative; right: -110px;">  <a href="/home/izberiPredmet" style="font-weight: bold">
+        Назад кон листата со предмети</a></p>
+</div>
+<footer style="height: 50px;"></footer>
 </body>
 </html>

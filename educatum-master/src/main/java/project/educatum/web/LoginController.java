@@ -13,6 +13,7 @@ import project.educatum.model.Admini;
 import project.educatum.model.Nastavnici;
 import project.educatum.model.Ucenici;
 import project.educatum.model.exceptions.InvalidUserCredentialsException;
+import project.educatum.model.exceptions.UserNotEnabledException;
 import project.educatum.service.AdminiService;
 import project.educatum.service.AuthService;
 import project.educatum.service.NastavniciService;
@@ -57,6 +58,8 @@ public class LoginController {
                     model.addAttribute("haserror", true);
                     model.addAttribute("error", ex.getMessage());
                     return "/najava";
+                } catch (UserNotEnabledException ex){
+                    return "notEnabled";
                 }
             }
         }

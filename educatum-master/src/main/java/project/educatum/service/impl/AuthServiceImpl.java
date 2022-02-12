@@ -11,6 +11,7 @@ import project.educatum.model.Admini;
 import project.educatum.model.Nastavnici;
 import project.educatum.model.Ucenici;
 import project.educatum.model.exceptions.InvalidArgumentsException;
+import project.educatum.model.exceptions.UserNotEnabledException;
 import project.educatum.repository.AdminiJpa;
 import project.educatum.repository.NastavniciJpa;
 import project.educatum.repository.UceniciJpa;
@@ -40,11 +41,14 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
             throw new InvalidArgumentsException();
         }
         Nastavnici n = nastavniciRepository.findByEmail(email);
-        if (!passwordEncoder.matches(password, n.getPassword())) {
-            throw new BadCredentialsException("Invalid credentials");
+        if(n!=null && n.getEnabled()!=null && n.isEnabled()){
+            if (!passwordEncoder.matches(password, n.getPassword())) {
+                throw new BadCredentialsException("Invalid credentials");
+            }
+            UserDetails user = loadUserByUsername(email);
+            return user;
         }
-        UserDetails user = loadUserByUsername(email);
-        return user;
+       else throw new UserNotEnabledException();
     }
 
     @Override

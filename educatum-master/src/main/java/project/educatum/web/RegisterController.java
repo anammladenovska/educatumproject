@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import project.educatum.model.exceptions.InvalidArgumentsException;
 import project.educatum.model.exceptions.PasswordsDoNotMatchException;
+import project.educatum.model.exceptions.UserNotEnabledException;
 import project.educatum.model.exceptions.UsernameAlreadyExistsException;
 import project.educatum.service.*;
 
@@ -67,12 +68,16 @@ public class RegisterController {
                 return "redirect:/register?error=" + exception.getMessage();
 
             }
+            catch (UserNotEnabledException e){
+                request.getSession().setAttribute("user",nastavniciService.findByEmail(email));
+                return "redirect:/home/izberiPredmet";
+            }
         } else if (role.equals("ROLE_UCENIK")) {
             try {
                 this.uceniciService.register(ime, prezime, email, password, repeatPassword, telBroj, opis);
                 UserDetails user = authService.loginUcenik(email, password);
                 request.getSession().setAttribute("user", user);
-                return "redirect:/home/slusajPredmet";
+                return "redirect:/home/zainteresiran";
 
             } catch (PasswordsDoNotMatchException | InvalidArgumentsException exception) {
                 return "redirect:/register?error=" + exception.getMessage();

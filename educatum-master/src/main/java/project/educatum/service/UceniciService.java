@@ -18,4 +18,6 @@ public interface UceniciService {
     Ucenici findById(Integer id);
 
     List<Ucenici> findAllByName(String ime);
+
+    void interestedIn(Integer subjectId, Integer studentId);
 }
