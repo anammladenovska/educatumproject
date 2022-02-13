@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Додавање предмет</title>
+</head>
+<body>
+
+<form method="POST" th:action="@{'/admini/add/subject'}">
+
+    <div>
+        <label for="ime">Име</label>
+        <input type="text"
+               id="ime"
+               name="ime"
+               th:value="${subjects?.name}"
+               required>
+    </div>
+
+    <button id="submit" type="submit">Додади</button>
+
+</form>
+
+</body>
+</html>

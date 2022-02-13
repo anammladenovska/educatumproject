@@ -1,5 +1,6 @@
 package project.educatum.web;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import project.educatum.model.Ucenici;
 import project.educatum.service.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,14 +27,16 @@ public class NastavniciController {
     private final UceniciService uceniciService;
     private final PlakjanjaService plakjanjaService;
     private final PredavaNaService predavaNaService;
+    private final CasoviService casoviService;
 
-    public NastavniciController(NastavniciService nastavniciService, PredmetiService predmetiService, PredavaPredmetService predavaPredmetService, UceniciService uceniciService, PlakjanjaService plakjanjaService, PredavaNaService predavaNaService) {
+    public NastavniciController(NastavniciService nastavniciService, PredmetiService predmetiService, PredavaPredmetService predavaPredmetService, UceniciService uceniciService, PlakjanjaService plakjanjaService, PredavaNaService predavaNaService, CasoviService casoviService) {
         this.nastavniciService = nastavniciService;
         this.predmetiService = predmetiService;
         this.predavaPredmetService = predavaPredmetService;
         this.uceniciService = uceniciService;
         this.plakjanjaService = plakjanjaService;
         this.predavaNaService = predavaNaService;
+        this.casoviService = casoviService;
     }
 
     @GetMapping
@@ -192,22 +196,28 @@ public class NastavniciController {
     }
 
 //OVIE DVA METODI PODOLU DA SE DOVRSAT ZA DODAVANJE NA CHAS
-//
-//    @PostMapping("/addClassForm")
-//    public String addClassForm(Model model) {
-//        model.addAttribute("predmeti",predmetiService.findAll());
-//        return "addNewClass";
-//    }
-//
-//    @PostMapping("/addClass")
-//    public String addClass() {
+
+    @PostMapping("/addClassForm")
+    public String addClassForm(Model model) {
+        model.addAttribute("predmeti",predmetiService.findAll());
+        return "addNewClass";
+    }
+
+    @PostMapping("/addClass")
+    public String addClass(
+                           @RequestParam() @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date,
+                           @RequestParam String desc,
+                           @RequestParam String ime,
+                           HttpServletRequest request) {
 //        Ucenici ucenik = uceniciService.findByEmail(email);
-//        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
-//        Nastavnici nastavnik = nastavniciService.findByEmail(user.getUsername());
-//
+        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
+        Nastavnici nastavnik = nastavniciService.findByEmail(user.getUsername());
+        Predmeti predmet = predmetiService.findByName(ime);
 //        nastavniciService.addStudent(nastavnik.getId(), ucenik.getId(), Integer.valueOf(price), Integer.valueOf(numClasses));
-//        return "redirect:/nastavnici/allClasses";
-//    }
+
+        casoviService.addClass(date,desc,nastavnik.getId(),predmet.getId());
+        return "redirect:/nastavnici/allClasses";
+    }
 
     @PostMapping("/showProfileTeacher/{id}")
     public String showProfileTeacher(@PathVariable String id, Model model){

@@ -65,4 +65,9 @@ public class PredmetiServiceImpl implements PredmetiService {
         Predmeti predmeti = new Predmeti(ime, admin);
         return this.predmetiRepository.save(predmeti);
     }
+
+    @Override
+    public Predmeti findByName(String ime) {
+        return predmetiRepository.findByIme(ime);
+    }
 }

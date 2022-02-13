@@ -29,8 +29,4 @@ public class PredmetiController {
         return "redirect:/admini/allSubjects";
     }
 
-    @GetMapping("/add")
-    public String showAdd(){
-        return "predmetiAdmin.html";
-    }
 }

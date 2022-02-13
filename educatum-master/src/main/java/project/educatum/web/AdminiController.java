@@ -76,5 +76,15 @@ public class AdminiController {
         return "redirect:/admini/allTeachers";
     }
 
+    @GetMapping("/add")
+    public String showAdd(){
+        return "formAdd.html";
+    }
+
+    @PostMapping("/add/subject")
+    public String create(@RequestParam String ime){
+        predmetiService.create(ime);
+        return "redirect:/admini/allSubjects";
+    }
 
 }
