@@ -69,7 +69,7 @@ public class LoginController {
                 try {
                     UserDetails user = authService.loginUcenik(email, password);
                     request.getSession().setAttribute("user", user);
-                    return "/nastavnici";
+                    return "redirect:/ucenici/listSubjectsTeachers";
                 } catch (InvalidUserCredentialsException | BadCredentialsException ex) {
                     model.addAttribute("haserror", true);
                     model.addAttribute("error", ex.getMessage());
