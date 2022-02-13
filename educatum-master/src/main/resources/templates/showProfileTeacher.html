@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form>
+
+    <h1><th:block th:text="${nastavnik.getImePrezime()}"></th:block></h1>
+    <div th:text="${nastavnik.getOpis()}"></div>
+
+    <h2>Телефонски број</h2>
+    <div th:text="${nastavnik.getTelefonskiBroj()}"></div>
+
+    <h2>Електорнска пошта (e-mail)</h2>
+    <div th:text="${nastavnik.getEmail()}"></div>
+
+    <br/>
+    <i><a href="/home/zainteresiran">Назад кон листата со наставници</a></i>
+    <br/>
+    <i><a href="/home">Назад кон почетна страна</a></i>
+    <br/>
+    <i><a href="/login">Најави се</a></i>
+
+</form>
+
+
+</body>
+</html>
