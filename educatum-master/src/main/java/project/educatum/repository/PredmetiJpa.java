@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface PredmetiJpa extends JpaRepository<Predmeti, Integer> {
     List<Predmeti> findAllByImeContainingIgnoreCase(String ime);
     Optional<Predmeti> findById(Integer id);
+    Predmeti findByIme(String ime);
 }

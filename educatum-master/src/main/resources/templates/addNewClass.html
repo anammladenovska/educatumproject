@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Додади нов час</title>
+</head>
+<body>
+
+<form method="POST" th:action="@{'/nastavnici/addClass'}">
+
+<!--    <div>-->
+<!--        <label for="email">Email на ученик</label>-->
+<!--        <input type="text"-->
+<!--               id="email"-->
+<!--               name="email"-->
+<!--               th:value="${ucenici?.email}"-->
+<!--               required>-->
+<!--    </div>-->
+
+    <div>
+        <label for="date">Дата на почеток</label>
+        <input type="datetime-local"
+               id="date"
+               name="date"
+               th:value="${casovi?.vreme_pocetok}"
+               required>
+    </div>
+
+    <div>
+        <label for="desc">Опис</label>
+        <input type="text"
+               id="desc"
+               name="desc"
+               th:value="${casovi?.opis}"
+               required>
+    </div>
+
+    <div>
+        <label for="ime">Име на предмет</label>
+        <input type="text"
+               id="ime"
+               name="ime"
+               th:value="${predmet?.ime}"
+               required>
+    </div>
+
+    <button id="submit" type="submit">Додади</button>
+
+</form>
+
+
+</body>
+</html>

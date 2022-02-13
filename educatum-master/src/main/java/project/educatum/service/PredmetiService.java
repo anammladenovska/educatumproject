@@ -19,5 +19,5 @@ public interface PredmetiService {
 
     Predmeti create(String ime);
 
-
+    Predmeti findByName(String ime);
 }
