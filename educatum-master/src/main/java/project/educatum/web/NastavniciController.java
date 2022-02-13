@@ -209,5 +209,12 @@ public class NastavniciController {
 //        return "redirect:/nastavnici/allClasses";
 //    }
 
+    @PostMapping("/showProfileTeacher/{id}")
+    public String showProfileTeacher(@PathVariable String id, Model model){
+        Nastavnici nastavnik = nastavniciService.findById(Integer.valueOf(id));
+        model.addAttribute("nastavnik",nastavnik);
+        return "showProfileTeacher.html";
+    }
+
 
 }

@@ -18,4 +18,6 @@ public interface PredmetiService {
     List<Predmeti> findAllByNameAndTeacherLike(String ime, List<Predmeti> predmeti);
 
     Predmeti create(String ime);
+
+
 }

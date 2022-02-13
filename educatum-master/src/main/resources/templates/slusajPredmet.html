@@ -213,7 +213,9 @@
                     <tr>
                         <li style="list-style-type: none;" th:each="nastavnik : ${nastavnici}">
                             <div id="left">
-                               <a> <th:block id="courseText" th:text="${nastavnik.getIme()}"/></a>
+                               <a th:href="@{'/nastavnici/showProfileTeacher/{id}' (id=${nastavnik.getId()})}" th:method="post"> <th:block id="courseText" th:value="${nastavnik.getId()}" th:text="${nastavnik.getImePrezime()}"/></a>
+
+
                             </div>
                         </li>
                     </tr>

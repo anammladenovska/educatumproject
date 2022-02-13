@@ -157,4 +157,8 @@ public class Nastavnici implements UserDetails {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public String getImePrezime(){
+        return ime + ' ' +  prezime;
+    }
 }

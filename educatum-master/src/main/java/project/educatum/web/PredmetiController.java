@@ -1,10 +1,7 @@
 package project.educatum.web;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import project.educatum.service.PredmetiService;
 import project.educatum.service.UceniciService;
 import project.educatum.service.ZainteresiraniZaService;
@@ -30,5 +27,10 @@ public class PredmetiController {
     public String deleteSubject(@PathVariable String id){
         predmetiService.delete(Integer.parseInt(id));
         return "redirect:/admini/allSubjects";
+    }
+
+    @GetMapping("/add")
+    public String showAdd(){
+        return "predmetiAdmin.html";
     }
 }
