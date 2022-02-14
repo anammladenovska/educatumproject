@@ -1,27 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Евиденција на плаќање</title>
-    <style>
-
-        @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600');
+    <style type = "text/css">
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@600&display=swap');
 
         body {
             margin: 0;
-            background: white;
+            background: whitesmoke;
             font-family: 'Cormorant Unicase', serif;
-            font-weight: 800;
+            font-weight: bold;
         }
-
+        *{
+            background-color: whitesmoke;
+            font-family: 'Cormorant Unicase', serif;
+        }
         .container {
             width: 80%;
             margin: 0 auto;
         }
 
         header {
-            background: white;
+            background: whitesmoke;
         }
 
         header::after {
@@ -81,16 +83,6 @@
             width: 100%;
         }
 
-
-
-
-        .Accordion {
-            margin-top: 0;
-            margin-bottom: 0;
-            padding-left: 0;
-            list-style: none;
-        }
-
         .Accordion + .Accordion {
             margin-top: 1em;
         }
@@ -119,12 +111,77 @@
             background-color: cornflowerblue;
         }
 
+        button {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: black;
+            border: none;
+            color: snow;
+            text-align: center;
+            font-size: 18px;
+            padding: 10px;
+            width: 100px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+
+
+        }
+
+        input[type=submit], input[type=reset],input[type=password],input[type=number] {
+            background-color: snow;
+            border: none;
+            color: black;
+            padding: 8px 16px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        footer {
+            text-align: center;
+            padding: 3px;
+            color: white;
+        }
+
+        a:link, a:visited {
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+
+        #search{
+            background-color: whitesmoke;
+            border-style: solid;
+            border-width: thin;
+            border-color: black;
+            color: black;
+            padding: 12px 20px;
+            text-decoration: none;
+            margin: 8px 0;
+
+            cursor: pointer;
+        }
+
+        input[type=text],input[type=password],input[type=number]{
+            width: 30%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+        input[type=text]:focus,input[type=password]:focus,input[type=number]{
+            background-color: snow;
+        }
+
+
         .Accordion-subElement a {
             display: block;
             padding-left: 2em;
             color: inherit;
             text-decoration: none;
         }
+
 
 
     </style>
@@ -145,34 +202,56 @@
         </nav>
     </div>
 </header>
-<h1><th:block th:text="${student.getName()}"></th:block>
-<th:block th:text="${student.getSurname()}"></th:block></h1>
-<h3>Должи:</h3>
-<div th:text="${owes}"></div>
-
-<h3>Број на часови по договор:</h3>
-<div th:text="${numScheduledClasses}"></div>
-
-<h3>Број на часови кои ги има слушано:</h3>
-<div th:text="${numListenedClasses}"></div>
-<a href="/students/slusanje" th:value="plus">+</a>
-<a href="/students/slusanje" th:value="minus">-</a>
-
-<h3>Број на часови за кои има платено:</h3>
-<div th:text="${paidClasses}"></div>
-
-<h3>Цена по час:</h3>
-<div th:text="${priceByClass}"></div>
 
 
-<form method="post" action="/teachers/updatePayment">
-<p>Плаќа за <input type="text" name="numPaidClasses"> часови</p>
-<input type="text" placeholder="ИЗНОС" name="price"> ден.
-    <input type="hidden" th:value="${student.getId()}" name="studentId"> </br>
-    <input type="submit" value="Submit">
-</form>
+<div>
+    <h1 style="text-align: center">Евиденција на плаќање за ученик
+        <th:block th:text="${student.getName()}"></th:block>
+        <th:block th:text="${student.getSurname()}"></th:block></h1>
+
+</div>
+<div class="container">
+    <h3>Должи:</h3>
+    <div th:text="${owes}"></div>
+
+    <h3>Број на часови по договор:</h3>
+    <div th:text="${numScheduledClasses}"></div>
+
+    <h3>Број на часови кои ги има слушано:</h3>
+    <div th:text="${numListenedClasses}"></div>
+
+    <form method="post" action="/students/listenedClass">
+        <input type="hidden" th:value="${student.getId()}" th:name="studentID">
+        <input type="submit" value="+">
+    </form>
 
 
-<i><a href="/teachers/allStudents">Назад кон листата со ученици</a></i>
+    <!--<h3>Број на часови за кои има платено:</h3>-->
+    <!--<div th:text="${paidClasses}"></div>-->
+
+    <h3>Цена по час:</h3>
+    <div th:text="${priceByClass}"></div>
+
+
+    <form method="post" action="/teachers/updatePayment">
+        <!--<p>Плаќа за <input type="text" name="numPaidClasses"> часови</p>-->
+        <input type="text" placeholder="ИЗНОС" name="price"> ден.
+        <input type="hidden" th:value="${student.getId()}" name="studentID"> </br>
+        <select id="classID" name="classID">
+            <option th:each="c : ${classes}"
+                    th:value="${c.getId()}"
+                    th:text="${c.getTema()}">
+            </option>
+
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+
+
+    <i><a href="/teachers/allStudents">Назад кон листата со ученици</a></i>
+</div>
+
+
+
 </body>
 </html>

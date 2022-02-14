@@ -19,7 +19,8 @@ public interface TeacherService {
 
     List<Subject> getSubjectsByTeacher(Integer id);
 
-    void addPayment(Integer teacherId, Integer price);
+
+    void addPayment(Integer teacherId, Integer price, Integer classID, Integer studentID);
 
     Teacher findById(Integer id);
 

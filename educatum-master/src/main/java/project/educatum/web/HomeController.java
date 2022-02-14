@@ -68,15 +68,18 @@ public class HomeController {
     public String singleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
+        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
+        Teacher teacher = teacherService.findByEmail(user.getUsername());
+
         if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Внесете задолжително документ");
+            redirectAttributes.addFlashAttribute("message", "Задолжително прикачете документ!");
             return "redirect:/home/potvrda";
         }
 
         try {
 
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Path path = Paths.get(UPLOADED_FOLDER + teacher.getId() + "_" + file.getOriginalFilename());
             Files.write(path, bytes);
             UserDetails userDetails = (UserDetails) request.getSession().getAttribute("user");
             Teacher n = teacherService.findByEmail(userDetails.getUsername());
@@ -113,7 +116,7 @@ public class HomeController {
     @GetMapping("/listenSubject")
     public String listenSubject(Model model, @RequestParam(required = false) String subject,
                                 HttpServletRequest request) {
-        if(subject==null){
+        if (subject == null) {
             return "redirect:/zainteresiran?error=Ве%20молиме%20изберете%20предмет";
         }
         UserDetails user = (UserDetails) request.getSession().getAttribute("user");
@@ -126,7 +129,7 @@ public class HomeController {
     }
 
     @GetMapping("/zainteresiran")
-    public String interested(Model model,@RequestParam(required = false) String search) {
+    public String interested(Model model, @RequestParam(required = false) String search) {
         List<Subject> subjects;
         if (search == null) {
             subjects = this.subjectService.findAll();

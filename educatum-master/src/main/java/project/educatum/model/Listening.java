@@ -5,6 +5,14 @@ import javax.persistence.*;
 @Entity
 @Table(name = "slusanje", schema = "project")
 public class Listening {
+
+    public Listening(ListeningID id, Payment idPayment, Student studentID, Boolean plateno) {
+        this.id = id;
+        this.idPayment = idPayment;
+        this.studentID = studentID;
+        this.plateno = plateno;
+    }
+
     @EmbeddedId
     private ListeningID id;
 
@@ -18,6 +26,12 @@ public class Listening {
 
     @Column(name = "plateno")
     private Boolean plateno;
+
+    public Listening() {
+
+    }
+
+
 
     public Boolean getPlateno() {
         return plateno;

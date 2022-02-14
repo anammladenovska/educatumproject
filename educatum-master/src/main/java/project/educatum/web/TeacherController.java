@@ -77,6 +77,8 @@ public class TeacherController {
         model.addAttribute("numScheduledClasses", numScheduledClasses);
         Integer priceByClass = teacherStudentService.find(teacher.getId(), Integer.valueOf(id)).getpriceByClass();
         model.addAttribute("priceByClass", priceByClass);
+        model.addAttribute("classes",teacherService.getClassesByTeacher(teacher.getId()));
+
         Integer numListenedClasses = paymentService.numListenedClasses(Integer.valueOf(id), teacher.getId());
         model.addAttribute("numListenedClasses", numListenedClasses);
         model.addAttribute("student", studentService.findById(Integer.valueOf(id)));
@@ -84,23 +86,27 @@ public class TeacherController {
     }
 
     @PostMapping("/updatePayment")
-    public String updatePaymentForStudent(@RequestParam String studentId, Model model, HttpServletRequest request,
-                                          @RequestParam String price, @RequestParam String numPaidClasses) {
+    public String updatePaymentForStudent(@RequestParam String studentID, Model model, HttpServletRequest request,
+                                          @RequestParam String price,@RequestParam String classID) {
 
         UserDetails user = (UserDetails) request.getSession().getAttribute("user");
         Teacher teacher = teacherService.findByEmail(user.getUsername());
-        teacherService.addPayment(teacher.getId(), Integer.valueOf(price));
-        
 
-        Integer owes = paymentService.studentTeacherLoan(Integer.valueOf(studentId), teacher.getId());
+
+        if(Integer.parseInt(price)!=0){
+            teacherService.addPayment(teacher.getId(), Integer.valueOf(price),Integer.valueOf(classID),Integer.valueOf(studentID));
+        }
+
+        Integer owes = paymentService.studentTeacherLoan(Integer.valueOf(studentID), teacher.getId());
         model.addAttribute("owes", owes);
-        Integer numScheduledClasses = teacherStudentService.find(teacher.getId(), Integer.valueOf(studentId)).getnumScheduledClasses();
+        Integer numScheduledClasses = teacherStudentService.find(teacher.getId(), Integer.valueOf(studentID)).getnumScheduledClasses();
         model.addAttribute("numScheduledClasses", numScheduledClasses);
-        Integer priceByClass = teacherStudentService.find(teacher.getId(), Integer.valueOf(studentId)).getpriceByClass();
+        Integer priceByClass = teacherStudentService.find(teacher.getId(), Integer.valueOf(studentID)).getpriceByClass();
         model.addAttribute("priceByClass", priceByClass);
-        Integer numListenedClasses = paymentService.numListenedClasses(Integer.valueOf(studentId), teacher.getId());
+        Integer numListenedClasses = paymentService.numListenedClasses(Integer.valueOf(studentID), teacher.getId());
         model.addAttribute("numListenedClasses", numListenedClasses);
-        model.addAttribute("student", studentService.findById(Integer.valueOf(studentId)));
+        model.addAttribute("classes",teacherService.getClassesByTeacher(teacher.getId()));
+        model.addAttribute("student", studentService.findById(Integer.valueOf(studentID)));
         return "payment";
     }
 
@@ -188,8 +194,6 @@ public class TeacherController {
         teacherSubjectService.addSubject(n.getId(), Integer.valueOf(subjectID), tema);
         return "redirect:/home/document";
     }
-
-//OVIE DVA METODI PODOLU DA SE DOVRSAT ZA DODAVANJE NA CHAS
 
     @PostMapping("/addClassForm")
     public String addClassForm(Model model) {

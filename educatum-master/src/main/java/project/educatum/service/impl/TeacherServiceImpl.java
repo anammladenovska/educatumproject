@@ -23,8 +23,9 @@ public class TeacherServiceImpl implements TeacherService {
     private final SubjectRepository subjectRepository;
     private final PaymentRepository paymentRepository;
     private final ClassRepository classesRepository;
+    private final ListeningRepository listeningRepository;
 
-    public TeacherServiceImpl(TeacherRepository teachersRepository, PasswordEncoder passwordEncoder, AdminRepository adminRepository, StudentRepository studentsRepository, TeacherStudentRepository teacherStudentRepository, TeacherSubjectRepository predavaPredmetRepository, SubjectRepository subjectRepository, PaymentRepository paymentRepository, ClassRepository classesRepository) {
+    public TeacherServiceImpl(TeacherRepository teachersRepository, PasswordEncoder passwordEncoder, AdminRepository adminRepository, StudentRepository studentsRepository, TeacherStudentRepository teacherStudentRepository, TeacherSubjectRepository predavaPredmetRepository, SubjectRepository subjectRepository, PaymentRepository paymentRepository, ClassRepository classesRepository, ListeningRepository listeningRepository) {
         this.teachersRepository = teachersRepository;
         this.passwordEncoder = passwordEncoder;
         this.adminRepository = adminRepository;
@@ -34,6 +35,7 @@ public class TeacherServiceImpl implements TeacherService {
         this.subjectRepository = subjectRepository;
         this.paymentRepository = paymentRepository;
         this.classesRepository = classesRepository;
+        this.listeningRepository = listeningRepository;
     }
 
     @Override
@@ -131,10 +133,15 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void addPayment(Integer teacherId, Integer price){
+    public void addPayment(Integer teacherId, Integer price,Integer classID, Integer studentID){
         Teacher n = teachersRepository.findById(teacherId).orElseThrow(TeacherNotFoundException::new);
-        Payment p = new Payment(price,n);
-        paymentRepository.save(p);
+//        Payment p = new Payment(price,n);
+//        paymentRepository.save(p);
+        List<Payment> paymentsByTeacher = paymentRepository.findAllByIdTeacher(teacherId);
+        List<Listening> listeningList = listeningRepository.findAllByClassAndStudent(classID,studentID);
+        Integer paymentID = listeningList.get(0).getidPayment().getId();
+        Payment p = paymentRepository.findById(paymentID).orElseThrow(PaymentNotFoundException::new);
+        paymentRepository.updatePrice(price,p.getId());
     }
 
     @Override
