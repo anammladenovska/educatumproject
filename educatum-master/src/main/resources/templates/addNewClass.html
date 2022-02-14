@@ -6,14 +6,14 @@
 </head>
 <body>
 
-<form method="POST" th:action="@{'/nastavnici/addClass'}">
+<form method="POST" th:action="@{'/teachers/addClass'}">
 
 <!--    <div>-->
 <!--        <label for="email">Email на ученик</label>-->
 <!--        <input type="text"-->
 <!--               id="email"-->
 <!--               name="email"-->
-<!--               th:value="${ucenici?.email}"-->
+<!--               th:value="${students?.email}"-->
 <!--               required>-->
 <!--    </div>-->
 
@@ -22,7 +22,7 @@
         <input type="datetime-local"
                id="date"
                name="date"
-               th:value="${casovi?.vreme_pocetok}"
+               th:value="${classes?.vreme_pocetok}"
                required>
     </div>
 
@@ -31,7 +31,7 @@
         <input type="text"
                id="desc"
                name="desc"
-               th:value="${casovi?.opis}"
+               th:value="${classes?.opis}"
                required>
     </div>
 

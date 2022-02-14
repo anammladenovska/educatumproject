@@ -193,10 +193,10 @@
 
         <nav>
             <ul>
-                <li><a href="/nastavnici/allClasses" style="font-weight: bold">РАСПОРЕД</a></li>
-                <li><a href="/nastavnici/allSubjects" style="font-weight: bold">ПРЕДМЕТИ</a></li>
-                <li><a href="/nastavnici/allStudents" style="font-weight: bold">УЧЕНИЦИ</a></li>
-                <li><a href="/nastavnici/profile" style="font-weight: bold">ПРОФИЛ</a></li>
+                <li><a href="/teachers/allClasses" style="font-weight: bold">РАСПОРЕД</a></li>
+                <li><a href="/teachers/allSubjects" style="font-weight: bold">ПРЕДМЕТИ</a></li>
+                <li><a href="/teachers/allStudents" style="font-weight: bold">УЧЕНИЦИ</a></li>
+                <li><a href="/teachers/profile" style="font-weight: bold">ПРОФИЛ</a></li>
                 <li><a href="/logout" style="font-weight: bold">ОДЈАВИ СЕ</a></li>
             </ul>
         </nav>
@@ -205,11 +205,12 @@
 
 
 <div style="height: 50px"></div>
-<h3 style="text-align: center; font-weight: bold">ЧАСОВИ</h3>
+<h3 style="text-align: center; font-weight: bold">СИТЕ ЧАСОВИ</h3>
 <div class="container" style="position: relative;  right:-150px;">
 
 
-    <form action="/nastavnici/addClassForm" method="post">
+
+    <form action="/teachers/addClassForm" method="post">
         <input type="submit" value="+ НОВ ЧАС">
     </form>
 
@@ -217,12 +218,11 @@
     <ul>
 
 
-        <li style="list-style-type: none;
-        padding: 5px; font-size: 18px;" th:each="c : ${casovi}">
+        <li style="list-style-type: none; text-align: center;
+        padding: 5px; font-size: 18px;" th:each="c : ${classes}">
             <div id="left">
                 <a href=""><th:block th:text="${c.getTema()}"></th:block>
-                    <th:block th:text="${c.idPredmet.getIme()}"></th:block>
-                    <th:block th:text="${c.getVremePocetok()}"></th:block>
+
                 </a>
             </div>
 

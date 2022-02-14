@@ -7,27 +7,27 @@
 <!--<body>-->
 
 
-<!--<form method="POST" th:action="@{'/home/izberiPredmet'}">-->
+<!--<form method="POST" th:action="@{'/home/chooseSubject'}">-->
 
 <!--    <div>-->
 <!--        <label for="ime">Ime</label>-->
 <!--        <input type="text"-->
 <!--               id="ime"-->
 <!--               name="ime"-->
-<!--               th:value="${izberiPredmet?.ime}"-->
+<!--               th:value="${chooseSubject?.ime}"-->
 <!--               required>-->
 <!--    </div>-->
 
 <!--&lt;!&ndash;    <div>&ndash;&gt;-->
-<!--&lt;!&ndash;        <label>Admini</label><br/>&ndash;&gt;-->
-<!--&lt;!&ndash;        <select id="adminiList" name="adminiList" >&ndash;&gt;-->
+<!--&lt;!&ndash;        <label>admin</label><br/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <select id="adminList" name="adminList" >&ndash;&gt;-->
 <!--&lt;!&ndash;            &lt;!&ndash; For each category you should have one <option> like below  &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;            <option th:each="a: ${adminiList}" th:value="${a.id}" th:text="${a.ime}" name="idAdmin"> [a.ime]</option>&ndash;&gt;-->
+<!--&lt;!&ndash;            <option th:each="a: ${adminList}" th:value="${a.id}" th:text="${a.ime}" name="idAdmin"> [a.ime]</option>&ndash;&gt;-->
 <!--&lt;!&ndash;        </select>&ndash;&gt;-->
 <!--&lt;!&ndash;    </div>&ndash;&gt;-->
 
 <!--    <button id="submit" type="submit">Додај го предметот</button>-->
-<!--    <a id="back" href="/home/izberiPredmet" type="button">Назад кон предмети</a>-->
+<!--    <a id="back" href="/home/chooseSubject" type="button">Назад кон предмети</a>-->
 <!--</form>-->
 
 <!--</body>-->
@@ -189,12 +189,12 @@
     <h1 style="text-align: center">Додадете предмет кој го нема во листата на понудени предмети</h1>
 </div>
 <div class="container" xmlns:th="http://www.thymeleaf.org">
-    <form class="form-signin mt-xl-5" method="POST" th:action="@{'/home/izberiPredmet'}">
+    <form class="form-signin mt-xl-5" method="POST" th:action="@{'/home/chooseSubject'}">
         <div>
             <input type="text"
                    id="ime"
                    name="ime"
-                   th:value="${izberiPredmet?.ime}"
+                   th:value="${chooseSubject?.ime}"
                    placeholder="Име на предметот"
                    required>
         </div>
@@ -206,7 +206,7 @@
         </button>
     </form>
     <p id="back"
-       style="position: relative; right: -110px;">  <a href="/home/izberiPredmet" style="font-weight: bold">
+       style="position: relative; right: -110px;">  <a href="/home/chooseSubject" style="font-weight: bold">
         Назад кон листата со предмети</a></p>
 </div>
 <footer style="height: 50px;"></footer>

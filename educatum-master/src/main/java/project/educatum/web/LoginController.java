@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import project.educatum.model.Admini;
-import project.educatum.model.Nastavnici;
-import project.educatum.model.Ucenici;
+import project.educatum.model.Admin;
+import project.educatum.model.Teacher;
+import project.educatum.model.Student;
 import project.educatum.model.exceptions.InvalidUserCredentialsException;
 import project.educatum.model.exceptions.UserNotEnabledException;
-import project.educatum.service.AdminiService;
+import project.educatum.service.AdminService;
 import project.educatum.service.AuthService;
-import project.educatum.service.NastavniciService;
-import project.educatum.service.UceniciService;
+import project.educatum.service.TeacherService;
+import project.educatum.service.StudentService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,75 +26,75 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginController {
 
 
-    private final NastavniciService nastavniciService;
-    private final UceniciService uceniciService;
-    private final AdminiService adminiService;
+    private final TeacherService teacherService;
+    private final StudentService studentService;
+    private final AdminService adminService;
     private final AuthService authService;
 
-    public LoginController(NastavniciService nastavniciService, UceniciService uceniciService, AdminiService adminiService, AuthService authService) {
-        this.nastavniciService = nastavniciService;
-        this.uceniciService = uceniciService;
-        this.adminiService = adminiService;
+    public LoginController(TeacherService teacherService, StudentService studentService, AdminService adminService, AuthService authService) {
+        this.teacherService = teacherService;
+        this.studentService = studentService;
+        this.adminService = adminService;
         this.authService = authService;
     }
 
 
     @GetMapping
     public String getLoginPage() {
-        return "najava";
+        return "login";
     }
 
     @PostMapping
     public String login(HttpServletRequest request, Model model, @RequestParam String username, @RequestParam String password) {
         String email = username;
 
-        for (Nastavnici n : nastavniciService.findAll()) {
+        for (Teacher n : teacherService.findAll()) {
             if (n.getEmail().equals(email)) {
                 try {
-                    UserDetails user = authService.loginNastavnik(email, password);
+                    UserDetails user = authService.loginTeacher(email, password);
                     request.getSession().setAttribute("user", user);
-                    return "redirect:/nastavnici/allStudents";
+                    return "redirect:/teachers/allStudents";
                 } catch (BadCredentialsException | InvalidUserCredentialsException ex) {
                     model.addAttribute("haserror", true);
                     model.addAttribute("error", ex.getMessage());
-                    return "/najava";
+                    return "login";
                 } catch (UserNotEnabledException ex){
                     return "notEnabled";
                 }
             }
         }
 
-        for (Ucenici u : uceniciService.findAll()) {
+        for (Student u : studentService.findAll()) {
             if (u.getEmail().equals(email)) {
                 try {
-                    UserDetails user = authService.loginUcenik(email, password);
+                    UserDetails user = authService.loginStudent(email, password);
                     request.getSession().setAttribute("user", user);
-                    return "redirect:/ucenici/listSubjectsTeachers";
+                    return "redirect:/students/listSubjectsTeachers?subjectID=1";
                 } catch (InvalidUserCredentialsException | BadCredentialsException ex) {
                     model.addAttribute("haserror", true);
                     model.addAttribute("error", ex.getMessage());
-                    return "/najava";
+                    return "login";
                 }
             }
         }
 
 
-        for (Admini a : adminiService.findAll()) {
+        for (Admin a : adminService.findAll()) {
             if (a.getEmail().equals(email)) {
                 try {
                     UserDetails user = authService.loginAdmin(email, password);
                     request.getSession().setAttribute("user", user);
-                    return "redirect:/admini/allTeachers";
+                    return "redirect:/admin/allTeachers";
                 } catch (InvalidUserCredentialsException | BadCredentialsException ex) {
                     model.addAttribute("haserror", true);
                     model.addAttribute("error", ex.getMessage());
-                    return "/najava";
+                    return "login";
                 }
             }
         }
 
         model.addAttribute("haserror", true);
         model.addAttribute("error", "Bad credentials!");
-        return "/najava";
+        return "login";
     }
 }

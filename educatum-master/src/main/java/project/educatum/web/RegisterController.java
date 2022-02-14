@@ -20,17 +20,17 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/register")
 public class RegisterController {
 
-    private final NastavniciService nastavniciService;
-    private final UceniciService uceniciService;
-    private final AdminiService adminiService;
-    private final PredmetiService predmetiService;
+    private final TeacherService teacherService;
+    private final StudentService studentService;
+    private final AdminService adminService;
+    private final SubjectService subjectService;
     private final AuthService authService;
 
-    public RegisterController(NastavniciService nastavniciService, UceniciService uceniciService, AdminiService adminiService, PredmetiService predmetiService, AuthService authService) {
-        this.nastavniciService = nastavniciService;
-        this.uceniciService = uceniciService;
-        this.adminiService = adminiService;
-        this.predmetiService = predmetiService;
+    public RegisterController(TeacherService teacherService, StudentService studentService, AdminService adminService, SubjectService subjectService, AuthService authService) {
+        this.teacherService = teacherService;
+        this.studentService = studentService;
+        this.adminService = adminService;
+        this.subjectService = subjectService;
         this.authService = authService;
     }
 
@@ -42,7 +42,7 @@ public class RegisterController {
             model.addAttribute("errors", error);
 
         }
-        return "registracija";
+        return "register";
     }
 
     @PostMapping("/registrirajSe")
@@ -59,23 +59,23 @@ public class RegisterController {
 
         if (role.equals("ROLE_NASTAVNIK")) {
             try {
-                this.nastavniciService.register(ime, prezime, email, password, repeatPassword, telBroj, opis);
-                UserDetails user = authService.loginNastavnik(email, password);
+                this.teacherService.register(ime, prezime, email, password, repeatPassword, telBroj, opis);
+                UserDetails user = authService.loginTeacher(email, password);
                 request.getSession().setAttribute("user", user);
-                return "redirect:/home/izberiPredmet";
+                return "redirect:/home/chooseSubject";
 
             } catch (PasswordsDoNotMatchException | InvalidArgumentsException | UsernameAlreadyExistsException exception) {
                 return "redirect:/register?error=" + exception.getMessage();
 
             }
             catch (UserNotEnabledException e){
-                request.getSession().setAttribute("user",nastavniciService.findByEmail(email));
-                return "redirect:/home/izberiPredmet";
+                request.getSession().setAttribute("user", teacherService.findByEmail(email));
+                return "redirect:/home/chooseSubject";
             }
         } else if (role.equals("ROLE_UCENIK")) {
             try {
-                this.uceniciService.register(ime, prezime, email, password, repeatPassword, telBroj, opis);
-                UserDetails user = authService.loginUcenik(email, password);
+                this.studentService.register(ime, prezime, email, password, repeatPassword, telBroj, opis);
+                UserDetails user = authService.loginStudent(email, password);
                 request.getSession().setAttribute("user", user);
                 return "redirect:/home/zainteresiran";
 

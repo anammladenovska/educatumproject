@@ -232,10 +232,10 @@
 
         <nav>
             <ul>
-                <li><a href="/nastavnici/allClasses" style="font-weight: bold">РАСПОРЕД</a></li>
-                <li><a href="/nastavnici/allSubjects" style="font-weight: bold">ПРЕДМЕТИ</a></li>
-                <li><a href="/nastavnici/allStudents" style="font-weight: bold">УЧЕНИЦИ</a></li>
-                <li><a href="/nastavnici/profile" style="font-weight: bold">ПРОФИЛ</a></li>
+                <li><a href="/teachers/allClasses" style="font-weight: bold">РАСПОРЕД</a></li>
+                <li><a href="/teachers/allSubjects" style="font-weight: bold">ПРЕДМЕТИ</a></li>
+                <li><a href="/teachers/allStudents" style="font-weight: bold">УЧЕНИЦИ</a></li>
+                <li><a href="/teachers/profile" style="font-weight: bold">ПРОФИЛ</a></li>
                 <li><a href="/logout" style="font-weight: bold">ОДЈАВИ СЕ</a></li>
             </ul>
         </nav>
@@ -244,13 +244,13 @@
 
 <div class="container">
 
-        <form th:method="post" th:action="@{/nastavnici/addSubject}">
+        <form th:method="post" th:action="@{/teachers/addSubject}">
             <div class="custom-select" style="width:200px;">
                 <select  id="subjectId" name="subjectId">
                     <option value="" selected disabled hidden>Изберете предмет</option>
-                    <option th:each="p : ${predmeti}"
-                            th:value="${p.getId()}"
-                            th:text="${p.getIme()}"></option>
+                    <option th:each="s : ${subjects}"
+                            th:value="${s.getId()}"
+                            th:text="${s.getName()}"></option>
 
                 </select>
             </div>
@@ -268,28 +268,21 @@
 
 <script>
     var x, i, j, l, ll, selElmnt, a, b, c;
-    /*look for any elements with the class "custom-select":*/
     x = document.getElementsByClassName("custom-select");
     l = x.length;
     for (i = 0; i < l; i++) {
         selElmnt = x[i].getElementsByTagName("select")[0];
         ll = selElmnt.length;
-        /*for each element, create a new DIV that will act as the selected item:*/
         a = document.createElement("DIV");
         a.setAttribute("class", "select-selected");
         a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
         x[i].appendChild(a);
-        /*for each element, create a new DIV that will contain the option list:*/
         b = document.createElement("DIV");
         b.setAttribute("class", "select-items select-hide");
         for (j = 1; j < ll; j++) {
-            /*for each option in the original select element,
-            create a new DIV that will act as an option item:*/
             c = document.createElement("DIV");
             c.innerHTML = selElmnt.options[j].innerHTML;
             c.addEventListener("click", function(e) {
-                /*when an item is clicked, update the original select box,
-                and the selected item:*/
                 var y, i, k, s, h, sl, yl;
                 s = this.parentNode.parentNode.getElementsByTagName("select")[0];
                 sl = s.length;
@@ -313,8 +306,6 @@
         }
         x[i].appendChild(b);
         a.addEventListener("click", function(e) {
-            /*when the select box is clicked, close any other select boxes,
-            and open/close the current select box:*/
             e.stopPropagation();
             closeAllSelect(this);
             this.nextSibling.classList.toggle("select-hide");
@@ -322,8 +313,6 @@
         });
     }
     function closeAllSelect(elmnt) {
-        /*a function that will close all select boxes in the document,
-        except the current select box:*/
         var x, y, i, xl, yl, arrNo = [];
         x = document.getElementsByClassName("select-items");
         y = document.getElementsByClassName("select-selected");
@@ -342,8 +331,6 @@
             }
         }
     }
-    /*if the user clicks anywhere outside the select box,
-    then close all select boxes:*/
     document.addEventListener("click", closeAllSelect);
 </script>
 </body>

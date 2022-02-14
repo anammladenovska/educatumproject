@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Предмети</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@600&display=swap');
+
+        body {
+            margin: 0;
+            background: whitesmoke;
+            font-family: 'Cormorant Unicase', serif;
+            font-weight: 800;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        header {
+            background: whitesmoke;
+        }
+
+        header::after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+
+        .logo {
+            float: left;
+            padding: 10px 0;
+        }
+
+        nav {
+            float: right;
+        }
+
+        nav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        nav li {
+            display: inline-block;
+            margin-left: 70px;
+            padding-top: 23px;
+
+            position: relative;
+        }
+
+        nav a {
+            color: #444;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #000;
+        }
+
+        nav a::before {
+            content: '';
+            display: block;
+            height: 5px;
+            background-color: #444;
+
+            position: absolute;
+            top: 0;
+            width: 0%;
+
+            transition: all ease-in-out 250ms;
+        }
+
+        nav a:hover::before {
+            width: 100%;
+        }
+
+        .Accordion + .Accordion {
+            margin-top: 1em;
+        }
+
+        .Accordion input[type="radio"],
+        .Accordion input[type="checkbox"] {
+            display: none;
+        }
+
+        .Accordion input:checked + .Accordion-subElements > .Accordion-subElement {
+            height: 2em;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+
+        .Accordion-item label {
+            display: block;
+            padding: 1em;
+            background-color: lightsteelblue;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .Accordion-item label:hover {
+            background-color: cornflowerblue;
+        }
+
+        button {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: black;
+            border: none;
+            color: snow;
+            text-align: center;
+            font-size: 18px;
+            padding: 10px;
+            width: 100px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+
+
+        }
+
+        input[type=submit], input[type=reset],input[type=password],input[type=number] {
+            background-color: snow;
+            border: none;
+            color: black;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        footer {
+            text-align: center;
+            padding: 3px;
+            color: white;
+        }
+        *{
+            background-color: whitesmoke;
+            font-family: 'Cormorant Unicase', serif;
+        }
+        a:link, a:visited {
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+
+        #search{
+            background-color: whitesmoke;
+            border-style: solid;
+            border-width: thin;
+            border-color: black;
+            color: black;
+            padding: 12px 20px;
+            text-decoration: none;
+            margin: 8px 0;
+
+            cursor: pointer;
+        }
+
+        input[type=text],input[type=password],input[type=number]{
+            width: 60%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+        input[type=text]:focus,input[type=password]:focus,input[type=number]{
+            background-color: snow;
+        }
+
+
+        .Accordion-subElement a {
+            display: block;
+            padding-left: 2em;
+            color: inherit;
+            text-decoration: none;
+        }
+        textarea {
+            width: 250px;
+            height: 150px;
+            padding: 12px 20px;
+            box-sizing: border-box;
+            border: 1px solid black;
+            background-color: snow;
+            font-size: 16px;
+            resize: none;
+        }
+
+
+    </style>
+</head>
+<body>
+<div style="height: 50px"></div>
+<h3 style="text-align: center; font-weight: bold">ИЗБЕРЕТЕ ПРЕДМЕТИ КОИ САКАТЕ ДА ГИ ПРЕДАВАТЕ</h3>
+
+
+<div class="container" style="position: relative;  right:-150px;">
+    <form id="filter-form" th:action="@{'/home/chooseSubject'}">
+        <label for="ime"></label>
+        <input id="ime" type="text" placeholder="Пребарувај предмет..." name="ime"/>
+        <button id="filter" type="submit" style="position: relative; bottom: -2px;">Пребарај</button>
+    </form>
+    <div>
+
+        <h4><i>*Доколку предметот го нема во листата, имате можност да го додадете</i> </h4>
+        <form action="/home/add">
+            <input type="submit" value="+ НОВ ПРЕДМЕТ">
+        </form>
+    </div>
+
+<!--    <ul>-->
+<!--        -->
+<!--        <li style="list-style-type: none; text-align: center;-->
+<!--        padding: 5px; font-size: 18px;" th:each="p : ${subjects}">-->
+<!--            <div id="left">-->
+<!--                <a href=""><th:block th:text="${p.getName()}"></th:block>-->
+
+<!--                </a>-->
+<!--            </div>-->
+
+<!--    </ul>-->
+
+
+    <form th:action="@{'/teachers/teachesSubject'}" th:method="post">
+        <ul>
+
+            <li style="list-style-type: none; text-align: center;
+       padding: 5px; font-size: 18px; position: relative; left: -100px;" th:each="s: ${subjects}">
+                <div id="left">
+                    <input type="radio" name="subjectID" th:value="${s.getId()}">
+                    <th:block id="courseText" th:text="${s.getName()}"/>
+                </div>
+
+            </li>
+        </ul>
+        <div style="height: 200px; width: 300px; position: relative; top:-250px;
+            ">
+            <textarea name="tema">Внесете опис на предметот...</textarea>
+        </div>
+        <button type="submit" value="Продолжи" style="position: relative; top: -250px; right:-70px;">
+            Продолжи
+        </button>
+
+    </form>
+
+
+
+
+
+
+
+</div>
+
+</body>
+</html>

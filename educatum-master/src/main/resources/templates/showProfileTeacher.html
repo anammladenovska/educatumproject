@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Информации за контакт</title>
 </head>
 <body>
 
 <form>
 
-    <h1><th:block th:text="${nastavnik.getImePrezime()}"></th:block></h1>
-    <div th:text="${nastavnik.getOpis()}"></div>
+    <h1><th:block th:text="${teacher.getFullName()}"></th:block></h1>
+    <div th:text="${teacher.getDescription()}"></div>
 
     <h2>Телефонски број</h2>
-    <div th:text="${nastavnik.getTelefonskiBroj()}"></div>
+    <div th:text="${teacher.getMobileNumber()}"></div>
 
     <h2>Електорнска пошта (e-mail)</h2>
-    <div th:text="${nastavnik.getEmail()}"></div>
+    <div th:text="${teacher.getEmail()}"></div>
 
     <br/>
     <i><a href="/home/zainteresiran">Назад кон листата со наставници</a></i>
