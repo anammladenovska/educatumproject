@@ -20,4 +20,6 @@ public interface StudentService {
     List<Student> findAllByName(String ime);
 
     void interestedIn(Integer subjectId, Integer studentId);
+
+    void addListening(Integer studentID, Integer classID, Integer teacherID);
 }

@@ -217,14 +217,32 @@
     <form action="/students/listSubjectsTeachers">
         <select id="subjectID" name="subjectID" onchange="this.form.submit()">
             <option value="none" selected>Избери предмет</option>
-            <option th:if="${nastavnik} == null"
-                    th:each="p : ${subjects}"
+            <option th:each="p : ${subjects}"
                     th:value="${p.getId()}"
                     th:text="${p.getName()}">
             </option>
 
         </select>
     </form>
+
+    <div style="position: center">
+
+            <table style="position: center">
+                <ul>
+                    <tr>
+                        <li style="list-style-type: none;" th:each="t : ${teachers}">
+                            <div id="left">
+                                <a th:href="@{'/teachers/showProfileTeacher/{id}' (id=${t.getId()})}" th:method="post"> <th:block id="courseText" th:value="${t.getId()}" th:text="${t.getFullName()}"/></a>
+
+
+                            </div>
+                        </li>
+                    </tr>
+                </ul>
+            </table>
+            <br/>
+            <br/>
+    </div>
 
 </div>
 

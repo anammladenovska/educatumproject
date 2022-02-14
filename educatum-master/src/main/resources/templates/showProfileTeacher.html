@@ -1,14 +1,118 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Информации за контакт</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<form>-->
+
+<!--    <h1><th:block th:text="${teacher.getFullName()}"></th:block></h1>-->
+<!--    <div th:text="${teacher.getDescription()}"></div>-->
+
+<!--    <h2>Телефонски број</h2>-->
+<!--    <div th:text="${teacher.getMobileNumber()}"></div>-->
+
+<!--    <h2>Електорнска пошта (e-mail)</h2>-->
+<!--    <div th:text="${teacher.getEmail()}"></div>-->
+
+<!--    <br/>-->
+<!--    <i><a href="/home/zainteresiran">Назад кон листата со наставници</a></i>-->
+<!--    <br/>-->
+<!--    <i><a href="/home">Назад кон почетна страна</a></i>-->
+<!--    <br/>-->
+<!--    <i><a href="/login">Најави се</a></i>-->
+
+<!--</form>-->
+
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Информации за контакт</title>
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@600&display=swap');
+
+        body, html {
+            height: 100%;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Cormorant Unicase', serif;
+        }
+
+        .bg-image {
+            background-image: url("https://cdn.shopify.com/s/files/1/0984/3604/products/backdrop-white-bookshelf-library-books-1_1340x.jpg?v=1612742982");
+            filter: blur(8px);
+            -webkit-filter: blur(8px);
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .bg-text {
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0, 0.4);
+            color: white;
+            font-weight: bold;
+            border: thin #f1f1f1;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            width: 80%;
+            padding: 20px;
+            text-align: center;
+        }
+        a:link, a:visited {
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a:hover, a:active {
+            background-color: black;
+            color: snow;
+        }
+    </style>
 </head>
 <body>
 
-<form>
 
-    <h1><th:block th:text="${teacher.getFullName()}"></th:block></h1>
+<div class="bg-image"></div>
+
+<div class="bg-text">
+    <h1><b><th:block th:text="${teacher.getFullName()}"></th:block></b></h1>
     <div th:text="${teacher.getDescription()}"></div>
 
     <h2>Телефонски број</h2>
@@ -24,8 +128,8 @@
     <br/>
     <i><a href="/login">Најави се</a></i>
 
-</form>
 
+</div>
 
 </body>
 </html>

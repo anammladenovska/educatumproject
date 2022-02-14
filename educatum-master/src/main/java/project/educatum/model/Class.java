@@ -64,6 +64,13 @@ public class Class {
         return vremePocetok;
     }
 
+    @Override
+    public String toString() {
+        return tema+ "\t" +vremePocetok.getDayOfMonth() + "." + vremePocetok.getMonthValue() + "."
+                + vremePocetok.getYear() + " " + vremePocetok.getHour() + ":" +
+                vremePocetok.getMinute()+"\n";
+    }
+
     public void setVremePocetok(LocalDateTime vremePocetok) {
         this.vremePocetok = vremePocetok;
     }

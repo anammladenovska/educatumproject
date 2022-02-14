@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Внеси час</title>
+</head>
+<body>
+
+<div class="container" style="position: relative;  right:-150px;">
+
+    <form action="/students/addListening">
+        <select id="classID" name="classID">
+            <option th:each="c : ${classes}"
+                    th:value="${c.getId()}"
+                    th:text="${c.getTema()}">
+            </option>
+            <input type="hidden" th:value="${student.getId()}" th:name="studentID">
+            <input type="submit" value="Submit">
+
+        </select>
+    </form>
+
+</div>
+
+</body>
+</html>

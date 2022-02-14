@@ -3,14 +3,8 @@ package project.educatum.service.impl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.educatum.model.*;
-import project.educatum.model.exceptions.InvalidArgumentsException;
-import project.educatum.model.exceptions.PasswordsDoNotMatchException;
-import project.educatum.model.exceptions.StudentNotFoundException;
-import project.educatum.model.exceptions.UsernameAlreadyExistsException;
-import project.educatum.repository.AdminRepository;
-import project.educatum.repository.TeacherRepository;
-import project.educatum.repository.StudentRepository;
-import project.educatum.repository.InterestRepository;
+import project.educatum.model.exceptions.*;
+import project.educatum.repository.*;
 import project.educatum.service.StudentService;
 
 import java.time.LocalDate;
@@ -27,13 +21,18 @@ public class StudentServiceImpl implements StudentService {
     private final AdminRepository adminRepository;
     private final TeacherRepository teachersRepository;
     private final InterestRepository interestRepository;
+    private static Integer counter = 0;
+    private final ListeningRepository listeningRepository;
+    private final PaymentRepository paymentRepository;
 
-    public StudentServiceImpl(StudentRepository studentsRepository, PasswordEncoder passwordEncoder, AdminRepository adminRepository, TeacherRepository teachersRepository, InterestRepository interestRepository) {
+    public StudentServiceImpl(StudentRepository studentsRepository, PasswordEncoder passwordEncoder, AdminRepository adminRepository, TeacherRepository teachersRepository, InterestRepository interestRepository, ListeningRepository listeningRepository, PaymentRepository paymentRepository) {
         this.studentsRepository = studentsRepository;
         this.passwordEncoder = passwordEncoder;
         this.adminRepository = adminRepository;
         this.teachersRepository = teachersRepository;
         this.interestRepository = interestRepository;
+        this.listeningRepository = listeningRepository;
+        this.paymentRepository = paymentRepository;
     }
 
     @Override
@@ -99,8 +98,15 @@ public class StudentServiceImpl implements StudentService {
         interestRepository.save(z);
     }
 
-    public void addListening(Integer studentID){
-
+    @Override
+    public void addListening(Integer studentID, Integer classID, Integer teacherID){
+        Teacher t = teachersRepository.findById(teacherID).orElseThrow(TeacherNotFoundException::new);
+        Payment p = new Payment(0,t);
+        paymentRepository.save(p);
+        Student s = studentsRepository.findById(studentID).orElseThrow(StudentNotFoundException::new);
+        ListeningID listeningID = new ListeningID(classID,counter++);
+        Listening l = new Listening(listeningID,p,s,false);
+        listeningRepository.save(l);
     }
 
 }
