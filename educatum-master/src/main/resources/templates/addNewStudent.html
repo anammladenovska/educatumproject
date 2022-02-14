@@ -194,10 +194,10 @@
 
         <nav>
             <ul>
-                <li><a href="/nastavnici/allClasses" style="font-weight: bold">РАСПОРЕД</a></li>
-                <li><a href="/nastavnici/allSubjects" style="font-weight: bold">ПРЕДМЕТИ</a></li>
-                <li><a href="/nastavnici/allStudents" style="font-weight: bold">УЧЕНИЦИ</a></li>
-                <li><a href="/nastavnici/profile" style="font-weight: bold">ПРОФИЛ</a></li>
+                <li><a href="/teachers/allClasses" style="font-weight: bold">РАСПОРЕД</a></li>
+                <li><a href="/teachers/allSubjects" style="font-weight: bold">ПРЕДМЕТИ</a></li>
+                <li><a href="/teachers/allStudents" style="font-weight: bold">УЧЕНИЦИ</a></li>
+                <li><a href="/teachers/profile" style="font-weight: bold">ПРОФИЛ</a></li>
                 <li><a href="/logout" style="font-weight: bold">ОДЈАВИ СЕ</a></li>
             </ul>
         </nav>
@@ -206,7 +206,7 @@
 
 <div class="container">
 <section>
-    <form th:method="post" th:action="@{/nastavnici/addStudent}">
+    <form th:method="post" th:action="@{/teachers/addStudent}">
         <input id='email' type='text' name='email' placeholder="E-MAIL НА УЧЕНИКОТ"/><br/>
         <input id='price' type='text' name='price' placeholder="ЦЕНА ПО ЧАС"/><br/>
         <input id='numClasses' type='text' name='numClasses' placeholder="БРОЈ НА ДОГОВОРЕНИ ЧАСОВИ"/><br/>

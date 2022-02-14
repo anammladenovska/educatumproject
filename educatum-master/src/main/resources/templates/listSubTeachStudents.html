@@ -202,7 +202,7 @@
 
         <nav>
             <ul>
-                <li><a href="/admini/allTeachers">ДОМАШНИ ЗАДАЧИ</a></li>
+                <li><a href="/admin/allTeachers">ДОМАШНИ ЗАДАЧИ</a></li>
                 <li><a href="#">ПРОФИЛ</a></li>
                 <li ><a href="/logout">ОДЈАВИ СЕ</a></li>
             </ul>
@@ -211,16 +211,16 @@
 </header>
 
 <div style="height: 50px"></div>
-<h3 style="text-align: center; font-weight: bold">СИТЕ ПРЕДМЕТИ СО СООДВЕТЕН НАСТАВНИЦИ</h3>
+<h3 style="text-align: center; font-weight: bold">СИТЕ ПРЕДМЕТИ СО СООДВЕТНИ НАСТАВНИЦИ</h3>
 <div class="container" style="position: relative;  right:-150px;">
 
-    <form method="post" action="/ucenici/vidiPredmeti">
-        <select id="predmetId" name="predmetId" onchange="this.form.submit()">
+    <form action="/students/listSubjectsTeachers">
+        <select id="subjectID" name="subjectID" onchange="this.form.submit()">
             <option value="none" selected>Избери предмет</option>
             <option th:if="${nastavnik} == null"
-                    th:each="p : ${predmeti}"
+                    th:each="p : ${subjects}"
                     th:value="${p.getId()}"
-                    th:text="${p.getIme()}">
+                    th:text="${p.getName()}">
             </option>
 
         </select>

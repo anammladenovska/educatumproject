@@ -193,10 +193,10 @@
 
         <nav>
             <ul>
-                <li><a href="/nastavnici/allClasses" style="font-weight: bold">РАСПОРЕД</a></li>
-                <li><a href="/nastavnici/allSubjects" style="font-weight: bold">ПРЕДМЕТИ</a></li>
-                <li><a href="/nastavnici/allStudents" style="font-weight: bold">УЧЕНИЦИ</a></li>
-                <li><a href="/nastavnici/profile" style="font-weight: bold">ПРОФИЛ</a></li>
+                <li><a href="/teachers/allClasses" style="font-weight: bold">РАСПОРЕД</a></li>
+                <li><a href="/teachers/allSubjects" style="font-weight: bold">ПРЕДМЕТИ</a></li>
+                <li><a href="/teachers/allStudents" style="font-weight: bold">УЧЕНИЦИ</a></li>
+                <li><a href="/teachers/profile" style="font-weight: bold">ПРОФИЛ</a></li>
                 <li><a href="/logout" style="font-weight: bold">ОДЈАВИ СЕ</a></li>
             </ul>
         </nav>
@@ -207,14 +207,14 @@
 <div style="height: 50px"></div>
 <h3 style="text-align: center; font-weight: bold">ПРЕДМЕТИ КОИ ГИ ПРЕДАВАТЕ</h3>
 <div class="container" style="position: relative;  right:-150px;">
-    <form id="filter-form" th:action="@{'/nastavnici/allSubjects'}">
+    <form id="filter-form" th:action="@{'/teachers/allSubjects'}">
         <label for="search"></label>
         <input id="search" type="text" placeholder="Пребарувај предмет..." name="ime"/>
         <button id="filter" type="submit" style="position: relative; bottom: -2px;">Пребарај</button>
     </form>
 
 
-    <form action="/nastavnici/addSubjectForm" method="post">
+    <form action="/teachers/addSubjectForm" method="post">
         <input type="submit" value="+ НОВ ПРЕДМЕТ">
     </form>
 
@@ -223,9 +223,9 @@
 
 
         <li style="list-style-type: none; text-align: center;
-        padding: 5px; font-size: 18px;" th:each="p : ${predmeti}">
+        padding: 5px; font-size: 18px;" th:each="p : ${subjects}">
             <div id="left">
-                <a href=""><th:block th:text="${p.getIme()}"></th:block>
+                <a href=""><th:block th:text="${p.getName()}"></th:block>
 
                 </a>
             </div>
