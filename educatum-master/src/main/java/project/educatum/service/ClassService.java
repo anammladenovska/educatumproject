@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ClassService {
+
     List<Class> findAll();
 
     void addClass(LocalDateTime dateTime, String desc, Integer teacherID, Integer subjectID);

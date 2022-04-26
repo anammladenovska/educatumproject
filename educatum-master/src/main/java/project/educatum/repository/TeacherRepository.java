@@ -13,7 +13,7 @@ import java.util.List;
 public interface TeacherRepository extends JpaRepository<Teacher, Integer> {
     Teacher findByEmail(String email);
 
-    List<Teacher> findAllByImeContainingIgnoreCase(String ime);
+    List<Teacher> findAllByNameContainingIgnoreCase(String name);
 
     @Transactional
     @Modifying

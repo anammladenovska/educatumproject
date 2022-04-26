@@ -4,8 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import project.educatum.model.Listening;
-import project.educatum.model.ListeningID;
-import project.educatum.model.Payment;
+import project.educatum.model.primarykeys.ListeningID;
 
 import java.util.List;
 

@@ -21,14 +21,16 @@ public class AdminController {
     private final StudentService studentService;
     private final PaymentService paymentService;
     private final TeacherStudentService teacherStudentService;
+    private final EmailService emailService;
 
-    public AdminController(TeacherService teacherService, SubjectService subjectService, TeacherSubjectService teacherSubjectService, StudentService studentService, PaymentService paymentService, TeacherStudentService teacherStudentService) {
+    public AdminController(TeacherService teacherService, SubjectService subjectService, TeacherSubjectService teacherSubjectService, StudentService studentService, PaymentService paymentService, TeacherStudentService teacherStudentService, EmailService emailService) {
         this.teacherService = teacherService;
         this.subjectService = subjectService;
         this.teacherSubjectService = teacherSubjectService;
         this.studentService = studentService;
         this.paymentService = paymentService;
         this.teacherStudentService = teacherStudentService;
+        this.emailService = emailService;
     }
 
     @GetMapping("/allTeachers")
@@ -73,6 +75,7 @@ public class AdminController {
         Teacher n = teacherService.findById(Integer.valueOf(id));
         if (n != null) {
             teacherService.updateEnabled(Integer.valueOf(id));
+            emailService.sendMessage(n.getEmail(), "Активиран корисник - EDUCATUM", "Вашиот профил е активиран. Можете да се најавите со e-mail и лозинка. \n\n EDUCATUM");
         }
         return "redirect:/admin/allTeachers";
     }

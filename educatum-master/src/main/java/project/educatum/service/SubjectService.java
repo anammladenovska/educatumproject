@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SubjectService {
+
     List<Subject> findAll();
 
     List<Subject> findAllByNameLike(String ime);
@@ -16,7 +17,8 @@ public interface SubjectService {
 
     List<Subject> findAllByNameAndTeacherLike(String ime, List<Subject> subjects);
 
-    Subject create(String ime);
+    Subject create(String name);
 
-    Subject findByName(String ime);
+    Subject findByName(String name);
+
 }

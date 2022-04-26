@@ -1,8 +1,11 @@
 package project.educatum.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Data
 @Entity
 @Table(name = "casovi", schema = "project")
 public class Class {
@@ -12,10 +15,10 @@ public class Class {
     private Integer id;
 
     @Column(name = "vreme_pocetok")
-    private LocalDateTime vremePocetok;
+    private LocalDateTime beginningTime;
 
     @Column(name = "tema", nullable = false, length = 100)
-    private String tema;
+    private String topic;
 
     @ManyToOne
     @JoinColumn(name = "id_nastavnik")
@@ -25,9 +28,9 @@ public class Class {
     @JoinColumn(name = "id_predmet")
     private Subject subjectID;
 
-    public Class(LocalDateTime vremePocetok, String tema, Teacher idTeacher, Subject subjectID) {
-        this.vremePocetok = vremePocetok;
-        this.tema = tema;
+    public Class(LocalDateTime beginningTime, String topic, Teacher idTeacher, Subject subjectID) {
+        this.beginningTime = beginningTime;
+        this.topic = topic;
         this.idTeacher = idTeacher;
         this.subjectID = subjectID;
     }
@@ -36,50 +39,11 @@ public class Class {
 
     }
 
-    public Subject getIdSubject() {
-        return subjectID;
-    }
-
-    public void setIdSubject(Subject subjectID) {
-        this.subjectID = subjectID;
-    }
-
-    public Teacher getidTeacher() {
-        return idTeacher;
-    }
-
-    public void setidTeacher(Teacher idTeacher) {
-        this.idTeacher = idTeacher;
-    }
-
-    public String getTema() {
-        return tema;
-    }
-
-    public void setTema(String tema) {
-        this.tema = tema;
-    }
-
-    public LocalDateTime getVremePocetok() {
-        return vremePocetok;
-    }
-
     @Override
     public String toString() {
-        return tema+ "\t" +vremePocetok.getDayOfMonth() + "." + vremePocetok.getMonthValue() + "."
-                + vremePocetok.getYear() + " " + vremePocetok.getHour() + ":" +
-                vremePocetok.getMinute()+"\n";
+        return topic + "\t" + beginningTime.getDayOfMonth() + "." + beginningTime.getMonthValue() + "."
+                + beginningTime.getYear() + " " + beginningTime.getHour() + ":" +
+                beginningTime.getMinute() + "\n";
     }
 
-    public void setVremePocetok(LocalDateTime vremePocetok) {
-        this.vremePocetok = vremePocetok;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

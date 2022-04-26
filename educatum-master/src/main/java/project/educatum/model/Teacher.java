@@ -1,31 +1,29 @@
 package project.educatum.model;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
 
+@Data
 @Entity
 @Table(name = "nastavnici", schema = "project")
 public class Teacher implements UserDetails {
-
-
-
-   public Teacher(){}
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_nastavnik", nullable = false)
     private Integer id;
 
     @Column(name = "ime", nullable = false, length = 50)
-    private String ime;
+    private String name;
 
     @Column(name = "prezime", nullable = false, length = 50)
-    private String prezime;
+    private String surname;
 
     @Column(name = "opis", nullable = false, length = 500)
-    private String opis;
+    private String description;
 
     @Column(name = "email", nullable = false, length = 50)
     private String email;
@@ -34,7 +32,7 @@ public class Teacher implements UserDetails {
     private String password;
 
     @Column(name = "telefonski_broj", length = 15)
-    private String telefonskiBroj;
+    private String telephoneNumber;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_admin", nullable = false)
@@ -44,39 +42,16 @@ public class Teacher implements UserDetails {
     private Boolean enabled;
 
 
-    public Teacher(String ime, String prezime, String opis, String email, String password, String telefonskiBroj) {
-        this.enabled=false;
-        this.ime = ime;
-        this.prezime = prezime;
-        this.opis = opis;
+    public Teacher() {
+    }
+
+    public Teacher(String name, String surname, String description, String email, String password, String telephoneNumber) {
+        this.name = name;
+        this.surname = surname;
+        this.description = description;
         this.email = email;
         this.password = password;
-        this.telefonskiBroj = telefonskiBroj;
-
-    }
-
-    public Admin getIdAdmin() {
-        return idAdmin;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setIdAdmin(Admin idAdmin) {
-        this.idAdmin = idAdmin;
-    }
-
-    public String getMobileNumber() {
-        return telefonskiBroj;
-    }
-
-    public void setTelefonskiBroj(String telefonskiBroj) {
-        this.telefonskiBroj = telefonskiBroj;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+        this.telephoneNumber = telephoneNumber;
     }
 
     @Override
@@ -113,51 +88,8 @@ public class Teacher implements UserDetails {
         return enabled;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getDescription() {
-        return opis;
-    }
-
-    public void setOpis(String opis) {
-        this.opis = opis;
-    }
-
-    public String getSurname() {
-        return prezime;
-    }
-
-    public void setPrezime(String prezime) {
-        this.prezime = prezime;
-    }
-
-    public String getName() {
-        return ime;
-    }
-
-    public void setIme(String ime) {
-        this.ime = ime;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getFullName(){
-        return ime + ' ' +  prezime;
+    public String getFullName() {
+        return name + ' ' + surname;
     }
 }

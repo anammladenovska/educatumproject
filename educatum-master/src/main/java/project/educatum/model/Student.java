@@ -1,29 +1,32 @@
 package project.educatum.model;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Map;
 
+@Data
 @Entity
 @Table(name = "ucenici", schema = "project")
 public class Student implements UserDetails {
 
-    public Student(){}
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_ucenik", nullable = false)
     private Integer id;
 
     @Column(name = "opis", length = 500)
-    private String opis;
+    private String description;
 
     @Column(name = "ime", nullable = false, length = 50)
-    private String ime;
+    private String name;
 
     @Column(name = "prezime", nullable = false, length = 50)
-    private String prezime;
+    private String surname;
 
     @Column(name = "email", nullable = false, length = 50)
     private String email;
@@ -32,24 +35,20 @@ public class Student implements UserDetails {
     private String password;
 
     @Column(name = "telefonski_broj", length = 15)
-    private String telefonskiBroj;
+    private String telephoneNumber;
 
-    public Student(String opis, String ime, String prezime, String email, String password, String telefonskiBroj) {
-        this.opis = opis;
-        this.ime = ime;
-        this.prezime = prezime;
+    public Student() {
+    }
+
+    public Student(String description, String name, String surname, String email, String password, String telephoneNumber) {
+        this.description = description;
+        this.name = name;
+        this.surname = surname;
         this.email = email;
         this.password = password;
-        this.telefonskiBroj = telefonskiBroj;
+        this.telephoneNumber = telephoneNumber;
     }
 
-    public String getMobileNumber() {
-        return telefonskiBroj;
-    }
-
-    public void setTelefonskiBroj(String telefonskiBroj) {
-        this.telefonskiBroj = telefonskiBroj;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -85,47 +84,4 @@ public class Student implements UserDetails {
         return true;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSurname() {
-        return prezime;
-    }
-
-    public void setPrezime(String prezime) {
-        this.prezime = prezime;
-    }
-
-    public String getName() {
-        return ime;
-    }
-
-    public void setIme(String ime) {
-        this.ime = ime;
-    }
-
-    public String getDescription() {
-        return opis;
-    }
-
-    public void setOpis(String opis) {
-        this.opis = opis;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

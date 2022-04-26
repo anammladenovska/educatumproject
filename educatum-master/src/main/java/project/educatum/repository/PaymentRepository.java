@@ -11,15 +11,14 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface PaymentRepository extends JpaRepository<Payment,Integer> {
+public interface PaymentRepository extends JpaRepository<Payment, Integer> {
 
-    @Query(value = "select * from project.plakjanja p where p.id_nastavnik = :idTeacher",
-            nativeQuery = true)
+    @Query(value = "select * from project.plakjanja p where p.id_nastavnik = :idTeacher", nativeQuery = true)
     List<Payment> findAllByIdTeacher(Integer idTeacher);
 
     @Transactional
     @Modifying
-    @Query("UPDATE Payment p SET p.iznos=:price WHERE p.id=:id")
+    @Query("UPDATE Payment p SET p.amount=:price WHERE p.id=:id")
     void updatePrice(Integer price, Integer id);
 
 }

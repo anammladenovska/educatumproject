@@ -4,6 +4,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.educatum.model.*;
 import project.educatum.model.exceptions.*;
+import project.educatum.model.primarykeys.InterestID;
+import project.educatum.model.primarykeys.ListeningID;
 import project.educatum.repository.*;
 import project.educatum.service.StudentService;
 
@@ -36,21 +38,22 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void register(String ime, String prezime, String email, String password, String repeatPassword, String telBroj, String opis) {
+    public void register(String name, String surname, String email, String password, String repeatPassword, String telNum, String desc) {
         if (email == null || email.isEmpty() || password == null || password.isEmpty())
             throw new InvalidArgumentsException();
-        if (!password.equals(repeatPassword)) throw new PasswordsDoNotMatchException();
+        if (!password.equals(repeatPassword))
+            throw new PasswordsDoNotMatchException();
 
-        for (Teacher n : teachersRepository.findAll()) {
+        for (Teacher n : teachersRepository.findAll())
             if (n.getEmail().equals(email)) throw new UsernameAlreadyExistsException("Username already exists!");
-        }
-        for (Student u : studentsRepository.findAll()) {
+
+        for (Student u : studentsRepository.findAll())
             if (u.getEmail().equals(email)) throw new UsernameAlreadyExistsException("Username already exists!");
-        }
-        for (Admin a : adminRepository.findAll()) {
+
+        for (Admin a : adminRepository.findAll())
             if (a.getEmail().equals(email)) throw new UsernameAlreadyExistsException("Username already exists!");
-        }
-        Student user = new Student(opis, ime, prezime, email, passwordEncoder.encode(password), telBroj);
+
+        Student user = new Student(desc, name, surname, email, passwordEncoder.encode(password), telNum);
         studentsRepository.save(user);
     }
 
@@ -65,8 +68,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> findAllByNameLike(String ime, List<Student> students) {
-        List<Student> searchedStudents = studentsRepository.findAllByImeContainingIgnoreCase(ime);
+    public List<Student> findAllByNameLike(String name, List<Student> students) {
+        List<Student> searchedStudents = studentsRepository.findAllByNameContainingIgnoreCase(name);
         Set<Student> result = new HashSet<>();
         for (Student u : searchedStudents) {
             for (Student u2 : students)
@@ -87,25 +90,25 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> findAllByName(String ime) {
-        return studentsRepository.findAllByImeContainingIgnoreCase(ime);
+    public List<Student> findAllByName(String name) {
+        return studentsRepository.findAllByNameContainingIgnoreCase(name);
     }
 
     @Override
-    public void interestedIn(Integer subjectId, Integer studentId){
-        InterestID zId = new InterestID(subjectId,studentId);
+    public void interestedIn(Integer subjectId, Integer studentId) {
+        InterestID zId = new InterestID(subjectId, studentId);
         Interest z = new Interest(zId, LocalDate.now());
         interestRepository.save(z);
     }
 
     @Override
-    public void addListening(Integer studentID, Integer classID, Integer teacherID){
+    public void addListening(Integer studentID, Integer classID, Integer teacherID) {
         Teacher t = teachersRepository.findById(teacherID).orElseThrow(TeacherNotFoundException::new);
-        Payment p = new Payment(0,t);
+        Payment p = new Payment(0, t);
         paymentRepository.save(p);
         Student s = studentsRepository.findById(studentID).orElseThrow(StudentNotFoundException::new);
-        ListeningID listeningID = new ListeningID(classID,counter++);
-        Listening l = new Listening(listeningID,p,s,false);
+        ListeningID listeningID = new ListeningID(classID, counter++);
+        Listening l = new Listening(listeningID, p, s, false);
         listeningRepository.save(l);
     }
 

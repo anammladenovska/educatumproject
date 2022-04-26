@@ -11,7 +11,6 @@ import project.educatum.service.InterestService;
 
 public class SubjectController {
 
-
     private final StudentService studentService;
     private final SubjectService subjectService;
     private final InterestService interestService;
@@ -24,7 +23,7 @@ public class SubjectController {
 
 
     @PostMapping("/delete/{id}")
-    public String deleteSubject(@PathVariable String id){
+    public String deleteSubject(@PathVariable String id) {
         subjectService.delete(Integer.parseInt(id));
         return "redirect:/admin/allSubjects";
     }

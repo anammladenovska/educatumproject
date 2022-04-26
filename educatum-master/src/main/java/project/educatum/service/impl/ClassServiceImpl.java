@@ -33,10 +33,10 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public void addClass(LocalDateTime dateTime, String desc, Integer teacherID, Integer subjectID){
+    public void addClass(LocalDateTime dateTime, String desc, Integer teacherID, Integer subjectID) {
         Teacher n = teacherRepository.findById(teacherID).orElseThrow(TeacherNotFoundException::new);
         Subject p = subjectRepository.findById(subjectID).orElseThrow(SubjectNotFoundException::new);
-        Class c = new Class(dateTime,desc,n,p);
+        Class c = new Class(dateTime, desc, n, p);
         classRepository.save(c);
     }
 

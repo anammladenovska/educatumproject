@@ -5,7 +5,8 @@ import project.educatum.model.Student;
 import java.util.List;
 
 public interface StudentService {
-    void register(String ime, String prezime, String email, String password, String repeatPassword, String telBroj, String opis);
+
+    void register(String name, String surname, String email, String password, String repeatPassword, String telNum, String desc);
 
     List<Student> findAll();
 
@@ -22,4 +23,5 @@ public interface StudentService {
     void interestedIn(Integer subjectId, Integer studentId);
 
     void addListening(Integer studentID, Integer classID, Integer teacherID);
+
 }

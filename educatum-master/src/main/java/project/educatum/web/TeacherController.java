@@ -73,11 +73,11 @@ public class TeacherController {
         Teacher teacher = teacherService.findByEmail(user.getUsername());
         Integer owes = paymentService.studentTeacherLoan(Integer.valueOf(id), teacher.getId());
         model.addAttribute("owes", owes);
-        Integer numScheduledClasses = teacherStudentService.find(teacher.getId(), Integer.valueOf(id)).getnumScheduledClasses();
+        Integer numScheduledClasses = teacherStudentService.find(teacher.getId(), Integer.valueOf(id)).getNumScheduledClasses();
         model.addAttribute("numScheduledClasses", numScheduledClasses);
-        Integer priceByClass = teacherStudentService.find(teacher.getId(), Integer.valueOf(id)).getpriceByClass();
+        Integer priceByClass = teacherStudentService.find(teacher.getId(), Integer.valueOf(id)).getPriceByClass();
         model.addAttribute("priceByClass", priceByClass);
-        model.addAttribute("classes",teacherService.getClassesByTeacher(teacher.getId()));
+        model.addAttribute("classes", teacherService.getClassesByTeacher(teacher.getId()));
 
         Integer numListenedClasses = paymentService.numListenedClasses(Integer.valueOf(id), teacher.getId());
         model.addAttribute("numListenedClasses", numListenedClasses);
@@ -87,25 +87,25 @@ public class TeacherController {
 
     @PostMapping("/updatePayment")
     public String updatePaymentForStudent(@RequestParam String studentID, Model model, HttpServletRequest request,
-                                          @RequestParam String price,@RequestParam String classID) {
+                                          @RequestParam(required = false) String price, @RequestParam String classID) {
 
         UserDetails user = (UserDetails) request.getSession().getAttribute("user");
         Teacher teacher = teacherService.findByEmail(user.getUsername());
 
 
-        if(Integer.parseInt(price)!=0){
-            teacherService.addPayment(teacher.getId(), Integer.valueOf(price),Integer.valueOf(classID),Integer.valueOf(studentID));
+        if (Integer.parseInt(price) != 0) {
+            paymentService.addPayment(teacher.getId(), Integer.valueOf(price), Integer.valueOf(classID), Integer.valueOf(studentID));
         }
 
         Integer owes = paymentService.studentTeacherLoan(Integer.valueOf(studentID), teacher.getId());
         model.addAttribute("owes", owes);
-        Integer numScheduledClasses = teacherStudentService.find(teacher.getId(), Integer.valueOf(studentID)).getnumScheduledClasses();
+        Integer numScheduledClasses = teacherStudentService.find(teacher.getId(), Integer.valueOf(studentID)).getNumScheduledClasses();
         model.addAttribute("numScheduledClasses", numScheduledClasses);
-        Integer priceByClass = teacherStudentService.find(teacher.getId(), Integer.valueOf(studentID)).getpriceByClass();
+        Integer priceByClass = teacherStudentService.find(teacher.getId(), Integer.valueOf(studentID)).getPriceByClass();
         model.addAttribute("priceByClass", priceByClass);
         Integer numListenedClasses = paymentService.numListenedClasses(Integer.valueOf(studentID), teacher.getId());
         model.addAttribute("numListenedClasses", numListenedClasses);
-        model.addAttribute("classes",teacherService.getClassesByTeacher(teacher.getId()));
+        model.addAttribute("classes", teacherService.getClassesByTeacher(teacher.getId()));
         model.addAttribute("student", studentService.findById(Integer.valueOf(studentID)));
         return "payment";
     }
@@ -180,7 +180,7 @@ public class TeacherController {
         model.addAttribute("ime", teacher.getName() + " " + teacher.getSurname());
         model.addAttribute("opis", teacher.getDescription());
         model.addAttribute("email", teacher.getEmail());
-        model.addAttribute("tel", teacher.getMobileNumber());
+        model.addAttribute("tel", teacher.getTelephoneNumber());
         return "userInfo";
     }
 
