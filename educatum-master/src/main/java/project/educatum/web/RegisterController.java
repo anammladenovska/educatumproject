@@ -42,7 +42,7 @@ public class RegisterController {
             model.addAttribute("errors", error);
 
         }
-        return "register";
+        return "/register";
     }
 
     @PostMapping("/registrirajSe")
@@ -67,8 +67,7 @@ public class RegisterController {
             } catch (PasswordsDoNotMatchException | InvalidArgumentsException | UsernameAlreadyExistsException exception) {
                 return "redirect:/register?error=" + exception.getMessage();
 
-            }
-            catch (UserNotEnabledException e){
+            } catch (UserNotEnabledException e) {
                 request.getSession().setAttribute("user", teacherService.findByEmail(email));
                 return "redirect:/home/chooseSubject";
             }

@@ -20,8 +20,7 @@ public class EducatumApplication {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder()
-    {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

@@ -44,7 +44,7 @@ public class HomeController {
 
     @GetMapping
     public String getHomePage() {
-        return "home";
+        return "/home";
     }
 
     @GetMapping("/chooseSubject")

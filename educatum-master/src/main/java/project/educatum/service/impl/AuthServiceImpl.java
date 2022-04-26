@@ -41,14 +41,13 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
             throw new InvalidArgumentsException();
         }
         Teacher n = teachersRepository.findByEmail(email);
-        if(n!=null && n.getEnabled()!=null && n.isEnabled()){
+        if (n != null && n.getEnabled() != null && n.isEnabled()) {
             if (!passwordEncoder.matches(password, n.getPassword())) {
                 throw new BadCredentialsException("Invalid credentials");
             }
             UserDetails user = loadUserByUsername(email);
             return user;
-        }
-       else throw new UserNotEnabledException();
+        } else throw new UserNotEnabledException();
     }
 
     @Override
@@ -78,24 +77,24 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Admin userAdmin = this.adminRepository.findByEmail(email);
-        Teacher userNastavnik = this.teachersRepository.findByEmail(email);
-        Student userUcenik = this.studentsRepository.findByEmail(email);
+        Teacher userTeacher = this.teachersRepository.findByEmail(email);
+        Student userStudent = this.studentsRepository.findByEmail(email);
         if (userAdmin != null) {
             return new org.springframework.security.core.userdetails.User(
                     userAdmin.getEmail(),
                     userAdmin.getPassword(),
                     Stream.of(new SimpleGrantedAuthority("ROLE_ADMIN")).collect(Collectors.toList())
             );
-        } else if (userNastavnik != null) {
+        } else if (userTeacher != null) {
             return new org.springframework.security.core.userdetails.User(
-                    userNastavnik.getEmail(),
-                    userNastavnik.getPassword(),
+                    userTeacher.getEmail(),
+                    userTeacher.getPassword(),
                     Stream.of(new SimpleGrantedAuthority("ROLE_NASTAVNIK")).collect(Collectors.toList())
             );
-        } else if (userUcenik != null) {
+        } else if (userStudent != null) {
             return new org.springframework.security.core.userdetails.User(
-                    userUcenik.getEmail(),
-                    userUcenik.getPassword(),
+                    userStudent.getEmail(),
+                    userStudent.getPassword(),
                     Stream.of(new SimpleGrantedAuthority("ROLE_UCENIK")).collect(Collectors.toList())
             );
         } else {

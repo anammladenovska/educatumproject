@@ -28,9 +28,9 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<Subject> findAllByNameLike(String ime) {
-        if (ime != null) {
-            return this.subjectsRepository.findAllByImeContainingIgnoreCase(ime);
+    public List<Subject> findAllByNameLike(String name) {
+        if (name != null) {
+            return this.subjectsRepository.findAllByNameContainingIgnoreCase(name);
         } else {
             return this.subjectsRepository.findAll();
         }
@@ -48,8 +48,8 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<Subject> findAllByNameAndTeacherLike(String ime, List<Subject> subjects) {
-        List<Subject> searchedSubjects = subjectsRepository.findAllByImeContainingIgnoreCase(ime);
+    public List<Subject> findAllByNameAndTeacherLike(String name, List<Subject> subjects) {
+        List<Subject> searchedSubjects = subjectsRepository.findAllByNameContainingIgnoreCase(name);
         Set<Subject> result = new HashSet<>();
         for (Subject p : searchedSubjects) {
             for (Subject p2 : subjects)
@@ -60,13 +60,13 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public Subject create(String ime) {
-       Admin admin = adminRepository.findById(1).orElseThrow(AdminNotFoundException::new);
+        Admin admin = adminRepository.findById(1).orElseThrow(AdminNotFoundException::new);
         Subject subject = new Subject(ime, admin);
         return this.subjectsRepository.save(subject);
     }
 
     @Override
-    public Subject findByName(String ime) {
-        return subjectsRepository.findByIme(ime);
+    public Subject findByName(String name) {
+        return subjectsRepository.findByName(name);
     }
 }

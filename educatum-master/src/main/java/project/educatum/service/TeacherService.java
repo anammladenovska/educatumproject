@@ -8,6 +8,7 @@ import project.educatum.model.Subject;
 import java.util.List;
 
 public interface TeacherService {
+
     List<Teacher> findAll();
 
     void register(String ime, String prezime, String email, String password, String repeatPassword, String telBroj, String opis);
@@ -18,9 +19,6 @@ public interface TeacherService {
     void updateEnabled(Integer teacherID);
 
     List<Subject> getSubjectsByTeacher(Integer id);
-
-
-    void addPayment(Integer teacherId, Integer price, Integer classID, Integer studentID);
 
     Teacher findById(Integer id);
 
@@ -37,6 +35,5 @@ public interface TeacherService {
     void addStudent(Integer teacherID, Integer ucenikId, Integer priceByClass, Integer numScheduledClasses);
 
     List<Teacher> getAllTeachersBySubject(Integer id);
-
 
 }

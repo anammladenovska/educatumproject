@@ -1,7 +1,10 @@
 package project.educatum.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name = "domasni_zadaci", schema = "project")
 public class Homework {
@@ -11,7 +14,7 @@ public class Homework {
     private Integer id;
 
     @Column(name = "opis", length = 500)
-    private String opis;
+    private String description;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_nastavnik", nullable = false)
@@ -21,35 +24,4 @@ public class Homework {
     @JoinColumn(name = "id_cas", nullable = false)
     private Class idCas;
 
-    public Class getIdCas() {
-        return idCas;
-    }
-
-    public void setIdCas(Class idCas) {
-        this.idCas = idCas;
-    }
-
-    public Teacher getidTeacher() {
-        return idTeacher;
-    }
-
-    public void setidTeacher(Teacher idTeacher) {
-        this.idTeacher = idTeacher;
-    }
-
-    public String getDescription() {
-        return opis;
-    }
-
-    public void setOpis(String opis) {
-        this.opis = opis;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

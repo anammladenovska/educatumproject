@@ -1,6 +1,14 @@
 package project.educatum.service.impl;
 
 import org.springframework.stereotype.Service;
+import project.educatum.model.Listening;
+import project.educatum.model.Payment;
+import project.educatum.model.Teacher;
+import project.educatum.model.exceptions.PaymentNotFoundException;
+import project.educatum.model.exceptions.TeacherNotFoundException;
+import project.educatum.repository.ListeningRepository;
+import project.educatum.repository.PaymentRepository;
+import project.educatum.repository.TeacherRepository;
 import project.educatum.service.*;
 
 import javax.persistence.EntityManager;
@@ -11,19 +19,37 @@ import java.util.List;
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
-    private final SlusanjeService slusanjeService;
+    private final ListeningService listeningService;
     private final TeacherService teacherService;
     private final TeacherStudentService teacherStudentService;
     private final ClassService classService;
+    private final TeacherRepository teacherRepository;
+    private final PaymentRepository paymentRepository;
+    private final ListeningRepository listeningRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public PaymentServiceImpl(SlusanjeService slusanjeService, TeacherService teacherService, TeacherStudentService teacherStudentService, ClassService classService) {
-        this.slusanjeService = slusanjeService;
+    public PaymentServiceImpl(ListeningService listeningService, TeacherService teacherService, TeacherStudentService teacherStudentService, ClassService classService, TeacherRepository teacherRepository, PaymentRepository paymentRepository, ListeningRepository listeningRepository) {
+        this.listeningService = listeningService;
         this.teacherService = teacherService;
         this.teacherStudentService = teacherStudentService;
         this.classService = classService;
+        this.teacherRepository = teacherRepository;
+        this.paymentRepository = paymentRepository;
+        this.listeningRepository = listeningRepository;
+    }
+
+    @Override
+    public void addPayment(Integer teacherID, Integer price, Integer classID, Integer studentID) {
+        Teacher teacher = teacherRepository.findById(teacherID).orElseThrow(TeacherNotFoundException::new);
+        Integer owes = studentTeacherLoan(studentID, teacher.getId());
+        if (owes != 0) {
+            List<Listening> listeningList = listeningRepository.findAllByClassAndStudent(classID, studentID);
+            Integer paymentID = listeningList.get(0).getIdPayment().getId();
+            Payment p = paymentRepository.findById(paymentID).orElseThrow(PaymentNotFoundException::new);
+            paymentRepository.updatePrice(price, p.getId());
+        }
     }
 
     @Override
@@ -68,51 +94,51 @@ public class PaymentServiceImpl implements PaymentService {
     public List<Object[]> getPaymentsQuery() {
         javax.persistence.Query q = entityManager.createNativeQuery(
                 """
-select q4.id_nastavnik1 as id_nastavnik,q4.nastavnik,\s
-        q4.id_ucenik1 as id_ucenik, q4.ucenik as ime_ucenik, sum(q4.dolzi) as dolzi from (
-       \s
-       \s
-       \s
-       \s
-        select q3.id_nastavnik1, q3.nastavnik1 || ' ' || q3.nastavnik_prezime1 as nastavnik,
-                         q3.id_ucenik1,q3.ime_ucenik1 as ucenik, (q3.vkupno_za_plakjanje-q3.plateno) as dolzi
-                         from
-                         (
-                                 select * from
-                        \s
-                                 (
-                                 select n.id_nastavnik as id_nastavnik1,n.ime as nastavnik1, n.prezime nastavnik_prezime1,
-                                                                         u.id_ucenik as id_ucenik1,u.ime || ' ' || u.prezime ime_ucenik1,
-                                 sum(pl.iznos) as plateno  from
-                                 project.nastavnici n\s
-                                 join project.plakjanja pl on pl.id_nastavnik = n.id_nastavnik\s
-                                 join project.casovi c on c.id_nastavnik = pl.id_nastavnik\s
-                                 join project.slusanje s on s.id_cas = c.id_cas\s
-                                 and s.id_plakjanja = pl.id_plakjanja\s
-                                 join project.ucenici u on u.id_ucenik = s.id_ucenik\s
-                                 group by 1,2,3,4
-              \s
-                                 ) q1
-                        \s
-                                 join
-                         				
-                                 (
-                                 select n.id_nastavnik as id_nastavnik2,n.ime as nastavnik2, n.prezime nastavnik_prezime2,
-                                                                         u2.id_ucenik as id_ucenik2, u2.ime || ' ' || u2.prezime as ime_ucenik2,
-                                 (pn.cena_po_cas * pn.broj_casovi_po_dogovor) vkupno_za_plakjanje from project.ucenici u2
-                                 join project.predava_na pn on pn.id_ucenik = u2.id_ucenik
-                                 join project.nastavnici n on n.id_nastavnik =pn.id_nastavnik
-                                 ) q2
-                                 on q1.id_ucenik1 = q2.id_ucenik2 and q2.id_nastavnik2=q1.id_nastavnik1
-                         ) q3
-                )q4
-                group by 1,2,3,4
-                order by id_nastavnik\s
+                        select q4.id_nastavnik1 as id_nastavnik,q4.nastavnik,\s
+                                q4.id_ucenik1 as id_ucenik, q4.ucenik as ime_ucenik, sum(q4.dolzi) as dolzi from (
+                               \s
+                               \s
+                               \s
+                               \s
+                                select q3.id_nastavnik1, q3.nastavnik1 || ' ' || q3.nastavnik_prezime1 as nastavnik,
+                                                 q3.id_ucenik1,q3.ime_ucenik1 as ucenik, (q3.vkupno_za_plakjanje-q3.plateno) as dolzi
+                                                 from
+                                                 (
+                                                         select * from
+                                                \s
+                                                         (
+                                                         select n.id_nastavnik as id_nastavnik1,n.ime as nastavnik1, n.prezime nastavnik_prezime1,
+                                                                                                 u.id_ucenik as id_ucenik1,u.ime || ' ' || u.prezime ime_ucenik1,
+                                                         sum(pl.iznos) as plateno  from
+                                                         project.nastavnici n\s
+                                                         join project.plakjanja pl on pl.id_nastavnik = n.id_nastavnik\s
+                                                         join project.casovi c on c.id_nastavnik = pl.id_nastavnik\s
+                                                         join project.slusanje s on s.id_cas = c.id_cas\s
+                                                         and s.id_plakjanja = pl.id_plakjanja\s
+                                                         join project.ucenici u on u.id_ucenik = s.id_ucenik\s
+                                                         group by 1,2,3,4
+                                      \s
+                                                         ) q1
+                                                \s
+                                                         join
+                                                 				
+                                                         (
+                                                         select n.id_nastavnik as id_nastavnik2,n.ime as nastavnik2, n.prezime nastavnik_prezime2,
+                                                                                                 u2.id_ucenik as id_ucenik2, u2.ime || ' ' || u2.prezime as ime_ucenik2,
+                                                         (pn.cena_po_cas * pn.broj_casovi_po_dogovor) vkupno_za_plakjanje from project.ucenici u2
+                                                         join project.predava_na pn on pn.id_ucenik = u2.id_ucenik
+                                                         join project.nastavnici n on n.id_nastavnik =pn.id_nastavnik
+                                                         ) q2
+                                                         on q1.id_ucenik1 = q2.id_ucenik2 and q2.id_nastavnik2=q1.id_nastavnik1
+                                                 ) q3
+                                        )q4
+                                        group by 1,2,3,4
+                                        order by id_nastavnik\s
 
-               \s
-               \s
-               \s
-""");
+                                       \s
+                                       \s
+                                       \s
+                        """);
 
         return q.getResultList();
     }
@@ -142,31 +168,33 @@ select q4.id_nastavnik1 as id_nastavnik,q4.nastavnik,\s
                 total += Integer.parseInt(owes);
             }
         }
+        if (total < 0) total = 0;
         return total;
     }
 
     @Override
     public Integer numListenedClasses(Integer idStudent, Integer idTeacher) {
-        int total=0;
+        int total = 0;
         List<Object[]> query = getListenedClassesQuery();
-        List<String> slusanja = new ArrayList<>();
+        List<String> listeningList = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
-        for(Object[] slusanje : query){
+        for (Object[] l : query) {
             sb.setLength(0);
-            for (int i = 0; i < slusanje.length; i++) {
-                String attribute = slusanje[i].toString();
+            for (int i = 0; i < l.length; i++) {
+                String attribute = l[i].toString();
                 sb.append(attribute).append(" ");
             }
-            slusanja.add(sb.toString());
+            listeningList.add(sb.toString());
         }
-        for(String s : slusanja){
+        for (String s : listeningList) {
             String[] parts = s.split("\\s+");
             String idU = parts[0];
-            String idN =parts[1];
+            String idN = parts[1];
             String numClasses = parts[2];
-            if(Integer.valueOf(idU).equals(idStudent)&&Integer.valueOf(idN).equals(idTeacher))
-                total+=Integer.parseInt(numClasses);
+            if (Integer.valueOf(idU).equals(idStudent) && Integer.valueOf(idN).equals(idTeacher))
+                total += Integer.parseInt(numClasses);
         }
+        if (total < 0) total = 0;
         return total;
     }
 

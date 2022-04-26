@@ -8,7 +8,10 @@ public interface PaymentService {
 
     Integer studentTeacherLoan(Integer studentId, Integer teacherId);
 
+    void addPayment(Integer teacherId, Integer price, Integer classID, Integer studentID);
+
     List<Object[]> getListenedClassesQuery();
 
     Integer numListenedClasses(Integer idStudent, Integer idTeacher);
+
 }

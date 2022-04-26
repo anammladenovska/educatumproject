@@ -9,7 +9,10 @@ import java.util.Optional;
 
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, Integer> {
-    List<Subject> findAllByImeContainingIgnoreCase(String ime);
+
+    List<Subject> findAllByNameContainingIgnoreCase(String name);
+
     Optional<Subject> findById(Integer id);
-    Subject findByIme(String ime);
+
+    Subject findByName(String name);
 }

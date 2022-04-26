@@ -25,14 +25,14 @@ public class QualificationServiceImpl implements QualificationService {
     }
 
     @Override
-    public void insert(String document,Integer idTeacher) {
-        Teacher n = teacherRepository.findById(idTeacher).orElseThrow(TeacherNotFoundException::new);
+    public void insert(String document, Integer teacherID) {
+        Teacher n = teacherRepository.findById(teacherID).orElseThrow(TeacherNotFoundException::new);
         Admin a = adminRepository.findById(1).orElseThrow(AdminNotFoundException::new);
-        Qualification kvalifikacija = new Qualification();
-        kvalifikacija.setDokument(document);
-        kvalifikacija.setIdAdmin(a);
-        kvalifikacija.setidTeacher(n);
-        qualificationRepository.save(kvalifikacija);
+        Qualification qualification = new Qualification();
+        qualification.setDocument(document);
+        qualification.setIdAdmin(a);
+        qualification.setIdTeacher(n);
+        qualificationRepository.save(qualification);
     }
 
 }

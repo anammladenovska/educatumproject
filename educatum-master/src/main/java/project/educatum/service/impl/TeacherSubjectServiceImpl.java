@@ -1,8 +1,8 @@
 package project.educatum.service.impl;
 
 import org.springframework.stereotype.Service;
-import project.educatum.model.TeacherSubjectRelation;
-import project.educatum.model.TeacherSubjectRelationID;
+import project.educatum.model.relations.TeacherSubjectRelation;
+import project.educatum.model.primarykeys.TeacherSubjectRelationID;
 import project.educatum.repository.TeacherSubjectRepository;
 import project.educatum.service.TeacherSubjectService;
 

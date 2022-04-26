@@ -70,35 +70,35 @@ public class StudentController {
 
     @PostMapping("/listenedClass")
     public String listenedClass(Model model, HttpServletRequest request,
-                                @RequestParam String studentID){
+                                @RequestParam String studentID) {
         UserDetails user = (UserDetails) request.getSession().getAttribute("user");
         Teacher t = teacherService.findByEmail(user.getUsername());
-        model.addAttribute("classes",teacherService.getClassesByTeacher(t.getId()));
-        model.addAttribute("student",studentService.findById(Integer.valueOf(studentID)));
+        model.addAttribute("classes", teacherService.getClassesByTeacher(t.getId()));
+        model.addAttribute("student", studentService.findById(Integer.valueOf(studentID)));
         return "listeningForm";
     }
 
     @PostMapping("/addListening")
     public String addListening(Model model, @RequestParam String studentID,
                                @RequestParam(required = false) String price,
-                               @RequestParam String classID,HttpServletRequest request){
+                               @RequestParam String classID, HttpServletRequest request) {
         UserDetails user = (UserDetails) request.getSession().getAttribute("user");
         Teacher teacher = teacherService.findByEmail(user.getUsername());
-        studentService.addListening(Integer.valueOf(studentID),Integer.valueOf(classID),teacher.getId());
+        studentService.addListening(Integer.valueOf(studentID), Integer.valueOf(classID), teacher.getId());
 
-        if(price!=null)
-        teacherService.addPayment(teacher.getId(), Integer.valueOf(price),Integer.valueOf(classID),Integer.valueOf(studentID));
+        if (price != null)
+            paymentService.addPayment(teacher.getId(), Integer.valueOf(price), Integer.valueOf(classID), Integer.valueOf(studentID));
 
 
         Integer owes = paymentService.studentTeacherLoan(Integer.valueOf(studentID), teacher.getId());
         model.addAttribute("owes", owes);
-        Integer numScheduledClasses = teacherStudentService.find(teacher.getId(), Integer.valueOf(studentID)).getnumScheduledClasses();
+        Integer numScheduledClasses = teacherStudentService.find(teacher.getId(), Integer.valueOf(studentID)).getNumScheduledClasses();
         model.addAttribute("numScheduledClasses", numScheduledClasses);
-        Integer priceByClass = teacherStudentService.find(teacher.getId(), Integer.valueOf(studentID)).getpriceByClass();
+        Integer priceByClass = teacherStudentService.find(teacher.getId(), Integer.valueOf(studentID)).getPriceByClass();
         model.addAttribute("priceByClass", priceByClass);
         Integer numListenedClasses = paymentService.numListenedClasses(Integer.valueOf(studentID), teacher.getId());
         model.addAttribute("numListenedClasses", numListenedClasses);
-        model.addAttribute("classes",teacherService.getClassesByTeacher(teacher.getId()));
+        model.addAttribute("classes", teacherService.getClassesByTeacher(teacher.getId()));
         model.addAttribute("student", studentService.findById(Integer.valueOf(studentID)));
         return "payment";
     }

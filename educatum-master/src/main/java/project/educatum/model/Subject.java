@@ -1,7 +1,10 @@
 package project.educatum.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name = "predmeti", schema = "project")
 public class Subject {
@@ -11,48 +14,23 @@ public class Subject {
     private Integer id;
 
     @Column(name = "ime", nullable = false, length = 100)
-    private String ime;
+    private String name;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_admin", nullable = false)
     private Admin idAdmin;
 
-    public Subject(String ime, Admin idAdmin) {
-
-        this.ime = ime;
+    public Subject(String name, Admin idAdmin) {
+        this.name = name;
         this.idAdmin = idAdmin;
     }
 
     public Subject() {
-
     }
 
     @Override
     public String toString() {
-        return ime;
+        return name;
     }
 
-    public Admin getIdAdmin() {
-        return idAdmin;
-    }
-
-    public void setIdAdmin(Admin idAdmin) {
-        this.idAdmin = idAdmin;
-    }
-
-    public String getName() {
-        return ime;
-    }
-
-    public void setIme(String ime) {
-        this.ime = ime;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

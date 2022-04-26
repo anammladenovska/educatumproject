@@ -2,7 +2,7 @@ package project.educatum.service.impl;
 
 import org.springframework.stereotype.Service;
 import project.educatum.model.Interest;
-import project.educatum.model.InterestID;
+import project.educatum.model.primarykeys.InterestID;
 import project.educatum.repository.InterestRepository;
 import project.educatum.service.InterestService;
 
@@ -18,17 +18,9 @@ public class InterestServiceImpl implements InterestService {
     }
 
     @Override
-    public void addSubjectStudent(Integer subjectID, Integer ucenikId, LocalDate datum) {
-
-        if(subjectID==null){
-
-        }
-        if(ucenikId==null){
-
-        }
-
-        InterestID interestID = new InterestID(subjectID,ucenikId);
-        Interest interested = new Interest(interestID,datum);
+    public void addSubjectStudent(Integer subjectID, Integer studentID, LocalDate datum) {
+        InterestID interestID = new InterestID(subjectID, studentID);
+        Interest interested = new Interest(interestID, datum);
         interestRepository.save(interested);
     }
 }

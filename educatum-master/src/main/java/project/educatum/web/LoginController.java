@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/login")
 public class LoginController {
 
-
     private final TeacherService teacherService;
     private final StudentService studentService;
     private final AdminService adminService;
@@ -58,7 +57,7 @@ public class LoginController {
                     model.addAttribute("haserror", true);
                     model.addAttribute("error", ex.getMessage());
                     return "login";
-                } catch (UserNotEnabledException ex){
+                } catch (UserNotEnabledException ex) {
                     return "notEnabled";
                 }
             }

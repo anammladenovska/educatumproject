@@ -1,11 +1,14 @@
 package project.educatum.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name = "kvalifikacii", schema = "project")
 public class Qualification {
-    public Qualification(){}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_kvalifikacija", nullable = false)
@@ -13,7 +16,7 @@ public class Qualification {
 
 
     @Column(name = "dokument", columnDefinition = "TEXT")
-    private String dokument;
+    private String document;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_nastavnik", nullable = false)
@@ -23,42 +26,13 @@ public class Qualification {
     @JoinColumn(name = "id_admin", nullable = false)
     private Admin idAdmin;
 
+    public Qualification() {
+    }
 
-    public Qualification(String dokument, Teacher idTeacher, Admin idAdmin) {
-        this.dokument = dokument;
+    public Qualification(String document, Teacher idTeacher, Admin idAdmin) {
+        this.document = document;
         this.idTeacher = idTeacher;
         this.idAdmin = idAdmin;
     }
 
-    public Admin getIdAdmin() {
-        return idAdmin;
-    }
-
-    public void setIdAdmin(Admin idAdmin) {
-        this.idAdmin = idAdmin;
-    }
-
-    public Teacher getidTeacher() {
-        return idTeacher;
-    }
-
-    public void setidTeacher(Teacher idTeacher) {
-        this.idTeacher = idTeacher;
-    }
-
-    public String getDokument() {
-        return dokument;
-    }
-
-    public void setDokument(String dokument) {
-        this.dokument = dokument;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

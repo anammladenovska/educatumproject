@@ -8,7 +8,8 @@ import java.util.List;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Integer> {
+
     Student findByEmail(String email);
 
-    List<Student> findAllByImeContainingIgnoreCase(String ime);
+    List<Student> findAllByNameContainingIgnoreCase(String name);
 }
