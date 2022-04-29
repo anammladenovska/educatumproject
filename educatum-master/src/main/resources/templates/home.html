@@ -3,25 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <title>EDUCATUM - HOME</title>
-
-
-    <style>
-
-    </style>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
 </head>
 <body>
 
+<section id="nav-bar">
+    <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo.png" alt="Logo image" /></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars" ></i>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#banner">Почетна</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Услуги</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about-us">За нас</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#footer">Контакт</a>
+                    </li>
+                </ul>
+            </div>
+    </nav>
+</section>
+<!---------------------------->
+<section id="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="promo-title"><b>EDUCATUM</b></h1>
+                <h2>СИСТЕМ ЗА ПРИВАТНИ ЧАСОВИ</h2>
 
-<div class="bg-text">
-    <h1><b>EDUCATUM</b></h1>
-    <h2>СИСТЕМ ЗА ПРИВАТНИ ЧАСОВИ</h2>
+                <p >Имате профил? Продолжете кон <a href="/login" class="log"><b>најава</b></a></p>
 
-    <a href="/register">РЕГИСТРАЦИЈА</a>
+                <a href="/register" class="reg"><b>РЕГИСТРИРАЈ СЕ</b></a>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="img/picture.png" alt="Cover image" class="img-fluid">
+            </div>
+        </div>
+    </div>
 
-    <p style="font-weight: normal">Имате профил? Продолжете кон <a href="/login">најава</a></p>
+    <img src="img/wave-1.png" alt="Wave" class="bottom-img">
+</section>
+<!---------------------------->
+<section id="services">
+    <div class="container text-center">
+        <h1 class="title">КОИ УСЛУГИ ГИ НУДИМЕ?</h1>
+        <div class="row text-center">
+            <div class="col-md-4 services">
+                <img src="img/teacher-student.jpg" alt="teacher-student" class="services-img" >
+                <h4>Пристап до наставници</h4>
+                <p>Веб апликација која овозможува пребарување и пристап до наставници кои држат приватни часови и нивно поврзување со учениците.</p>
+            </div>
+            <div class="col-md-4 services">
+                <img src="img/teacher-student2.jpg" alt="teacher-student" class="services-img" >
+                <h4>Брзо пребарување за учениците</h4>
+                <p>Со брз пристап, без залудно трошење на време, ученикот ќе може да стапи во контакт со одреден наставник.</p>
+            </div>
+            <div class="col-md-4 services">
+                <img src="img/teacher-student3.jpg" alt="teacher-student" class="services-img" >
+                <h4>Наставниците водат евиденција</h4>
+                <p>На наставниците им е овозможена полесна евиденција на нивните ученици и еден вид на маркетинг.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!---------------------------->
+<section id="about-us">
+    <div class="container" >
+        <h1 class="title text-center">ЗОШТО ДА НЕ ИЗБЕРЕТЕ НАС?</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-6 about-us">
+            <h6 class="about-title text-center">Зошто сме поразлични?</h6>
+            <ul>
+                <li>Ги разбираме барањата на клиентите</li>
+                <li>Нудиме флексибилност меѓу клиентите</li>
+                <li>Заштедено време</li>
+                <li>Поголема побарувачка за наставниците</li>
+                <li>Организираност на часовите и плаќањата</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <img src="img/strategy.jpg" alt="strategy" class="img-fluid" width="500" height="530">
+        </div>
+    </div>
+</section>
+<!---------------------------->
+<section id="footer">
+    <img src="img/wave-2.png" alt="Wave" class="footer-img">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 footer-box">
+                <img src="img/demo-logo.png" alt="Demo logo image" />
+                <p>Приклучете ни се заедно да пребарување, учиме и сме организирани.</p>
+            </div>
+            <div class="col-md-4 footer-box">
+                <p><b>КОНТАКТ</b></p>
+                <p>072896333</p>
+                <p>educatum@gmail.com</p>
+            </div>
+        </div>
 
+    </div>
 
-</div>
+</section>
+<!---------------------------->
+<script src="css/smooth-scroll.js"></script>
+<script>
+    var scroll = new SmoothScroll('a[href*="#"]');
+</script>
 
 </body>
 </html>
