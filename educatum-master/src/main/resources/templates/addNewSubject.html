@@ -98,7 +98,7 @@
 
         }
 
-        input[type=submit], input[type=reset],input[type=password],input[type=number] {
+        input[type=submit], input[type=reset], input[type=password], input[type=number] {
             background-color: snow;
             border: none;
             color: black;
@@ -107,15 +107,18 @@
             margin: 4px 2px;
             cursor: pointer;
         }
+
         footer {
             text-align: center;
             padding: 3px;
             color: white;
         }
-        *{
+
+        * {
             background-color: whitesmoke;
             font-family: 'Zen Antique', serif;
         }
+
         a:link, a:visited {
             color: black;
             text-align: center;
@@ -124,7 +127,7 @@
         }
 
 
-        #search{
+        #search {
             background-color: whitesmoke;
             border-style: solid;
             border-width: thin;
@@ -137,13 +140,14 @@
             cursor: pointer;
         }
 
-        input[type=text],input[type=password],input[type=number]{
+        input[type=text], input[type=password], input[type=number] {
             width: 60%;
             padding: 12px 20px;
             margin: 8px 0;
             box-sizing: border-box;
         }
-        input[type=text]:focus,input[type=password]:focus,input[type=number]{
+
+        input[type=text]:focus, input[type=password]:focus, input[type=number] {
             background-color: snow;
         }
 
@@ -181,7 +185,7 @@
         }
 
         /*style the items (options), including the selected item:*/
-        .select-items div,.select-selected {
+        .select-items div, .select-selected {
             color: black;
             padding: 8px 16px;
             border: 1px solid transparent;
@@ -244,26 +248,19 @@
 
 <div class="container">
 
-        <form th:method="post" th:action="@{/teachers/addSubject}">
-            <div class="custom-select" style="width:200px;">
-                <select  id="subjectId" name="subjectId">
-                    <option value="" selected disabled hidden>Изберете предмет</option>
-                    <option th:each="s : ${subjects}"
-                            th:value="${s.getId()}"
-                            th:text="${s.getName()}"></option>
+    <form th:method="post" th:action="@{/teachers/addSubject}">
+            <select id="subjectId" name="subjectId">
+                <option value="" selected disabled hidden>Изберете предмет</option>
+                <option th:each="s : ${allSubjects}"
+                        th:value="${s.getId()}"
+                        th:text="${s.getName()}">
+                </option>
+            </select>
+            <textarea name="desc" class="form-control">Опис...</textarea>
 
-                </select>
-            </div>
-
-            <div style="height: 200px;">
-                <textarea name="desc">Опис...</textarea>
-            </div>
-             <input type='submit' value='Submit' />
-        </form>
-
-
+        <input type='submit' value='Submit'/>
+    </form>
 </div>
-
 
 
 <script>
@@ -282,7 +279,7 @@
         for (j = 1; j < ll; j++) {
             c = document.createElement("DIV");
             c.innerHTML = selElmnt.options[j].innerHTML;
-            c.addEventListener("click", function(e) {
+            c.addEventListener("click", function (e) {
                 var y, i, k, s, h, sl, yl;
                 s = this.parentNode.parentNode.getElementsByTagName("select")[0];
                 sl = s.length;
@@ -305,13 +302,14 @@
             b.appendChild(c);
         }
         x[i].appendChild(b);
-        a.addEventListener("click", function(e) {
+        a.addEventListener("click", function (e) {
             e.stopPropagation();
             closeAllSelect(this);
             this.nextSibling.classList.toggle("select-hide");
             this.classList.toggle("select-arrow-active");
         });
     }
+
     function closeAllSelect(elmnt) {
         var x, y, i, xl, yl, arrNo = [];
         x = document.getElementsByClassName("select-items");
@@ -331,6 +329,7 @@
             }
         }
     }
+
     document.addEventListener("click", closeAllSelect);
 </script>
 </body>

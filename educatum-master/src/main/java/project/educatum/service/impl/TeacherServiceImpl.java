@@ -13,7 +13,9 @@ import project.educatum.repository.*;
 import project.educatum.service.TeacherService;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -45,7 +47,10 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<Teacher> findAll() {
-        return teachersRepository.findAll();
+        return teachersRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparing(Teacher::getEmail))
+                .collect(Collectors.toList());
     }
 
     @Override

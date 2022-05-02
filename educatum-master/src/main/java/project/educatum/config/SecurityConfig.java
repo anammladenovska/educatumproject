@@ -2,6 +2,7 @@ package project.educatum.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,13 +11,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
+@EnableOAuth2Sso
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
-
     @Autowired
     private final UserDetailsService userDetailsService;
     private final CustomAuthenticationProvider customAuthenticationProvider;
@@ -36,26 +39,80 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+//        http.csrf().disable()
+//                .authorizeRequests()
+//                .antMatchers("/","/login").permitAll()
+//                .anyRequest().hasRole("USER_ADMIN")
+//                .and()
+//                .formLogin()
+//                .failureUrl("/login?error=BadCredentials")
+//                .defaultSuccessUrl("/teachers", true)
+//                .and()
+//                .logout()
+//                .logoutUrl("/logout")
+//                .clearAuthentication(true)
+//                .invalidateHttpSession(true)
+//                .deleteCookies("JSESSIONID")
+//                .logoutSuccessUrl("/");
+
+//        http.authorizeRequests()
+//                .antMatchers("/**", "/login**","/oauth2/**").permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin().permitAll()
+//                .and()
+//                .oauth2Login()
+//                .loginPage("/login")
+//                .userInfoEndpoint()
+//                .userService(oauth2UserService);
+//                .and()
+//                .successHandler(new AuthenticationSuccessHandler() {
+//
+//                    @Override
+//                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+//                                                        Authentication authentication) throws IOException, ServletException {
+//
+//                        CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
+//
+//                        userService.processOAuthPostLogin(oauthUser.getEmail());
+//
+//                        response.sendRedirect("/list");
+//                    }
+//                })
+//        http
+//                .antMatcher("/**")
+//                .authorizeRequests()
+//                .antMatchers("/", "/login**", "/webjars/**", "/error**")
+//                .permitAll()
+//                .anyRequest()
+//                .authenticated();
+
+
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .anyRequest().hasRole("USER_ADMIN")
+                .antMatchers("/", "/home", "/assets/**", "/register", "/login").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest()
+                .authenticated()
                 .and()
                 .formLogin()
+                .loginPage("/login").permitAll()
                 .failureUrl("/login?error=BadCredentials")
-                .defaultSuccessUrl("/teachers", true)
+                .defaultSuccessUrl("/home", true)
                 .and()
                 .logout()
                 .logoutUrl("/logout")
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/login");
+
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(customAuthenticationProvider);
     }
+
 
 }

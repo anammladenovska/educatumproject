@@ -46,6 +46,7 @@ public class Teacher implements UserDetails {
     }
 
     public Teacher(String name, String surname, String description, String email, String password, String telephoneNumber) {
+        this.enabled = false;
         this.name = name;
         this.surname = surname;
         this.description = description;

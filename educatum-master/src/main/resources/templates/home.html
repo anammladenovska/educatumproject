@@ -3,130 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <title>EDUCATUM - HOME</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
           crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script th:inline="javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        body{
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(to right, #93A3CE, #1C294E);
+        }
+        #banner {
+            position: relative;
+            top: -35px;
+        }
+        #services {
+            position: relative;
+            top: -50px;
+            background: floralwhite;
+        }
+        #about-us{
+            position: relative;
+            top: -80px;
+        }
+        #footer {
+            position: relative;
+            top: -90px;
+        }
+    </style>
 </head>
 <body>
-
-<section id="nav-bar">
+<section class="nav-bar">
     <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="#">
-                <img src="img/logo.png" alt="Logo image" /></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fa fa-bars" ></i>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#banner">Почетна</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#services">Услуги</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about-us">За нас</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#footer">Контакт</a>
-                    </li>
-                </ul>
-            </div>
+        <!--            <a class="navbar-brand" href="#">-->
+        <!--                <img src="img/logo.png" alt="Logo image" /></a>-->
+        <div class="col-8"></div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#banner">ПОЧЕТНА</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#services">УСЛУГИ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about-us">ЗА НАС</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#footer">КОНТАКТ</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 </section>
-<!---------------------------->
 <section id="banner">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h1 class="promo-title"><b>EDUCATUM</b></h1>
-                <h2>СИСТЕМ ЗА ПРИВАТНИ ЧАСОВИ</h2>
+                <h1 class="promo-title" style="font-weight: bold; color: antiquewhite; text-shadow: 16px 27px 20px rgba(242,227,208,0.54);">&nbsp;&nbsp;&nbsp;<svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="40" height="40"
+                        fill="currentColor"
+                        class="bi bi-mortarboard-fill"
+                        viewBox="0 0 16 16">
+                    <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5Z"/>
+                    <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Z"/>
+                </svg>
+                    EDUCATUM
+                </h1>
+                <h2 style="font-weight: bold; color: antiquewhite; text-shadow: 16px 27px 20px rgba(242,227,208,0.54);">СИСТЕМ ЗА ПРИВАТНИ ЧАСОВИ</h2>
 
-                <p >Имате профил? Продолжете кон <a href="/login" class="log"><b>најава</b></a></p>
+                <h3 style="font-weight: bold; ">Имате профил? Продолжете кон <a style="font-weight: bold; color: antiquewhite;" href="/login" class="log"><b>најава</b></a></h3>
 
-                <a href="/register" class="reg"><b>РЕГИСТРИРАЈ СЕ</b></a>
+                <h3><a href="/register" class="reg"><b style="font-weight: bold; color: antiquewhite;">РЕГИСТРИРАЈ СЕ</b></a></h3>
+
             </div>
             <div class="col-md-6 text-center">
-                <img src="img/picture.png" alt="Cover image" class="img-fluid">
+                <img src="img/picture.png" alt="Cover image" class="img-fluid" height="379px" width="549px">
             </div>
         </div>
     </div>
 
     <img src="img/wave-1.png" alt="Wave" class="bottom-img">
 </section>
-<!---------------------------->
 <section id="services">
     <div class="container text-center">
         <h1 class="title">КОИ УСЛУГИ ГИ НУДИМЕ?</h1>
         <div class="row text-center">
-            <div class="col-md-4 services">
-                <img src="img/teacher-student.jpg" alt="teacher-student" class="services-img" >
-                <h4>Пристап до наставници</h4>
-                <p>Веб апликација која овозможува пребарување и пристап до наставници кои држат приватни часови и нивно поврзување со учениците.</p>
+            <div class="col"></div>
+            <div class="mt-auto col-md-3 services">
+                <img src="img/teacher-student.png" alt="teacher-student" class="services-img">
+                <h4 style="font-weight: bold">Пристап до наставници</h4>
+                <hr/>
+                <h5 style="font-weight: bold;" class="text-justify">Пребарување и пристап до наставници кои држат
+                    приватни часови и нивно поврзување со учениците.</h5>
             </div>
-            <div class="col-md-4 services">
-                <img src="img/teacher-student2.jpg" alt="teacher-student" class="services-img" >
-                <h4>Брзо пребарување за учениците</h4>
-                <p>Со брз пристап, без залудно трошење на време, ученикот ќе може да стапи во контакт со одреден наставник.</p>
+            <div class="mt-auto col-md-3 services">
+                <img src="img/teacher-student2.png" alt="teacher-student" class="services-img">
+                <h4 style="font-weight: bold">Брзо пребарување за учениците</h4>
+                <hr/>
+                <h5 style="font-weight: bold;" class="text-justify">Со брз пристап, без залудно трошење на време, ученикот ќе може да стапи во
+                    контакт со одреден наставник.</h5>
             </div>
-            <div class="col-md-4 services">
-                <img src="img/teacher-student3.jpg" alt="teacher-student" class="services-img" >
-                <h4>Наставниците водат евиденција</h4>
-                <p>На наставниците им е овозможена полесна евиденција на нивните ученици и еден вид на маркетинг.</p>
+            <div class="mt-auto col-md-3 services">
+                <img src="img/teacher-student3.png" alt="teacher-student" class="services-img">
+                <h4 style="font-weight: bold">Наставниците водат евиденција</h4>
+                <hr/>
+                <h5 style="font-weight: bold;" class="text-justify">На наставниците им е овозможена полесна евиденција на нивните ученици и еден
+                    вид на маркетинг.</h5>
             </div>
+            <div class="col"></div>
+
         </div>
     </div>
 </section>
-<!---------------------------->
 <section id="about-us">
     <div class="container" >
-        <h1 class="title text-center">ЗОШТО ДА НЕ ИЗБЕРЕТЕ НАС?</h1>
+        <h1 class="title text-center">ЗОШТО ДА НЕ ИЗБЕРЕТЕ?</h1>
     </div>
     <div class="row">
         <div class="col-md-6 about-us">
-            <h6 class="about-title text-center">Зошто сме поразлични?</h6>
-            <ul>
-                <li>Ги разбираме барањата на клиентите</li>
-                <li>Нудиме флексибилност меѓу клиентите</li>
-                <li>Заштедено време</li>
-                <li>Поголема побарувачка за наставниците</li>
-                <li>Организираност на часовите и плаќањата</li>
-            </ul>
+            <h5 class="about-title text-center">Зошто сме поразлични?</h5>
+            <div class="row" style="height: 20px;"></div>
+                <h4 style="font-weight: bold" class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-all" viewBox="0 0 16 16">
+                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>
+                </svg> Лесна евиденција на часови и плаќања</h4>
+                <h4 style="font-weight: bold" class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-all" viewBox="0 0 16 16">
+                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>
+                </svg> Секој може да се регистрира како наставник или ученик</h4>
+                <h4 style="font-weight: bold" class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-all" viewBox="0 0 16 16">
+                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>
+                </svg> Поголема побарувачка за наставниците</h4>
+            <h4 style="font-weight: bold" class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-all" viewBox="0 0 16 16">
+                <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>
+            </svg> Единствена апликација од ваков тип во државата</h4>
         </div>
         <div class="col-md-6">
-            <img src="img/strategy.jpg" alt="strategy" class="img-fluid" width="500" height="530">
+            <img src="/img/strategy.png" alt="strategy" class="img-fluid" width="500" height="530">
         </div>
     </div>
 </section>
-<!---------------------------->
 <section id="footer">
-    <img src="img/wave-2.png" alt="Wave" class="footer-img">
+    <img src="/img/wave-2.png" alt="Wave" class="footer-img" style="position: relative; top: -50px;">
     <div class="container">
         <div class="row">
-            <div class="col-md-4 footer-box">
-                <img src="img/demo-logo.png" alt="Demo logo image" />
-                <p>Приклучете ни се заедно да пребаруваме, учиме и сме организирани.</p>
+            <div class="col-md-6 footer-box text-center">
+                <img src="img/demo-logo.png" alt="Demo logo image"/>
+                <p>Приклучете ни се заедно да пребаруваме, учиме и организираме.</p>
             </div>
-            <div class="col-md-4 footer-box">
-                <p><b>КОНТАКТ</b></p>
-                <p>~072896333</p>
-                <p>~educatum@gmail.com</p>
+            <div class="col-md-6 footer-box text-center">
+                <p style="color: #ffcc00;"><b>КОНТАКТ</b></p>
+                <p>072896333</p>
+                <p>educatum@gmail.com</p>
             </div>
         </div>
-
     </div>
-
 </section>
-<!---------------------------->
-<script src="css/smooth-scroll.js"></script>
-<script>
-    var scroll = new SmoothScroll('a[href*="#"]');
-</script>
 
 </body>
 </html>
+
+
+
+
+

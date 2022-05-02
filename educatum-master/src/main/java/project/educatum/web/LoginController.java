@@ -43,6 +43,7 @@ public class LoginController {
         return "login";
     }
 
+
     @PostMapping
     public String login(HttpServletRequest request, Model model, @RequestParam String username, @RequestParam String password) {
         String email = username;
