@@ -10,6 +10,7 @@ import project.educatum.repository.SubjectRepository;
 import project.educatum.service.SubjectService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
@@ -24,7 +25,10 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public List<Subject> findAll() {
-        return this.subjectsRepository.findAll();
+        return this.subjectsRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparing(Subject::getName))
+                .collect(Collectors.toList());
     }
 
     @Override

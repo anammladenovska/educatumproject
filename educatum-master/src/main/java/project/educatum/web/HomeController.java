@@ -31,7 +31,8 @@ public class HomeController {
     private final TeacherService teacherService;
     private final QualificationService qualificationService;
     private final StudentService studentService;
-    private static String UPLOADED_FOLDER = "C://Users//Acer//Desktop//kvalifikacii//";
+    //  private static String UPLOADED_FOLDER = "C://Users//Acer//Desktop//kvalifikacii//";
+    private static String UPLOADED_FOLDER = "C://Users//User//OneDrive//Desktop//kvalifikacii//";
 
     public HomeController(SubjectService subjectService, AdminService adminService, TeacherService teacherService, QualificationService qualificationService, StudentService studentService) {
         this.subjectService = subjectService;
@@ -44,6 +45,11 @@ public class HomeController {
     @GetMapping
     public String getHomePage() {
         return "/home";
+    }
+
+    @PostMapping("/choose")
+    public String chooseRole() {
+        return "chooseRole";
     }
 
     @GetMapping("/chooseSubject")

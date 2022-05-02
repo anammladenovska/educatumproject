@@ -1,251 +1,188 @@
-<!DOCTYPE html>
-<html lang="en">
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>EDUCATUM - Предмети со наставници</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header>-->
+<!--    <div class="container">-->
+<!--        <h3 class="logo"></h3>-->
+<!--        <nav>-->
+<!--            <ul>-->
+<!--                <li><a href="/admin/allTeachers">ДОМАШНИ ЗАДАЧИ</a></li>-->
+<!--                <li><a href="#">ПРОФИЛ</a></li>-->
+<!--                <li><a href="/logout">ОДЈАВИ СЕ</a></li>-->
+<!--            </ul>-->
+<!--        </nav>-->
+<!--    </div>-->
+<!--</header>-->
+<!--<h3>СИТЕ ПРЕДМЕТИ СО СООДВЕТНИ НАСТАВНИЦИ</h3>-->
+<!--<div class="container">-->
+<!--    <form action="/students/listSubjectsTeachers">-->
+<!--        <select id="subjectID" name="subjectID" onchange="this.form.submit()">-->
+<!--            <option value="none" selected>Избери предмет</option>-->
+<!--            <option th:each="p : ${subjects}"-->
+<!--                    th:value="${p.getId()}"-->
+<!--                    th:text="${p.getName()}">-->
+<!--            </option>-->
+<!--        </select>-->
+<!--    </form>-->
+<!--    <div>-->
+<!--        <table>-->
+<!--            <ul>-->
+<!--                <tr>-->
+<!--                    <li th:each="t : ${teachers}">-->
+<!--                        <div id="left">-->
+<!--                            <a th:href="@{'/teachers/showProfileTeacher/{id}' (id=${t.getId()})}" th:method="post">-->
+<!--                                <th:block id="courseText" th:value="${t.getId()}" th:text="${t.getFullName()}"/>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                </tr>-->
+<!--            </ul>-->
+<!--        </table>-->
+<!--        <br/>-->
+<!--        <br/>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!-- -&#45;&#45;-->
+
+
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>ЛИСТА НА ПРЕДМЕТИ СО НАСТАВНИЦИ</title>
-
+    <title>EDUCATUM - НАЈАВА</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@600&display=swap');
-
-        body {
-            margin: 0;
-            background: whitesmoke;
-            font-family: 'Cormorant Unicase', serif;
-            font-weight: 800;
-        }
-
-        .container {
-            width: 80%;
-            margin: 0 auto;
-        }
-
-        header {
-            background: whitesmoke;
-        }
-
-        header::after {
-            content: '';
-            display: table;
-            clear: both;
-        }
-
-        .logo {
-            float: left;
-            padding: 10px 0;
-        }
-
-        nav {
-            float: right;
-        }
-
-        nav ul {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        nav li {
-            display: inline-block;
-            margin-left: 70px;
-            padding-top: 23px;
-
-            position: relative;
-        }
-
-        nav a {
-            color: #444;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 14px;
-        }
-
-        nav a:hover {
-            color: #000;
-        }
-
-        nav a::before {
-            content: '';
-            display: block;
-            height: 5px;
-            background-color: #444;
-
-            position: absolute;
-            top: 0;
-            width: 0%;
-
-            transition: all ease-in-out 250ms;
-        }
-
-        nav a:hover::before {
-            width: 100%;
-        }
-
-        .Accordion + .Accordion {
-            margin-top: 1em;
-        }
-
-        .Accordion input[type="radio"],
-        .Accordion input[type="checkbox"] {
-            display: none;
-        }
-
-        .Accordion input:checked + .Accordion-subElements > .Accordion-subElement {
-            height: 2em;
-            -webkit-transform: scale(1);
-            transform: scale(1);
-        }
-
-        .Accordion-item label {
-            display: block;
-            padding: 1em;
-            background-color: lightsteelblue;
-            color: black;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .Accordion-item label:hover {
-            background-color: cornflowerblue;
-        }
-
-        button {
-            display: inline-block;
-            border-radius: 4px;
-            background-color: black;
-            border: none;
-            color: snow;
-            text-align: center;
-            font-size: 18px;
-            padding: 10px;
-            width: 100px;
-            transition: all 0.5s;
-            cursor: pointer;
-            margin: 5px;
-
-
-        }
-
-        input[type=submit], input[type=reset],input[type=password],input[type=number] {
-            background-color: snow;
-            border: none;
-            color: black;
-            padding: 16px 32px;
-            text-decoration: none;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-        footer {
-            text-align: center;
-            padding: 3px;
-            color: white;
-        }
-        *{
-            background-color: whitesmoke;
-            font-family: 'Cormorant Unicase', serif;
-        }
-        a:link, a:visited {
-            color: black;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-
-        #search{
-            background-color: whitesmoke;
-            border-style: solid;
-            border-width: thin;
-            border-color: black;
-            color: black;
-            padding: 12px 20px;
-            text-decoration: none;
-            margin: 8px 0;
-
-            cursor: pointer;
-        }
-
-        input[type=text],input[type=password],input[type=number]{
-            width: 60%;
-            padding: 12px 20px;
-            margin: 8px 0;
+        * {
             box-sizing: border-box;
         }
-        input[type=text]:focus,input[type=password]:focus,input[type=number]{
-            background-color: snow;
+
+        .no-gutters {
+            background: floralwhite;
+            border-radius: 5px;
+            box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
         }
 
-
-        .Accordion-subElement a {
-            display: block;
-            padding-left: 2em;
-            color: inherit;
-            text-decoration: none;
+        body {
+            background: linear-gradient(to right, #93A3CE, #1C294E);
+            color: #000029;
         }
 
-
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            position: relative;
+            bottom: -30px;
+        }
     </style>
-    <script>
-        function submitbtn(){
-            getElementById("disable").disabled=true;
-
-        }
-    </script>
-
-
 </head>
 <body>
-
-<header>
-    <div class="container">
-        <h3 class="logo"></h3>
-
-        <nav>
-            <ul>
-                <li><a href="/admin/allTeachers">ДОМАШНИ ЗАДАЧИ</a></li>
-                <li><a href="#">ПРОФИЛ</a></li>
-                <li ><a href="/logout">ОДЈАВИ СЕ</a></li>
+<section class="nav-bar">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="ml-1"></div>
+        <a class="navbar-brand" href="#">
+            <p style="font-weight: bold; color: #FFCC00FF;">&nbsp;&nbsp;
+                &nbsp;
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="26" height="26"
+                     fill="currentColor"
+                     class="bi bi-mortarboard-fill"
+                     viewBox="0 0 16 16">
+                    <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5Z"/>
+                    <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Z"/>
+                </svg>
+                EDUCATUM
+            </p>
+        </a>
+        <div class="col-6"></div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/students/listSubjectsTeachers"
+                       style="text-shadow: 2px 2px 2px #A3A3A3; color: floralwhite;">НАСТАВНИЦИ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <p>ДОМАШНИ ЗАДАЧИ</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">ПРОФИЛ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">ОДЈАВИ СЕ</a>
+                </li>
             </ul>
-        </nav>
-    </div>
-</header>
+        </div>
+    </nav>
 
-<div style="height: 50px"></div>
-<h3 style="text-align: center; font-weight: bold">СИТЕ ПРЕДМЕТИ СО СООДВЕТНИ НАСТАВНИЦИ</h3>
-<div class="container" style="position: relative;  right:-150px;">
+</section>
 
-    <form action="/students/listSubjectsTeachers">
-        <select id="subjectID" name="subjectID" onchange="this.form.submit()">
-            <option value="none" selected>Избери предмет</option>
-            <option th:each="p : ${subjects}"
-                    th:value="${p.getId()}"
-                    th:text="${p.getName()}">
-            </option>
+<section id="banner" style="position: relative; top: -30px;">
+    <div class="container" style="background-color: floralwhite;  border-radius: 5px;
+            box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;">
 
-        </select>
-    </form>
+        <div style="height: 50px"></div>
+        <h2 style="font-weight: bold; color: #000029;" class="text-center" id="title">
+            НАСТАВНИЦИ </h2>
 
-    <div style="position: center">
 
+        <form action="/students/listSubjectsTeachers">
+            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="subjectID"
+                    name="subjectID" onchange="this.form.submit()">
+                <option value="none" selected>Избери предмет</option>
+                <option th:each="p : ${subjects}"
+                        th:value="${p.getId()}"
+                        th:text="${p.getName()}">
+                </option>
+
+            </select>
+        </form>
+
+        <div style="position: center">
             <table style="position: center">
                 <ul>
                     <tr>
                         <li style="list-style-type: none;" th:each="t : ${teachers}">
                             <div id="left">
-                                <a th:href="@{'/teachers/showProfileTeacher/{id}' (id=${t.getId()})}" th:method="post"> <th:block id="courseText" th:value="${t.getId()}" th:text="${t.getFullName()}"/></a>
-
-
+                                <a th:href="@{'/teachers/showProfileTeacher/{id}' (id=${t.getId()})}"
+                                   th:method="post">
+                                    <th:block id="courseText" th:value="${t.getId()}"
+                                              th:text="${t.getFullName()}"/>
+                                </a>
                             </div>
                         </li>
                     </tr>
                 </ul>
             </table>
             <br/>
-            <br/>
+        </div>
+
+
+        <div style="height: 30px;"></div>
     </div>
-
-</div>
-
-
+</section>
+<img src="/img/wavebook.png" alt="Wave" class="bottom-img" style="position: relative; bottom: -60px;">
 </body>
 </html>

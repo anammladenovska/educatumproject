@@ -86,8 +86,8 @@ public class AdminController {
     }
 
     @PostMapping("/add/subject")
-    public String create(@RequestParam String ime) {
-        subjectService.create(ime);
+    public String create(@RequestParam String name) {
+        subjectService.create(name);
         return "redirect:/admin/allSubjects";
     }
 

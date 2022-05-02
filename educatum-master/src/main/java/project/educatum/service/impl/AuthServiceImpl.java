@@ -17,6 +17,7 @@ import project.educatum.repository.TeacherRepository;
 import project.educatum.repository.StudentRepository;
 import project.educatum.service.AuthService;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -57,7 +58,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         }
         Student u = studentsRepository.findByEmail(email);
         if (!passwordEncoder.matches(password, u.getPassword())) {
-            throw new BadCredentialsException("Invalid credentials");
+            throw new BadCredentialsException("Passwords do not match!");
         }
         UserDetails user = loadUserByUsername(email);
         return user;
@@ -66,10 +67,14 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
 
     @Override
     public UserDetails loginAdmin(String email, String password) {
-        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
+        if (email == null || email.isEmpty() || password == null || password.isEmpty())
             throw new InvalidArgumentsException();
-        }
+
         UserDetails user = loadUserByUsername(email);
+
+        if (!Objects.equals(user.getPassword(), passwordEncoder.encode(password)))
+            throw new BadCredentialsException("Incorrect password!");
+
         return user;
     }
 
@@ -79,6 +84,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         Admin userAdmin = this.adminRepository.findByEmail(email);
         Teacher userTeacher = this.teachersRepository.findByEmail(email);
         Student userStudent = this.studentsRepository.findByEmail(email);
+
         if (userAdmin != null) {
             return new org.springframework.security.core.userdetails.User(
                     userAdmin.getEmail(),
