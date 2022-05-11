@@ -24,4 +24,13 @@ public class Homework {
     @JoinColumn(name = "id_cas", nullable = false)
     private Class idCas;
 
+    public Homework(String description, Teacher idTeacher, Class idCas) {
+        this.description = description;
+        this.idTeacher = idTeacher;
+        this.idCas = idCas;
+    }
+
+    public Homework() {
+    }
+
 }

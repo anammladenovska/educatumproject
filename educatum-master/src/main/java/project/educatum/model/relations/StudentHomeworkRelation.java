@@ -18,4 +18,11 @@ public class StudentHomeworkRelation {
     @Column(name = "dali_zavrsena")
     private Boolean isDone;
 
+    public StudentHomeworkRelation() {
+        this.isDone = false;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
 }

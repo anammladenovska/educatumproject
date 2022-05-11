@@ -4,12 +4,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import project.educatum.model.Homework;
 import project.educatum.model.Student;
 import project.educatum.model.Teacher;
+import project.educatum.model.relations.StudentHomeworkRelation;
 import project.educatum.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping(path = "/students", method = {RequestMethod.POST, RequestMethod.DELETE, RequestMethod.GET})
@@ -21,14 +24,18 @@ public class StudentController {
     private final TeacherService teacherService;
     private final PaymentService paymentService;
     private final TeacherStudentService teacherStudentService;
+    private final HomeworkService homeworkService;
+    private final StudentHomeworkService studentHomeworkService;
 
-    public StudentController(StudentService studentService, SubjectService subjectService, InterestService interestService, TeacherService teacherService, PaymentService paymentService, TeacherStudentService teacherStudentService) {
+    public StudentController(StudentService studentService, SubjectService subjectService, InterestService interestService, TeacherService teacherService, PaymentService paymentService, TeacherStudentService teacherStudentService, HomeworkService homeworkService, StudentHomeworkService studentHomeworkService) {
         this.studentService = studentService;
         this.subjectService = subjectService;
         this.interestService = interestService;
         this.teacherService = teacherService;
         this.paymentService = paymentService;
         this.teacherStudentService = teacherStudentService;
+        this.homeworkService = homeworkService;
+        this.studentHomeworkService = studentHomeworkService;
     }
 
     @GetMapping("/listSubjectsTeachers")
@@ -101,6 +108,43 @@ public class StudentController {
         model.addAttribute("classes", teacherService.getClassesByTeacher(teacher.getId()));
         model.addAttribute("student", studentService.findById(Integer.valueOf(studentID)));
         return "payment";
+    }
+
+
+    @PostMapping("/showProfileStudent")
+    public String showProfileStudent(HttpServletRequest request, Model model) {
+        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
+        Student student = studentService.findByEmail(user.getUsername());
+        model.addAttribute("student", student);
+        return "showProfileStudent.html";
+    }
+
+    @PostMapping("/homeWork")
+    public String getAllHomeworks(@RequestParam(required = false) String opis, Model model){
+        List<Homework> homeworks;
+        if(opis == null){
+            homeworks = homeworkService.findAll();
+        } else {
+            homeworks = homeworkService.findAllByDescriptionLike(opis);
+        }
+        model.addAttribute("homeworks", homeworks);
+        return "homeworksList";
+    }
+
+    @PostMapping("/add/homework")
+    public String create(@RequestParam String opis, @RequestParam String email, @RequestParam Integer aClass) {
+        Teacher teacher = teacherService.findByEmail(email);
+        homeworkService.create(opis, teacher.getId(), aClass);
+        return "redirect:/students/homeWork";
+    }
+
+    @PostMapping("/done/{id}")
+    public String doneHomework(@PathVariable String id) {
+        StudentHomeworkRelation h = studentHomeworkService.findById(Integer.valueOf(id));
+        if(h != null){
+            studentHomeworkService.updateDone(Integer.valueOf(id));
+        }
+        return "redirect:/students/homeWork";
     }
 
 }

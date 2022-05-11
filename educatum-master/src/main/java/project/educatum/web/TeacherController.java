@@ -1,14 +1,17 @@
 package project.educatum.web;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import project.educatum.model.Class;
 import project.educatum.model.Student;
 import project.educatum.model.Teacher;
 import project.educatum.model.Subject;
+import project.educatum.model.exceptions.SubjectNotFoundException;
 import project.educatum.service.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -188,20 +191,6 @@ public class TeacherController {
         } else return "redirect:/home";
     }
 
-    @PostMapping("/profile")
-    public String showProfile(Model model, HttpServletRequest request) {
-        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
-        if (user != null) {
-            Teacher teacher = teacherService.findByEmail(user.getUsername());
-            model.addAttribute("ime", teacher.getName() + " " + teacher.getSurname());
-            model.addAttribute("opis", teacher.getDescription());
-            model.addAttribute("email", teacher.getEmail());
-            model.addAttribute("tel", teacher.getTelephoneNumber());
-            return "userInfo";
-        } else return "redirect/home";
-    }
-
-
     @PostMapping("/teachesSubject")
     public String teachesSubject(@RequestParam String tema, @RequestParam String subjectID, HttpServletRequest request) {
         Optional<Subject> p = subjectService.findById(Integer.valueOf(subjectID));
@@ -214,11 +203,6 @@ public class TeacherController {
         } else return "redirect:/home";
     }
 
-    @PostMapping("/addClassForm")
-    public String addClassForm(Model model) {
-        model.addAttribute("subjects", subjectService.findAll());
-        return "addNewClass";
-    }
 
     @PostMapping("/addClass")
     public String addClass(
@@ -230,8 +214,12 @@ public class TeacherController {
         if (user != null) {
             Teacher t = teacherService.findByEmail(user.getUsername());
             Subject s = subjectService.findByName(ime);
-            classService.addClass(date, desc, t.getId(), s.getId());
-            return "redirect:/teachers/allClasses";
+            if(s != null)
+            {
+                classService.addClass(date, desc, t.getId(), s.getId());
+                return "redirect:/teachers/allClasses";
+            }else
+                return "redirect:/teachers/allClasses";
         } else
             return "redirect:/home";
 
@@ -242,5 +230,13 @@ public class TeacherController {
         Teacher teacher = teacherService.findById(Integer.valueOf(id));
         model.addAttribute("teacher", teacher);
         return "showProfileTeacher.html";
+    }
+
+    @PostMapping("/showProfile")
+    public String showProfile(HttpServletRequest request,Model model) {
+        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
+        Teacher teacher = teacherService.findByEmail(user.getUsername());
+        model.addAttribute("teacher", teacher);
+        return "showProfile.html";
     }
 }
