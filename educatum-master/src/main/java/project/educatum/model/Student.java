@@ -84,4 +84,8 @@ public class Student implements UserDetails {
         return true;
     }
 
+    public String getFullName() {
+        return name + ' ' + surname;
+    }
+
 }

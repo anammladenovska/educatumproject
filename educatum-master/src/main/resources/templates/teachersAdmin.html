@@ -1,3 +1,152 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>EDUCATUM - Наставници</title>-->
+<!--    <link rel="stylesheet" href="/css/style.css">-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"-->
+<!--          rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"-->
+<!--          crossorigin="anonymous">-->
+<!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"-->
+<!--            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"-->
+<!--            crossorigin="anonymous"></script>-->
+<!--    <link rel="stylesheet"-->
+<!--          href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">-->
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>-->
+<!--    <script th:inline="javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<section class="nav-bar">-->
+<!--    <nav class="navbar navbar-expand-lg navbar-light">-->
+<!--        <div class="ml-1"></div>-->
+<!--        <a class="navbar-brand" href="#">-->
+<!--            <p style="font-weight: bold; color: #FFCC00FF;">&nbsp;&nbsp;&nbsp;<svg xmlns="http://www.w3.org/2000/svg"-->
+<!--                                                                                   width="26" height="26"-->
+<!--                                                                                   fill="currentColor"-->
+<!--                                                                                   class="bi bi-mortarboard-fill"-->
+<!--                                                                                   viewBox="0 0 16 16">-->
+<!--                <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5Z"/>-->
+<!--                <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Z"/>-->
+<!--            </svg>-->
+<!--                EDUCATUM-->
+<!--            </p>-->
+<!--        </a>-->
+<!--        <div class="col-6"></div>-->
+<!--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"-->
+<!--                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--            <i class="fa fa-bars"></i>-->
+<!--        </button>-->
+<!--        <div class="collapse navbar-collapse justify-content-end navbarNav">-->
+<!--            <ul class="navbar-nav mr-auto">-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/admin/allTeachers"-->
+<!--                       style="color: #ffcc00; text-shadow: 2px 2px 2px #A3A3A3;"><p style="color: floralwhite;">-->
+<!--                        НАСТАВНИЦИ</p></a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/admin/allSubjects">ПРЕДМЕТИ</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/admin/allStudents">УЧЕНИЦИ</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/logout">ОДЈАВИ СЕ</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </nav>-->
+<!--</section>-->
+
+<!--<section id="banner" style="position: relative; top:-30px;">-->
+<!--    <div class="container" style="background-color: floralwhite;  border-radius: 5px;-->
+<!--            box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;">-->
+<!--        <div class="row">-->
+<!--            <h1 class="promo-title text-center" style="color: #000029">НАСТАВНИЦИ</h1>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <form class="row" th:action="@{'/admin/allTeachers'}">-->
+<!--                <div class="form-group col-1 ml-1"></div>-->
+<!--                <div class="form-group col-9">-->
+<!--                    <input class="form-control transparent-input border-bottom" type="text"-->
+<!--                           placeholder="Пребарувај наставник..." name="ime"/>-->
+<!--                </div>-->
+<!--                <div class="form-group col">-->
+<!--                    <button id="filter" type="submit" class="btn btn-outline-secondary btn-block">-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
+<!--                             class="bi bi-search" viewBox="0 0 16 16">-->
+<!--                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>-->
+<!--                        </svg>-->
+<!--                        Пребарај-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <table class="table table-hover">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th scope="col">Име</th>-->
+<!--                    <th scope="col">Презиме</th>-->
+<!--                    <th scope="col">E-mail</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr th:each="t : ${teachers}">-->
+<!--                    <td class="col-2">-->
+<!--                        <th:block id="teacherName" th:text="${t.getName()}"-->
+<!--                                  th:style="'font-size:25px; font-weight:bold;'"/>-->
+<!--                    </td>-->
+<!--                    <td class="col-2">-->
+<!--                        <th:block id="teacherSurname" th:text="${t.getSurname()}"-->
+<!--                                  th:style="'font-size:25px; font-weight:bold;'"/>-->
+<!--                    </td>-->
+<!--                    <td class="col-3">-->
+<!--                        <th:block id="teacherEmail" th:text="${t.getEmail()}"-->
+<!--                                  th:style="'font-size:25px; font-weight:bold;'"/>-->
+<!--                    </td>-->
+
+
+<!--                    <td class="col-2">-->
+
+<!--                            <div th:if="${t.isEnabled()}==false">-->
+<!--                            <a class="btn btn-outline-secondary btn-block btn-sm"-->
+<!--                               th:href="@{'/admin/activate/{id}' (id=${t.getId()})}"-->
+<!--                               th:method="POST" th:value="${t.getId()}">-->
+<!--                                    <p>Активирај корисник</p>-->
+<!--                            </a>-->
+<!--                            </div>-->
+<!--                        <div th:if="${t.isEnabled()==true}">-->
+<!--                            <button type="button" class="btn btn-outline-success btn-sm" disabled>Корисникот е активиран<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-all" viewBox="0 0 16 16">-->
+<!--                                <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>-->
+<!--                            </svg></button>-->
+<!--                        </div>-->
+
+<!--                    </td>-->
+<!--                    <td class="col-2">-->
+<!--                        <div>-->
+<!--                            <a class="btn btn-outline-danger" th:href="@{'/teachers/delete/{id}' (id=${t.getId()})}"-->
+<!--                               th:method="POST" th:value="${t.getId()}"><i class="bi bi-trash">-->
+<!--                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
+<!--                                     class="bi bi-trash" viewBox="0 0 16 16">-->
+<!--                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>-->
+<!--                                    <path fill-rule="evenodd"-->
+<!--                                          d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>-->
+<!--                                </svg>-->
+<!--                            </i></a>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <img src="/img/wavebook.png" alt="Wave" class="bottom-img" style="position: relative; bottom: -60px;">-->
+<!--</section>-->
+<!--</body>-->
+<!--</html>-->
+
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -108,13 +257,13 @@
 
                     <td class="col-2">
 
-                            <div th:if="${t.isEnabled()}==false">
+                        <div th:if="${t.isEnabled()}==false">
                             <a class="btn btn-outline-secondary btn-block btn-sm"
                                th:href="@{'/admin/activate/{id}' (id=${t.getId()})}"
                                th:method="POST" th:value="${t.getId()}">
-                                    <p>Активирај корисник</p>
+                                <p>Активирај корисник</p>
                             </a>
-                            </div>
+                        </div>
                         <div th:if="${t.isEnabled()==true}">
                             <button type="button" class="btn btn-outline-success btn-sm" disabled>Корисникот е активиран<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-all" viewBox="0 0 16 16">
                                 <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>
@@ -144,5 +293,3 @@
 </section>
 </body>
 </html>
-
-
