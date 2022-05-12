@@ -4,6 +4,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import project.educatum.model.Class;
 import project.educatum.model.Homework;
 import project.educatum.model.Student;
 import project.educatum.model.Teacher;
@@ -26,8 +27,9 @@ public class StudentController {
     private final TeacherStudentService teacherStudentService;
     private final HomeworkService homeworkService;
     private final StudentHomeworkService studentHomeworkService;
+    private final ClassService classService;
 
-    public StudentController(StudentService studentService, SubjectService subjectService, InterestService interestService, TeacherService teacherService, PaymentService paymentService, TeacherStudentService teacherStudentService, HomeworkService homeworkService, StudentHomeworkService studentHomeworkService) {
+    public StudentController(StudentService studentService, SubjectService subjectService, InterestService interestService, TeacherService teacherService, PaymentService paymentService, TeacherStudentService teacherStudentService, HomeworkService homeworkService, StudentHomeworkService studentHomeworkService, ClassService classService) {
         this.studentService = studentService;
         this.subjectService = subjectService;
         this.interestService = interestService;
@@ -36,6 +38,7 @@ public class StudentController {
         this.teacherStudentService = teacherStudentService;
         this.homeworkService = homeworkService;
         this.studentHomeworkService = studentHomeworkService;
+        this.classService = classService;
     }
 
     @GetMapping("/listSubjectsTeachers")
@@ -132,9 +135,10 @@ public class StudentController {
     }
 
     @PostMapping("/add/homework")
-    public String create(@RequestParam String opis, @RequestParam String email, @RequestParam Integer aClass) {
+    public String create(@RequestParam String opis, @RequestParam String email, @RequestParam String tema) {
         Teacher teacher = teacherService.findByEmail(email);
-        homeworkService.create(opis, teacher.getId(), aClass);
+        Class aClass = classService.findByTopic(tema);
+        homeworkService.create(opis, teacher.getId(), aClass.getId());
         return "redirect:/students/homeWork";
     }
 

@@ -125,6 +125,13 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public Teacher edit(Integer id, String opis) {
+        Teacher teacher = this.findById(id);
+        teacher.setDescription(opis);
+        return this.teachersRepository.save(teacher);
+    }
+
+    @Override
     public void updateEnabled(Integer teacherID) {
         teachersRepository.updateEnabled(teacherID);
     }

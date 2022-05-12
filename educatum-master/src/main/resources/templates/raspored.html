@@ -68,11 +68,13 @@
         <div class="collapse navbar-collapse justify-content-end navbarNav">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/teachers/allClasses">ЧАСОВИ</a>
+                    <a class="nav-link" href="/teachers/allClasses"
+                       style="color: #ffcc00; text-shadow: 2px 2px 2px #A3A3A3;">
+                        <p style="color: floralwhite;">ЧАСОВИ</p>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/teachers/allSubjects"
-                       style="text-shadow: 2px 2px 2px #A3A3A3; color: floralwhite;">
+                    <a class="nav-link" href="/teachers/allSubjects">
                         ПРЕДМЕТИ
                     </a>
                 </li>
@@ -157,7 +159,11 @@
                 <tbody>
                 <tr th:each="c : ${classes}">
                     <td class="col-2">
-                        <th:block id="subjectName" th:text="${c}"
+                        <th:block id="subjectName" th:text="${c.getTopic()}"
+                                  th:style="'font-size:25px; font-weight:bold;'"/>
+                    </td>
+                    <td class="col-2">
+                        <th:block id="dateSort" th:text="${c.getBeginningTime()}"
                                   th:style="'font-size:25px; font-weight:bold;'"/>
                     </td>
                 </tr>

@@ -232,6 +232,13 @@ public class TeacherController {
         return "showProfileTeacher.html";
     }
 
+    @PostMapping("/showProfileTeacher2/{id}")
+    public String showProfileTeacher2(@PathVariable String id, Model model) {
+        Teacher teacher = teacherService.findById(Integer.valueOf(id));
+        model.addAttribute("teacher", teacher);
+        return "showProfileTeacher2.html";
+    }
+
     @PostMapping("/showProfile")
     public String showProfile(HttpServletRequest request,Model model) {
         UserDetails user = (UserDetails) request.getSession().getAttribute("user");
@@ -239,4 +246,10 @@ public class TeacherController {
         model.addAttribute("teacher", teacher);
         return "showProfile.html";
     }
+
+//    @PostMapping("/edit/{id}")
+//    public String editDescription(@PathVariable String id) {
+//        teacherService.edit();
+//        return "redirect:/teachers/showProfile";
+//    }
 }

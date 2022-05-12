@@ -12,4 +12,6 @@ public interface ClassService {
     void addClass(LocalDateTime dateTime, String desc, Integer teacherID, Integer subjectID);
 
     List<Class> findAllByTeacher(Integer id);
+
+    Class findByTopic(String tema);
 }
