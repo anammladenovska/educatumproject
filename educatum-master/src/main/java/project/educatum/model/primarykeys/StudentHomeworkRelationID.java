@@ -11,6 +11,7 @@ import java.util.Objects;
 @Data
 @Embeddable
 public class StudentHomeworkRelationID implements Serializable {
+
     private static final long serialVersionUID = 8560838741150170862L;
     @Column(name = "id_ucenik", nullable = false)
     private Integer studentID;

@@ -1,6 +1,7 @@
 package project.educatum.service;
 
 import project.educatum.model.Student;
+import project.educatum.model.Teacher;
 
 import java.util.List;
 
@@ -24,4 +25,5 @@ public interface StudentService {
 
     void addListening(Integer studentID, Integer classID, Integer teacherID);
 
+    boolean rateTeacher(Teacher t, Student s, Float r);
 }

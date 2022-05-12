@@ -15,7 +15,6 @@ public interface TeacherService {
 
     List<Student> getStudentsByTeacher(Integer id);
 
-
     void updateEnabled(Integer teacherID);
 
     List<Subject> getSubjectsByTeacher(Integer id);
@@ -38,4 +37,5 @@ public interface TeacherService {
 
     Teacher edit(Integer id, String opis);
 
+    double getRatingForTeacher(Long teacherID);
 }

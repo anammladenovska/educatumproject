@@ -20,13 +20,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
-    @Autowired
-    private final UserDetailsService userDetailsService;
     private final CustomAuthenticationProvider customAuthenticationProvider;
 
-    public SecurityConfig(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService, CustomAuthenticationProvider customAuthenticationProvider) {
+    public SecurityConfig(PasswordEncoder passwordEncoder, CustomAuthenticationProvider customAuthenticationProvider) {
         this.passwordEncoder = passwordEncoder;
-        this.userDetailsService = userDetailsService;
         this.customAuthenticationProvider = customAuthenticationProvider;
     }
 
@@ -38,56 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-//        http.csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/","/login").permitAll()
-//                .anyRequest().hasRole("USER_ADMIN")
-//                .and()
-//                .formLogin()
-//                .failureUrl("/login?error=BadCredentials")
-//                .defaultSuccessUrl("/teachers", true)
-//                .and()
-//                .logout()
-//                .logoutUrl("/logout")
-//                .clearAuthentication(true)
-//                .invalidateHttpSession(true)
-//                .deleteCookies("JSESSIONID")
-//                .logoutSuccessUrl("/");
-
-//        http.authorizeRequests()
-//                .antMatchers("/**", "/login**","/oauth2/**").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin().permitAll()
-//                .and()
-//                .oauth2Login()
-//                .loginPage("/login")
-//                .userInfoEndpoint()
-//                .userService(oauth2UserService);
-//                .and()
-//                .successHandler(new AuthenticationSuccessHandler() {
-//
-//                    @Override
-//                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-//                                                        Authentication authentication) throws IOException, ServletException {
-//
-//                        CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
-//
-//                        userService.processOAuthPostLogin(oauthUser.getEmail());
-//
-//                        response.sendRedirect("/list");
-//                    }
-//                })
-//        http
-//                .antMatcher("/**")
-//                .authorizeRequests()
-//                .antMatchers("/", "/login**", "/webjars/**", "/error**")
-//                .permitAll()
-//                .anyRequest()
-//                .authenticated();
-
-
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/home", "/assets/**", "/register", "/login").permitAll()
@@ -106,13 +53,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/login");
-
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(customAuthenticationProvider);
     }
-
-
 }

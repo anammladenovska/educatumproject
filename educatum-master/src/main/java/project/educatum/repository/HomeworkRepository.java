@@ -14,5 +14,4 @@ public interface HomeworkRepository extends JpaRepository<Homework, Integer> {
     List<Homework> findAllByDescriptionContainingIgnoreCase(String opis);
 
     Homework findByDescription(String opis);
-
 }

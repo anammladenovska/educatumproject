@@ -159,7 +159,6 @@ public class TeacherServiceImpl implements TeacherService {
     public void addSubject(Integer teacherId, Integer subjectId, String desc) {
         TeacherSubjectRelationID ppId = new TeacherSubjectRelationID(teacherId, subjectId);
         teacherSubjectRepository.save(new TeacherSubjectRelation(ppId, desc));
-
     }
 
 
@@ -167,9 +166,24 @@ public class TeacherServiceImpl implements TeacherService {
     public void addStudent(Integer teacherID, Integer studentID, Integer priceByClass, Integer numScheduledClasses) {
         Teacher teacher = teachersRepository.findById(teacherID).orElseThrow(TeacherNotFoundException::new);
         Student student = studentsRepository.findById(studentID).orElseThrow(StudentNotFoundException::new);
-
         TeacherStudentRelationID pId = new TeacherStudentRelationID(teacher.getId(), student.getId());
         teacherStudentRepository.save(new TeacherStudentRelation(pId, priceByClass, numScheduledClasses));
+    }
+
+
+    @Override
+    public double getRatingForTeacher(Long teacherID) {
+        List<TeacherStudentRelation> teacherStudentRelationList = teacherStudentRepository
+                .findAll()
+                .stream()
+                .filter(t -> t.getId().getTeacherID().equals(teacherID.intValue()))
+                .filter(TeacherStudentRelation::hasRated)
+                .collect(Collectors.toList());
+        float rating = 0;
+        for (TeacherStudentRelation t : teacherStudentRelationList) {
+                rating += t.getRating();
+        }
+        return rating / teacherStudentRelationList.size() * 1.0;
     }
 
 

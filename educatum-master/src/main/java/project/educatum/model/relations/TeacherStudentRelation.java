@@ -22,12 +22,28 @@ public class TeacherStudentRelation {
     @Column(name = "broj_casovi_po_dogovor", nullable = false)
     private Integer numScheduledClasses;
 
+    @Column(name = "rejting")
+    private Float rating;
+
+    @Column(name = "komentar")
+    private String comment;
+
+    @Column(name = "hasrated")
+    private boolean hasRated;
+
+
     public TeacherStudentRelation() {
     }
 
     public TeacherStudentRelation(TeacherStudentRelationID id, Integer priceByClass, Integer numScheduledClasses) {
+        this.hasRated = false;
+        this.rating = Float.valueOf(0);
         this.id = id;
         this.priceByClass = priceByClass;
         this.numScheduledClasses = numScheduledClasses;
+    }
+
+    public boolean hasRated(){
+        return hasRated;
     }
 }

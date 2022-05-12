@@ -46,8 +46,8 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
             if (!passwordEncoder.matches(password, n.getPassword())) {
                 throw new BadCredentialsException("Invalid credentials");
             }
-            UserDetails user = loadUserByUsername(email);
-            return user;
+            return loadUserByUsername(email);
+
         } else throw new UserNotEnabledException();
     }
 
@@ -60,8 +60,8 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         if (!passwordEncoder.matches(password, u.getPassword())) {
             throw new BadCredentialsException("Passwords do not match!");
         }
-        UserDetails user = loadUserByUsername(email);
-        return user;
+        return loadUserByUsername(email);
+
     }
 
 

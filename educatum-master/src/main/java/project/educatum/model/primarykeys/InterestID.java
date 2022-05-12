@@ -11,6 +11,7 @@ import java.util.Objects;
 @Data
 @Embeddable
 public class InterestID implements Serializable {
+
     private static final long serialVersionUID = 1443493244068543984L;
     @Column(name = "id_ucenik", nullable = false)
     private Integer studentID;

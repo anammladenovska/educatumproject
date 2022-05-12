@@ -7,10 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import project.educatum.model.*;
 import project.educatum.model.Class;
-import project.educatum.model.Student;
-import project.educatum.model.Teacher;
-import project.educatum.model.Subject;
 import project.educatum.model.exceptions.SubjectNotFoundException;
 import project.educatum.service.*;
 
@@ -146,7 +144,7 @@ public class TeacherController {
             }
             model.addAttribute("teacher", teacherService.findById(teacher.getId()));
             model.addAttribute("subjects", subjects);
-            model.addAttribute("allSubjects",subjectService.findAll());
+            model.addAttribute("allSubjects", subjectService.findAll());
             return "subjectsByTeacher";
         } else return "redirect:/home";
     }
@@ -214,11 +212,10 @@ public class TeacherController {
         if (user != null) {
             Teacher t = teacherService.findByEmail(user.getUsername());
             Subject s = subjectService.findByName(ime);
-            if(s != null)
-            {
+            if (s != null) {
                 classService.addClass(date, desc, t.getId(), s.getId());
                 return "redirect:/teachers/allClasses";
-            }else
+            } else
                 return "redirect:/teachers/allClasses";
         } else
             return "redirect:/home";
@@ -229,6 +226,8 @@ public class TeacherController {
     public String showProfileTeacher(@PathVariable String id, Model model) {
         Teacher teacher = teacherService.findById(Integer.valueOf(id));
         model.addAttribute("teacher", teacher);
+        model.addAttribute("teacherRating",teacherService.getRatingForTeacher(Long.valueOf(teacher.getId())));
+
         return "showProfileTeacher.html";
     }
 
@@ -236,20 +235,15 @@ public class TeacherController {
     public String showProfileTeacher2(@PathVariable String id, Model model) {
         Teacher teacher = teacherService.findById(Integer.valueOf(id));
         model.addAttribute("teacher", teacher);
+        model.addAttribute("teacherRating",teacherService.getRatingForTeacher(Long.valueOf(teacher.getId())));
         return "showProfileTeacher2.html";
     }
 
     @PostMapping("/showProfile")
-    public String showProfile(HttpServletRequest request,Model model) {
+    public String showProfile(HttpServletRequest request, Model model) {
         UserDetails user = (UserDetails) request.getSession().getAttribute("user");
         Teacher teacher = teacherService.findByEmail(user.getUsername());
         model.addAttribute("teacher", teacher);
         return "showProfile.html";
     }
-
-//    @PostMapping("/edit/{id}")
-//    public String editDescription(@PathVariable String id) {
-//        teacherService.edit();
-//        return "redirect:/teachers/showProfile";
-//    }
 }

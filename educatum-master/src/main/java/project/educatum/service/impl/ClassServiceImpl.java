@@ -50,5 +50,4 @@ public class ClassServiceImpl implements ClassService {
         return classRepository.findByTopic(tema);
     }
 
-
 }

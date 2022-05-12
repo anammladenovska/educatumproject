@@ -123,9 +123,9 @@ public class StudentController {
     }
 
     @PostMapping("/homeWork")
-    public String getAllHomeworks(@RequestParam(required = false) String opis, Model model){
+    public String getAllHomeworks(@RequestParam(required = false) String opis, Model model) {
         List<Homework> homeworks;
-        if(opis == null){
+        if (opis == null) {
             homeworks = homeworkService.findAll();
         } else {
             homeworks = homeworkService.findAllByDescriptionLike(opis);
@@ -145,10 +145,33 @@ public class StudentController {
     @PostMapping("/done/{id}")
     public String doneHomework(@PathVariable String id) {
         StudentHomeworkRelation h = studentHomeworkService.findById(Integer.valueOf(id));
-        if(h != null){
+        if (h != null) {
             studentHomeworkService.updateDone(Integer.valueOf(id));
         }
         return "redirect:/students/homeWork";
+    }
+
+    @PostMapping("/rateTeacher/{id}")
+    public String rateTeacher(@PathVariable String id, Model model, @RequestParam String rating, HttpServletRequest request) {
+        Float r = Float.valueOf(rating);
+        Teacher t = teacherService.findById(Integer.valueOf(id));
+        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
+        Student s = studentService.findByEmail(user.getUsername());
+        if (studentService.rateTeacher(t, s, r)) {
+            model.addAttribute("hasError", false);
+            model.addAttribute("message", "Thank you for the rating!");
+            model.addAttribute("teacher", t);
+            model.addAttribute("teacherRating",teacherService.getRatingForTeacher(Long.valueOf(t.getId())));
+
+            return "showProfileTeacher2.html";
+        } else {
+            model.addAttribute("hasError", true);
+            model.addAttribute("message", "You don't have a permission to do this action!");
+            model.addAttribute("teacher", t);
+            model.addAttribute("teacherRating",teacherService.getRatingForTeacher(Long.valueOf(t.getId())));
+
+            return "showProfileTeacher2.html";
+        }
     }
 
 }
