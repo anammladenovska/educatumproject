@@ -36,4 +36,6 @@ public interface TeacherService {
 
     List<Teacher> getAllTeachersBySubject(Integer id);
 
+    Teacher edit(Integer id, String opis);
+
 }

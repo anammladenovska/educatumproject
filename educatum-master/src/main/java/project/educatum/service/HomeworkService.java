@@ -2,7 +2,6 @@ package project.educatum.service;
 
 import project.educatum.model.Homework;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public interface HomeworkService {

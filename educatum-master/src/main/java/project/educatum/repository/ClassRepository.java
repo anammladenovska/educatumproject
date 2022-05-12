@@ -11,4 +11,6 @@ import java.util.List;
 public interface ClassRepository extends JpaRepository<Class, Integer> {
     @Query(value = "select * from project.casovi c where c.id_nastavnik = :idTeacher", nativeQuery = true)
     List<Class> findAllByIdTeacher(Integer idTeacher);
+
+    Class findByTopic(String tema);
 }

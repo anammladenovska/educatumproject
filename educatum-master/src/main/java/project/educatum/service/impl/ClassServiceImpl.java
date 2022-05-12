@@ -45,5 +45,10 @@ public class ClassServiceImpl implements ClassService {
         return classRepository.findAllByIdTeacher(id);
     }
 
+    @Override
+    public Class findByTopic(String tema) {
+        return classRepository.findByTopic(tema);
+    }
+
 
 }

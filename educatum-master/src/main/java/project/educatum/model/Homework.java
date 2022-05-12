@@ -24,6 +24,9 @@ public class Homework {
     @JoinColumn(name = "id_cas", nullable = false)
     private Class idCas;
 
+    @Transient
+    private Boolean isDone;
+
     public Homework(String description, Teacher idTeacher, Class idCas) {
         this.description = description;
         this.idTeacher = idTeacher;
@@ -33,4 +36,7 @@ public class Homework {
     public Homework() {
     }
 
+    public boolean isDone() {
+        return isDone;
+    }
 }
