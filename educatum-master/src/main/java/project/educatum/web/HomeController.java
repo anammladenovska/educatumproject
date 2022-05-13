@@ -1,5 +1,6 @@
 package project.educatum.web;
 
+import net.bytebuddy.utility.RandomString;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,15 +32,17 @@ public class HomeController {
     private final TeacherService teacherService;
     private final QualificationService qualificationService;
     private final StudentService studentService;
+    private final EmailService emailService;
     //      private static String UPLOADED_FOLDER = "C://Users//Acer//Desktop//kvalifikacii//";
     private static String UPLOADED_FOLDER = "C://Users//User//OneDrive//Desktop//kvalifikacii//";
 
-    public HomeController(SubjectService subjectService, AdminService adminService, TeacherService teacherService, QualificationService qualificationService, StudentService studentService) {
+    public HomeController(SubjectService subjectService, AdminService adminService, TeacherService teacherService, QualificationService qualificationService, StudentService studentService, EmailService emailService) {
         this.subjectService = subjectService;
         this.adminService = adminService;
         this.teacherService = teacherService;
         this.qualificationService = qualificationService;
         this.studentService = studentService;
+        this.emailService = emailService;
     }
 
     @GetMapping
@@ -50,6 +53,15 @@ public class HomeController {
     @PostMapping("/choose")
     public String chooseRole() {
         return "chooseRole";
+    }
+
+    @PostMapping("/forgotPassword")
+    public String resetPassword(@RequestParam String email) {
+        if (teacherService.findByEmail(email) != null || studentService.findByEmail(email) != null) {
+            String text = String.format("Код за ресетирање на Вашата лозинка: " + RandomString.make() + "\nEDUCATUM");
+            emailService.sendMessage(email, "ЗАБОРАВЕНА ЛОЗИНКА", text);
+        }
+        return "redirect:/admin/allTeachers";
     }
 
     @GetMapping("/chooseSubject")

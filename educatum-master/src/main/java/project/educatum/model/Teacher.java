@@ -41,11 +41,15 @@ public class Teacher implements UserDetails {
     @Column(name = "enabled")
     private Boolean enabled;
 
+    @Transient
+    private Float rating;
+
 
     public Teacher() {
     }
 
     public Teacher(String name, String surname, String description, String email, String password, String telephoneNumber) {
+        this.rating = Float.valueOf(0);
         this.enabled = false;
         this.name = name;
         this.surname = surname;

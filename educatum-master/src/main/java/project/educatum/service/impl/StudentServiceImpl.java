@@ -125,6 +125,7 @@ public class StudentServiceImpl implements StudentService {
         if (list.size() > 0) {
             TeacherStudentRelation teacherStudent = list.get(0);
             teacherStudent.setRating(rating);
+            teacher.setRating(rating);
             teacherStudent.setHasRated(true);
             teacherStudentRepository.save(teacherStudent);
             return true;

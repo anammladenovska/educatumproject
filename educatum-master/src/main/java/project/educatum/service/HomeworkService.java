@@ -8,9 +8,9 @@ public interface HomeworkService {
 
     List<Homework> findAll();
 
-    List<Homework> findAllByDescriptionLike(String opis);
+    List<Homework> findAllByDescriptionLike(String desc);
 
-    Homework create(String opis,Integer teacherID, Integer classID);
+    Homework create(String desc, Integer teacherID, Integer classID);
 
     Homework findById(Integer id);
 }

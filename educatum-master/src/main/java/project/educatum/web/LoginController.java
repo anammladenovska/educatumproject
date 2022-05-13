@@ -43,6 +43,11 @@ public class LoginController {
         return "login";
     }
 
+    @GetMapping("/forgotPassword")
+    public String getForgotPasswordPage(){
+        return "forgotPasswordForm.html";
+    }
+
 
     @PostMapping
     public String login(HttpServletRequest request, Model model, @RequestParam String username, @RequestParam String password) {
