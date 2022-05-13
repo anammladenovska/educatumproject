@@ -9,10 +9,12 @@ import project.educatum.model.Homework;
 import project.educatum.model.Student;
 import project.educatum.model.Teacher;
 import project.educatum.model.relations.StudentHomeworkRelation;
+import project.educatum.model.relations.TeacherStudentRelation;
 import project.educatum.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -123,22 +125,33 @@ public class StudentController {
     }
 
     @PostMapping("/homeWork")
-    public String getAllHomeworks(@RequestParam(required = false) String opis, Model model) {
+    public String getAllHomeworks(@RequestParam(required = false) String desc, Model model, HttpServletRequest request) {
         List<Homework> homeworks;
-        if (opis == null) {
+        if (desc == null) {
             homeworks = homeworkService.findAll();
         } else {
-            homeworks = homeworkService.findAllByDescriptionLike(opis);
+            homeworks = homeworkService.findAllByDescriptionLike(desc);
         }
+        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
+        Student student = studentService.findByEmail(user.getUsername());
         model.addAttribute("homeworks", homeworks);
+        List<TeacherStudentRelation> teacherStudentRelationList = teacherStudentService.findAll();
+        List<Teacher> teachers = new ArrayList<>();
+        for (TeacherStudentRelation t : teacherStudentRelationList) {
+            if (t.getId().getStudentID().equals(student.getId())) {
+                teachers.add(teacherService.findById(t.getId().getTeacherID()));
+            }
+        }
+        model.addAttribute("teachersByStudent", teachers);
         return "homeworksList";
     }
 
     @PostMapping("/add/homework")
-    public String create(@RequestParam String opis, @RequestParam String email, @RequestParam String tema) {
-        Teacher teacher = teacherService.findByEmail(email);
-        Class aClass = classService.findByTopic(tema);
-        homeworkService.create(opis, teacher.getId(), aClass.getId());
+    public String create(@RequestParam String desc, @RequestParam String topic, @RequestParam String teacher) {
+        Class aClass = classService.findByTopic(topic);
+        homeworkService.create(desc, teacherService.findById(Integer.valueOf(teacher)).getId(), aClass.getId());
+
+
         return "redirect:/students/homeWork";
     }
 
@@ -148,6 +161,7 @@ public class StudentController {
         if (h != null) {
             studentHomeworkService.updateDone(Integer.valueOf(id));
         }
+
         return "redirect:/students/homeWork";
     }
 
@@ -161,14 +175,14 @@ public class StudentController {
             model.addAttribute("hasError", false);
             model.addAttribute("message", "Thank you for the rating!");
             model.addAttribute("teacher", t);
-            model.addAttribute("teacherRating",teacherService.getRatingForTeacher(Long.valueOf(t.getId())));
+            model.addAttribute("teacherRating", teacherService.getRatingForTeacher(Long.valueOf(t.getId())));
 
             return "showProfileTeacher2.html";
         } else {
             model.addAttribute("hasError", true);
             model.addAttribute("message", "You don't have a permission to do this action!");
             model.addAttribute("teacher", t);
-            model.addAttribute("teacherRating",teacherService.getRatingForTeacher(Long.valueOf(t.getId())));
+            model.addAttribute("teacherRating", teacherService.getRatingForTeacher(Long.valueOf(t.getId())));
 
             return "showProfileTeacher2.html";
         }

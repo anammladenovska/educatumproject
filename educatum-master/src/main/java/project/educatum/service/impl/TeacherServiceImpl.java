@@ -49,6 +49,7 @@ public class TeacherServiceImpl implements TeacherService {
     public List<Teacher> findAll() {
         return teachersRepository.findAll()
                 .stream()
+                .sorted(Comparator.comparing(Teacher::getRating))
                 .sorted(Comparator.comparing(Teacher::getEmail))
                 .collect(Collectors.toList());
     }
@@ -60,15 +61,15 @@ public class TeacherServiceImpl implements TeacherService {
 
         if (!password.equals(repeatPassword)) throw new PasswordsDoNotMatchException();
 
-        for (Teacher n : teachersRepository.findAll()) {
-            if (n.getEmail().equals(email)) throw new UsernameAlreadyExistsException("Username already exists!");
-        }
-        for (Student u : studentsRepository.findAll()) {
-            if (u.getEmail().equals(email)) throw new UsernameAlreadyExistsException("Username already exists!");
-        }
-        for (Admin a : adminRepository.findAll()) {
-            if (a.getEmail().equals(email)) throw new UsernameAlreadyExistsException("Username already exists!");
-        }
+        teachersRepository.findAll().stream().filter(n -> n.getEmail().equals(email)).forEach(n -> {
+            throw new UsernameAlreadyExistsException("Username already exists!");
+        });
+        studentsRepository.findAll().stream().filter(u -> u.getEmail().equals(email)).forEach(u -> {
+            throw new UsernameAlreadyExistsException("Username already exists!");
+        });
+        adminRepository.findAll().stream().filter(a -> a.getEmail().equals(email)).forEach(a -> {
+            throw new UsernameAlreadyExistsException("Username already exists!");
+        });
 
         Teacher user = new Teacher(ime, prezime, opis, email, passwordEncoder.encode(password), telBroj);
         user.setIdAdmin(adminRepository.findAll().get(0));
@@ -98,29 +99,29 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<Student> getStudentsByTeacher(Integer id) {
-        List<Student> students = new ArrayList<>();
+        List<Student> students;
         List<TeacherStudentRelation> teacherStudentRelationList = teacherStudentRepository.findAll();
-        for (TeacherStudentRelation p : teacherStudentRelationList) {
-            TeacherStudentRelationID pId = p.getId();
-            if (pId.getTeacherID().equals(id)) {
-                Integer studentID = pId.getStudentID();
-                students.add(studentsRepository.findById(studentID).orElseThrow(StudentNotFoundException::new));
-            }
-        }
+        students = teacherStudentRelationList
+                .stream()
+                .map(TeacherStudentRelation::getId)
+                .filter(pId -> pId.getTeacherID().equals(id))
+                .map(TeacherStudentRelationID::getStudentID)
+                .map(studentID -> studentsRepository.findById(studentID).orElseThrow(StudentNotFoundException::new))
+                .collect(Collectors.toList());
         return students;
     }
 
     @Override
     public List<Teacher> getAllTeachersBySubject(Integer id) {
-        List<Teacher> teachers = new ArrayList<>();
+        List<Teacher> teachers;
         List<TeacherSubjectRelation> teacherSubjectRelationList = teacherSubjectRepository.findAll();
-        for (TeacherSubjectRelation pp : teacherSubjectRelationList) {
-            TeacherSubjectRelationID ppId = pp.getId();
-            if (ppId.getSubjectID().equals(id)) {
-                Integer idTeacher = ppId.getTeacherID();
-                teachers.add(teachersRepository.findById(idTeacher).orElseThrow(TeacherNotFoundException::new));
-            }
-        }
+        teachers = teacherSubjectRelationList
+                .stream()
+                .map(TeacherSubjectRelation::getId)
+                .filter(ppId -> ppId.getSubjectID().equals(id))
+                .map(TeacherSubjectRelationID::getTeacherID)
+                .map(idTeacher -> teachersRepository.findById(idTeacher).orElseThrow(TeacherNotFoundException::new))
+                .collect(Collectors.toList());
         return teachers;
     }
 
@@ -138,15 +139,15 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<Subject> getSubjectsByTeacher(Integer id) {
-        List<Subject> subjects = new ArrayList<>();
+        List<Subject> subjects;
         List<TeacherSubjectRelation> teacherSubjectRelationList = teacherSubjectRepository.findAll();
-        for (TeacherSubjectRelation teachesSubject : teacherSubjectRelationList) {
-            TeacherSubjectRelationID ppId = teachesSubject.getId();
-            if (ppId.getTeacherID().equals(id)) {
-                Integer subjectID = ppId.getSubjectID();
-                subjects.add(subjectRepository.findById(subjectID).orElseThrow(SubjectNotFoundException::new));
-            }
-        }
+        subjects = teacherSubjectRelationList
+                .stream()
+                .map(TeacherSubjectRelation::getId)
+                .filter(ppId -> ppId.getTeacherID().equals(id))
+                .map(TeacherSubjectRelationID::getSubjectID)
+                .map(subjectID -> subjectRepository.findById(subjectID).orElseThrow(SubjectNotFoundException::new))
+                .collect(Collectors.toList());
         return subjects;
     }
 
@@ -181,10 +182,8 @@ public class TeacherServiceImpl implements TeacherService {
                 .collect(Collectors.toList());
         float rating = 0;
         for (TeacherStudentRelation t : teacherStudentRelationList) {
-                rating += t.getRating();
+            rating += t.getRating();
         }
         return rating / teacherStudentRelationList.size() * 1.0;
     }
-
-
 }

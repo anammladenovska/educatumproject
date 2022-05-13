@@ -41,7 +41,7 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="/students/listSubjectsTeachers?subjectID=0"
-                       >НАСТАВНИЦИ</a>
+                    >НАСТАВНИЦИ</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/students/homeWork"
@@ -71,7 +71,7 @@
                 <div class="form-group col-1 ml-1"></div>
                 <div class="form-group col-9">
                     <input class="form-control transparent-input border-bottom" type="text"
-                           placeholder="Пребарувај домашни задачи..." name="opis"/>
+                           placeholder="Пребарувај домашни задачи..." name="desc"/>
                 </div>
                 <div class="form-group col">
                     <button id="filter" type="submit" class="btn btn-outline-secondary btn-block">
@@ -105,20 +105,29 @@
                                 <form method="POST" th:action="@{'/students/add/homework'}">
                                     <div>
                                         <input class="form-control transparent-input border-bottom" type="text"
-                                               id="opis"
-                                               name="opis"
+                                               id="desc"
+                                               name="desc"
                                                placeholder="Опис за домашното"
                                                required>
                                         <hr/>
-                                        <!--                                        <input class="form-control transparent-input border-bottom" type="text"-->
-                                        <!--                                               id="email"-->
-                                        <!--                                               name="email"-->
-                                        <!--                                               placeholder="Е-mail на наставникот"-->
-                                        <!--                                               required>-->
-                                        <!--                                        <hr/>-->
+
+
+                                        <select class="form-select form-select-lg mb-3"
+                                                aria-label=".form-select-lg example" id="teacher"
+                                                name="teacher">
+                                            <option value="none" selected>Избери наставник</option>
+                                            <option th:each="t : ${teachersByStudent}"
+                                                    th:value="${t.getId()}"
+                                                    th:text="${t.getFullName()}">
+                                            </option>
+
+                                        </select>
+
+                                        <hr/>
+
                                         <input class="form-control transparent-input border-bottom" type="text"
-                                               id="tema"
-                                               name="tema"
+                                               id="topic"
+                                               name="topic"
                                                placeholder="Тема за часот"
                                                required>
                                     </div>
@@ -171,7 +180,6 @@
             </table>
         </div>
     </div>
-    <img src="/img/wavebook.png" alt="Wave" class="bottom-img" style="position: relative; bottom: -60px;">
 </section>
 </body>
 </html>
