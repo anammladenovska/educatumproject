@@ -37,7 +37,6 @@ public class LoginController {
         this.authService = authService;
     }
 
-
     @GetMapping
     public String getLoginPage() {
         return "login";

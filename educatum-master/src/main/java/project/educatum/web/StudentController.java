@@ -80,16 +80,6 @@ public class StudentController {
         return "redirect:/zaintesesiranZaPredmet";
     }
 
-    @PostMapping("/listenedClass")
-    public String listenedClass(Model model, HttpServletRequest request,
-                                @RequestParam String studentID) {
-        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
-        Teacher t = teacherService.findByEmail(user.getUsername());
-        model.addAttribute("classes", teacherService.getClassesByTeacher(t.getId()));
-        model.addAttribute("student", studentService.findById(Integer.valueOf(studentID)));
-        return "listeningForm";
-    }
-
     @PostMapping("/addListening")
     public String addListening(Model model, @RequestParam String studentID,
                                @RequestParam(required = false) String price,

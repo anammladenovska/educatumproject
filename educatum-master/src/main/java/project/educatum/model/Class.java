@@ -1,6 +1,7 @@
 package project.educatum.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "casovi", schema = "project")
+@NoArgsConstructor
 public class Class {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,10 +37,6 @@ public class Class {
         this.subjectID = subjectID;
     }
 
-    public Class() {
-
-    }
-
     @Override
     public String toString() {
         return topic + "\t" + beginningTime.getDayOfMonth() + "." + beginningTime.getMonthValue() + "."
@@ -46,4 +44,12 @@ public class Class {
                 beginningTime.getMinute() + "\n";
     }
 
+    public String beginningDate() {
+        return beginningTime.getDayOfMonth() + "." + beginningTime.getMonthValue() + "."
+                + beginningTime.getYear() + "\n";
+    }
+
+    public String beginningTime() {
+        return beginningTime.getHour() + ":" + beginningTime.getMinute() + "h\n";
+    }
 }

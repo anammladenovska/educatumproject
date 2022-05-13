@@ -12,7 +12,9 @@ import project.educatum.repository.SubjectRepository;
 import project.educatum.service.ClassService;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClassServiceImpl implements ClassService {
@@ -29,7 +31,10 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public List<Class> findAll() {
-        return classRepository.findAll();
+        return classRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparing(Class::getBeginningTime))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -42,7 +47,11 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public List<Class> findAllByTeacher(Integer id) {
-        return classRepository.findAllByIdTeacher(id);
+        return classRepository
+                .findAllByIdTeacher(id)
+                .stream()
+                .sorted(Comparator.comparing(Class::getBeginningTime))
+                .collect(Collectors.toList());
     }
 
     @Override
