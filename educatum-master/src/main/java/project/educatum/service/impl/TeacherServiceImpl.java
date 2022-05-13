@@ -49,7 +49,6 @@ public class TeacherServiceImpl implements TeacherService {
     public List<Teacher> findAll() {
         return teachersRepository.findAll()
                 .stream()
-                .sorted(Comparator.comparing(Teacher::getRating))
                 .sorted(Comparator.comparing(Teacher::getEmail))
                 .collect(Collectors.toList());
     }
@@ -61,15 +60,21 @@ public class TeacherServiceImpl implements TeacherService {
 
         if (!password.equals(repeatPassword)) throw new PasswordsDoNotMatchException();
 
-        teachersRepository.findAll().stream().filter(n -> n.getEmail().equals(email)).forEach(n -> {
-            throw new UsernameAlreadyExistsException("Username already exists!");
-        });
-        studentsRepository.findAll().stream().filter(u -> u.getEmail().equals(email)).forEach(u -> {
-            throw new UsernameAlreadyExistsException("Username already exists!");
-        });
-        adminRepository.findAll().stream().filter(a -> a.getEmail().equals(email)).forEach(a -> {
-            throw new UsernameAlreadyExistsException("Username already exists!");
-        });
+        for (Teacher n : teachersRepository.findAll()) {
+            if (n.getEmail().equals(email)) {
+                throw new UsernameAlreadyExistsException("Username already exists!");
+            }
+        }
+        for (Student u : studentsRepository.findAll()) {
+            if (u.getEmail().equals(email)) {
+                throw new UsernameAlreadyExistsException("Username already exists!");
+            }
+        }
+        for (Admin a : adminRepository.findAll()) {
+            if (a.getEmail().equals(email)) {
+                throw new UsernameAlreadyExistsException("Username already exists!");
+            }
+        }
 
         Teacher user = new Teacher(ime, prezime, opis, email, passwordEncoder.encode(password), telBroj);
         user.setIdAdmin(adminRepository.findAll().get(0));
@@ -83,7 +88,10 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<Class> getClassesByTeacher(Integer id) {
-        return classesRepository.findAllByIdTeacher(id);
+        return classesRepository.findAllByIdTeacher(id)
+                .stream()
+                .sorted(Comparator.comparing(Class::beginningDate))
+                .collect(Collectors.toList());
     }
 
     @Override

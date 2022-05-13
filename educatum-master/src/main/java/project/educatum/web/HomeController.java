@@ -50,11 +50,6 @@ public class HomeController {
         return "/home";
     }
 
-    @PostMapping("/choose")
-    public String chooseRole() {
-        return "chooseRole";
-    }
-
     @PostMapping("/forgotPassword")
     public String resetPassword(@RequestParam String email) {
         if (teacherService.findByEmail(email) != null || studentService.findByEmail(email) != null) {
@@ -89,7 +84,7 @@ public class HomeController {
         Teacher teacher = teacherService.findByEmail(user.getUsername());
 
         if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Задолжително прикачете документ!");
+            redirectAttributes.addFlashAttribute("message", "Прикачувањето на документ е задолжително!");
             return "redirect:/home/potvrda";
         }
 
@@ -102,7 +97,7 @@ public class HomeController {
             Teacher n = teacherService.findByEmail(userDetails.getUsername());
             qualificationService.insert(String.valueOf(path), n.getId());
             redirectAttributes.addFlashAttribute("message",
-                    "Ви благодариме за регистрацијата!\n Ќе добиете известување на e-mail кога Вашиот профил ќе биде активиран.");
+                    "Ви благодариме за регистрацијата!\n Администраторот треба да го провери прикачениот документ. Ќе добиете известување на e-mail кога Вашиот профил ќе биде активиран.");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -125,9 +120,16 @@ public class HomeController {
 
 
     @PostMapping("/chooseSubject")
-    public String createSubject(@RequestParam String ime) {
-        this.subjectService.create(ime);
-        return "redirect:/home/chooseSubject";
+    public String createSubject(Model model, @RequestParam(required = false) String name, @RequestParam(required = false) String ime) {
+        this.subjectService.create(name);
+        List<Subject> subjects;
+        if (ime == null) {
+            subjects = this.subjectService.findAll();
+        } else {
+            subjects = this.subjectService.findAllByNameLike(ime);
+        }
+        model.addAttribute("subjects", subjects);
+        return "chooseSubjects.html";
     }
 
     @GetMapping("/listenSubject")
