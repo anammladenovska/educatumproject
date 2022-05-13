@@ -11,6 +11,7 @@ import java.util.Objects;
 @Data
 @Embeddable
 public class TeacherStudentRelationID implements Serializable {
+
     public TeacherStudentRelationID(Integer teacherID, Integer studentID) {
         this.teacherID = teacherID;
         this.studentID = studentID;

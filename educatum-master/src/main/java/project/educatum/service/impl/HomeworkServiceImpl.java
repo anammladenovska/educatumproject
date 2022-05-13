@@ -38,20 +38,19 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
-    public List<Homework> findAllByDescriptionLike(String opis) {
-        if(opis != null){
-            return this.homeworkRepository.findAllByDescriptionContainingIgnoreCase(opis);
-        }
-        else{
+    public List<Homework> findAllByDescriptionLike(String desc) {
+        if (desc != null) {
+            return this.homeworkRepository.findAllByDescriptionContainingIgnoreCase(desc);
+        } else {
             return this.homeworkRepository.findAll();
         }
     }
 
     @Override
-    public Homework create(String opis,Integer teacherID, Integer classID) {
+    public Homework create(String desc, Integer teacherID, Integer classID) {
         Teacher teacher = teacherRepository.findById(teacherID).orElseThrow(TeacherNotFoundException::new);
-        Class aclass = classRepository.findById(classID).orElseThrow();
-        Homework homework = new Homework(opis, teacher, aclass);
+        Class aClass = classRepository.findById(classID).orElseThrow();
+        Homework homework = new Homework(desc, teacher, aClass);
         return this.homeworkRepository.save(homework);
     }
 

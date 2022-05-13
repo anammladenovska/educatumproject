@@ -6,6 +6,7 @@ import project.educatum.model.*;
 import project.educatum.model.exceptions.*;
 import project.educatum.model.primarykeys.InterestID;
 import project.educatum.model.primarykeys.ListeningID;
+import project.educatum.model.relations.TeacherStudentRelation;
 import project.educatum.repository.*;
 import project.educatum.service.StudentService;
 
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -26,8 +28,9 @@ public class StudentServiceImpl implements StudentService {
     private static Integer counter = 0;
     private final ListeningRepository listeningRepository;
     private final PaymentRepository paymentRepository;
+    private final TeacherStudentRepository teacherStudentRepository;
 
-    public StudentServiceImpl(StudentRepository studentsRepository, PasswordEncoder passwordEncoder, AdminRepository adminRepository, TeacherRepository teachersRepository, InterestRepository interestRepository, ListeningRepository listeningRepository, PaymentRepository paymentRepository) {
+    public StudentServiceImpl(StudentRepository studentsRepository, PasswordEncoder passwordEncoder, AdminRepository adminRepository, TeacherRepository teachersRepository, InterestRepository interestRepository, ListeningRepository listeningRepository, PaymentRepository paymentRepository, TeacherStudentRepository teacherStudentRepository) {
         this.studentsRepository = studentsRepository;
         this.passwordEncoder = passwordEncoder;
         this.adminRepository = adminRepository;
@@ -35,6 +38,7 @@ public class StudentServiceImpl implements StudentService {
         this.interestRepository = interestRepository;
         this.listeningRepository = listeningRepository;
         this.paymentRepository = paymentRepository;
+        this.teacherStudentRepository = teacherStudentRepository;
     }
 
     @Override
@@ -112,4 +116,20 @@ public class StudentServiceImpl implements StudentService {
         listeningRepository.save(l);
     }
 
+
+    @Override
+    public boolean rateTeacher(Teacher teacher, Student student, Float rating) {
+        List<TeacherStudentRelation> list = teacherStudentRepository.findAll().stream()
+                .filter(t -> t.getId().getStudentID().equals(student.getId()) && t.getId().getTeacherID().equals(teacher.getId()))
+                .collect(Collectors.toList());
+        if (list.size() > 0) {
+            TeacherStudentRelation teacherStudent = list.get(0);
+            teacherStudent.setRating(rating);
+            teacherStudent.setHasRated(true);
+            teacherStudentRepository.save(teacherStudent);
+            return true;
+        }
+        return false;
+
+    }
 }
