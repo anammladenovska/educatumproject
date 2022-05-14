@@ -23,6 +23,8 @@ public interface StudentService {
 
     void interestedIn(Integer subjectId, Integer studentId);
 
+    void save(Student student);
+
     void addListening(Integer studentID, Integer classID, Integer teacherID);
 
     boolean rateTeacher(Teacher t, Student s, Float r);

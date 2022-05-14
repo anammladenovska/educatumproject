@@ -2,6 +2,7 @@ package project.educatum.web;
 
 import net.bytebuddy.utility.RandomString;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,16 +34,18 @@ public class HomeController {
     private final QualificationService qualificationService;
     private final StudentService studentService;
     private final EmailService emailService;
-          private static String UPLOADED_FOLDER = "C://Users//Acer//Desktop//kvalifikacii//";
-//    private static String UPLOADED_FOLDER = "C://Users//User//OneDrive//Desktop//kvalifikacii//";
+    private final PasswordEncoder passwordEncoder;
+    //      private static String UPLOADED_FOLDER = "C://Users//Acer//Desktop//kvalifikacii//";
+    private static String UPLOADED_FOLDER = "C://Users//User//OneDrive//Desktop//kvalifikacii//";
 
-    public HomeController(SubjectService subjectService, AdminService adminService, TeacherService teacherService, QualificationService qualificationService, StudentService studentService, EmailService emailService) {
+    public HomeController(SubjectService subjectService, AdminService adminService, TeacherService teacherService, QualificationService qualificationService, StudentService studentService, EmailService emailService, PasswordEncoder passwordEncoder) {
         this.subjectService = subjectService;
         this.adminService = adminService;
         this.teacherService = teacherService;
         this.qualificationService = qualificationService;
         this.studentService = studentService;
         this.emailService = emailService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
@@ -51,12 +54,25 @@ public class HomeController {
     }
 
     @PostMapping("/forgotPassword")
-    public String resetPassword(@RequestParam String email) {
+    public String resetPassword(@RequestParam String email, HttpServletRequest request) {
+
         if (teacherService.findByEmail(email) != null || studentService.findByEmail(email) != null) {
-            String text = String.format("Код за ресетирање на Вашата лозинка: " + RandomString.make() + "\nEDUCATUM");
+            String randomPassword = RandomString.make();
+            String text = String.format("Код за ресетирање на Вашата лозинка: " + randomPassword + "\nEDUCATUM");
             emailService.sendMessage(email, "ЗАБОРАВЕНА ЛОЗИНКА", text);
+            
+            if (teacherService.findByEmail(email) != null) {
+                Teacher teacher = teacherService.findByEmail(email);
+                teacher.setPassword(passwordEncoder.encode(randomPassword));
+                teacherService.save(teacher);
+            } else if (studentService.findByEmail(email) != null) {
+                Student student = studentService.findByEmail(email);
+                student.setPassword(passwordEncoder.encode(randomPassword));
+                studentService.save(student);
+            }
+
         }
-        return "redirect:/admin/allTeachers";
+        return "redirect:/home";
     }
 
     @GetMapping("/chooseSubject")

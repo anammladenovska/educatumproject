@@ -95,6 +95,11 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public void save(Teacher teacher){
+        this.teachersRepository.save(teacher);
+    }
+
+    @Override
     public List<Teacher> findAllByNameLike(String name) {
         return teachersRepository.findAllByNameContainingIgnoreCase(name);
     }
