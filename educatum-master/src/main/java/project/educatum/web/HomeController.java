@@ -33,8 +33,8 @@ public class HomeController {
     private final QualificationService qualificationService;
     private final StudentService studentService;
     private final EmailService emailService;
-    //      private static String UPLOADED_FOLDER = "C://Users//Acer//Desktop//kvalifikacii//";
-    private static String UPLOADED_FOLDER = "C://Users//User//OneDrive//Desktop//kvalifikacii//";
+          private static String UPLOADED_FOLDER = "C://Users//Acer//Desktop//kvalifikacii//";
+//    private static String UPLOADED_FOLDER = "C://Users//User//OneDrive//Desktop//kvalifikacii//";
 
     public HomeController(SubjectService subjectService, AdminService adminService, TeacherService teacherService, QualificationService qualificationService, StudentService studentService, EmailService emailService) {
         this.subjectService = subjectService;

@@ -134,9 +134,13 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher edit(Integer id, String opis) {
+    public Teacher edit(Integer id, String ime, String prezime,String description, String email, String telephoneNumber) {
         Teacher teacher = this.findById(id);
-        teacher.setDescription(opis);
+        teacher.setName(ime);
+        teacher.setSurname(prezime);
+        teacher.setDescription(description);
+        teacher.setEmail(email);
+        teacher.setTelephoneNumber(telephoneNumber);
         return this.teachersRepository.save(teacher);
     }
 
