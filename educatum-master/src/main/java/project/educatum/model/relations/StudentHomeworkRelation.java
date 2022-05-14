@@ -22,7 +22,4 @@ public class StudentHomeworkRelation {
         this.isDone = false;
     }
 
-    public boolean isDoneStudent() {
-        return isDone;
-    }
 }

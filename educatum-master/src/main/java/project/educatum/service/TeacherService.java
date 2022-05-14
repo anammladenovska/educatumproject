@@ -25,6 +25,8 @@ public interface TeacherService {
 
     List<Class> getClassesByTeacher(Integer id);
 
+    void save(Teacher teacher);
+
     List<Teacher> findAllByNameLike(String ime);
 
     void delete(Integer id);

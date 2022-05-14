@@ -105,6 +105,12 @@ public class StudentServiceImpl implements StudentService {
         interestRepository.save(z);
     }
 
+
+    @Override
+    public void save(Student student){
+        studentsRepository.save(student);
+    }
+
     @Override
     public void addListening(Integer studentID, Integer classID, Integer teacherID) {
         Teacher t = teachersRepository.findById(teacherID).orElseThrow(TeacherNotFoundException::new);
