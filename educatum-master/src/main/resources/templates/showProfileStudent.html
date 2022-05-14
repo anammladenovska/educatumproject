@@ -108,7 +108,77 @@
                 <hr/>
                 <h3>E-mail <div th:text="${student.getEmail()}"></div></h3>
                 <hr/>
-                <br>
+
+                <div class="col">
+                    <button type="button" class="btn btn-link" data-toggle="modal"
+                            th:attr="data-target='#exampleModalCenter'">
+                        Промени профил
+                    </button>
+                    <div class="modal fade" th:id="*{'exampleModalCenter'}" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: #000029"> Промена на информации на профил
+                                    </h5>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" th:action="@{'/students/{id}' (id=${student.id})}">
+                                        <div>
+                                            <label for="name">Име</label>
+                                            <input class="form-control transparent-input border-bottom"
+                                                   type="text"
+                                                   id="name"
+                                                   name="name"
+                                                   th:value="${student?.name}"
+                                                   required>
+                                            <hr/>
+
+                                            <label for="surname">Презиме</label>
+                                            <input class="form-control transparent-input border-bottom"
+                                                   type="text"
+                                                   id="surname"
+                                                   name="surname"
+                                                   th:value="${student?.surname}"
+                                                   required>
+                                            <hr/>
+                                            <label for="description">Опис</label>
+                                            <input class="form-control transparent-input border-bottom"
+                                                   type="text"
+                                                   id="description"
+                                                   name="description"
+                                                   th:value="${student?.description}"
+                                                   required>
+                                            <hr/>
+                                            <label for="email">Емаил</label>
+                                            <input class="form-control transparent-input border-bottom"
+                                                   type="text"
+                                                   id="email"
+                                                   name="email"
+                                                   th:value="${student?.email}"
+                                                   required>
+                                            <hr/>
+                                            <label for="telephoneNumber">Телефонски Број</label>
+                                            <input class="form-control transparent-input border-bottom"
+                                                   type="text"
+                                                   id="telephoneNumber"
+                                                   name="telephoneNumber"
+                                                   th:value="${student?.telephoneNumber}"
+                                                   required>
+                                            <hr/>
+                                        </div>
+                                        <button id="submit" type="submit" class="m-1 btn btn-outline-primary">Зачувај
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <a id="back" href="/students/showProfileStudent" type="button" class="btn btn-primary">Назад кон профилот</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
             </div>
 
 

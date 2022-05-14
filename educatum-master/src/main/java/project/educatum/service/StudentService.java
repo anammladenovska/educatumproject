@@ -26,4 +26,6 @@ public interface StudentService {
     void addListening(Integer studentID, Integer classID, Integer teacherID);
 
     boolean rateTeacher(Teacher t, Student s, Float r);
+
+    Student edit(Integer id, String ime, String prezime, String opis, String email, String telefonskiBroj);
 }

@@ -35,7 +35,7 @@ public interface TeacherService {
 
     List<Teacher> getAllTeachersBySubject(Integer id);
 
-    Teacher edit(Integer id, String opis);
+    Teacher edit(Integer id,String ime, String prezime, String opis, String email, String telefonskiBroj);
 
     double getRatingForTeacher(Long teacherID);
 }

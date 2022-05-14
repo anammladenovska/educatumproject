@@ -133,4 +133,15 @@ public class StudentServiceImpl implements StudentService {
         return false;
 
     }
+
+    @Override
+    public Student edit(Integer id, String ime, String prezime, String opis, String email, String telefonskiBroj) {
+        Student student = this.findById(id);
+        student.setName(ime);
+        student.setSurname(prezime);
+        student.setDescription(opis);
+        student.setEmail(email);
+        student.setTelephoneNumber(telefonskiBroj);
+        return this.studentsRepository.save(student);
+    }
 }

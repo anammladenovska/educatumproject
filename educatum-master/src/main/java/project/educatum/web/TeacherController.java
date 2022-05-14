@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -245,5 +246,28 @@ public class TeacherController {
         Teacher teacher = teacherService.findByEmail(user.getUsername());
         model.addAttribute("teacher", teacher);
         return "showProfile.html";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String showEdit(@PathVariable Integer id, Model model) {
+        Teacher teacher = this.teacherService.findById(id);
+        model.addAttribute("teacher", teacher);
+        return "showProfile";
+    }
+
+    @PostMapping("/{id}")
+    public String editTeacher(@PathVariable Integer id,
+                         @RequestParam String name,
+                         @RequestParam String surname,
+                         @RequestParam String description,
+                         @RequestParam String email,
+                         @RequestParam String telephoneNumber,
+                         HttpServletRequest request) {
+        this.teacherService.edit(id, name, surname,description,email,telephoneNumber);
+        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
+        if(!Objects.equals(email, user.getUsername())){
+            return "redirect:/login";
+        }
+        return "redirect:/teachers/showProfile";
     }
 }

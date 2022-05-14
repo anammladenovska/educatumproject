@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping(path = "/students", method = {RequestMethod.POST, RequestMethod.DELETE, RequestMethod.GET})
@@ -140,8 +141,6 @@ public class StudentController {
     public String create(@RequestParam String desc, @RequestParam String topic, @RequestParam String teacher) {
         Class aClass = classService.findByTopic(topic);
         homeworkService.create(desc, teacherService.findById(Integer.valueOf(teacher)).getId(), aClass.getId());
-
-
         return "redirect:/students/homeWork";
     }
 
@@ -176,6 +175,29 @@ public class StudentController {
 
             return "showProfileTeacher2.html";
         }
+    }
+
+    @GetMapping("/{id}/edit")
+    public String showEdit(@PathVariable Integer id, Model model) {
+        Student student = this.studentService.findById(id);
+        model.addAttribute("student", student);
+        return "showProfileStudent";
+    }
+
+    @PostMapping("/{id}")
+    public String editStudent(@PathVariable Integer id,
+                              @RequestParam String name,
+                              @RequestParam String surname,
+                              @RequestParam String description,
+                              @RequestParam String email,
+                              @RequestParam String telephoneNumber,
+                              HttpServletRequest request) {
+        this.studentService.edit(id, name, surname,description,email,telephoneNumber);
+        UserDetails user = (UserDetails) request.getSession().getAttribute("user");
+        if(!Objects.equals(email, user.getUsername())){
+            return "redirect:/login";
+        }
+        return "redirect:/students/showProfileStudent";
     }
 
 }

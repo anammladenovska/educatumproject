@@ -110,8 +110,151 @@
                 <hr/>
                 <h3>E-mail <div th:text="${teacher.getEmail()}"></div></h3>
                 <hr/>
-                <br>
+                <div class="col">
+                    <button type="button" class="btn btn-link" data-toggle="modal"
+                            th:attr="data-target='#exampleModalCenter'">
+                        Промени профил
+                    </button>
+                    <div class="modal fade" th:id="*{'exampleModalCenter'}" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: #000029"> Промена на информации на профил
+                                    </h5>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" th:action="@{'/teachers/{id}' (id=${teacher.id})}">
+                                        <div>
+                                            <label for="name">Име</label>
+                                            <input class="form-control transparent-input border-bottom"
+                                                   type="text"
+                                                   id="name"
+                                                   name="name"
+                                                   th:value="${teacher?.name}"
+                                                   required>
+                                            <hr/>
+
+                                            <label for="surname">Презиме</label>
+                                            <input class="form-control transparent-input border-bottom"
+                                                   type="text"
+                                                   id="surname"
+                                                   name="surname"
+                                                   th:value="${teacher?.surname}"
+                                                   required>
+                                            <hr/>
+                                            <label for="description">Опис</label>
+                                            <input class="form-control transparent-input border-bottom"
+                                                   type="text"
+                                                   id="description"
+                                                   name="description"
+                                                   th:value="${teacher?.description}"
+                                                   required>
+                                            <hr/>
+                                            <label for="email">Емаил</label>
+                                            <input class="form-control transparent-input border-bottom"
+                                                   type="text"
+                                                   id="email"
+                                                   name="email"
+                                                   th:value="${teacher?.email}"
+                                                   required>
+                                            <hr/>
+                                            <label for="telephoneNumber">Телефонски Број</label>
+                                            <input class="form-control transparent-input border-bottom"
+                                                   type="text"
+                                                   id="telephoneNumber"
+                                                   name="telephoneNumber"
+                                                   th:value="${teacher?.telephoneNumber}"
+                                                   required>
+                                            <hr/>
+                                        </div>
+                                        <button id="submit" type="submit" class="m-1 btn btn-outline-primary">Зачувај
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <a id="back" href="/teachers/showProfile" type="button" class="btn btn-primary">Назад кон профилот</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
             </div>
+
+
+<!--            <div class="row">-->
+<!--                <div class="col-1"></div>-->
+<!--                <div class="col">-->
+<!--                    <button type="button" class="btn btn-link" data-toggle="modal"-->
+<!--                            th:attr="data-target='#exampleModalCenter'">-->
+<!--                        Промени профил-->
+<!--                    </button>-->
+<!--                    <div class="modal fade" th:id="*{'exampleModalCenter'}" tabindex="-1" role="dialog"-->
+<!--                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">-->
+<!--                        <div class="modal-dialog modal-dialog-centered" role="document">-->
+<!--                            <div class="modal-content">-->
+<!--                                <div class="modal-header">-->
+<!--                                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: #000029"> Промена на информации на профил-->
+<!--                                        </h5>-->
+<!--                                </div>-->
+<!--                                <div class="modal-body">-->
+<!--                                    <form method="POST" th:href="@{'/teachers/{id}/edit' (id=${teacher.id})}">-->
+<!--                                        <div>-->
+<!--                                            <label for="name">Име</label>-->
+<!--                                            <input class="form-control transparent-input border-bottom"-->
+<!--                                                   type="text"-->
+<!--                                                   id="name"-->
+<!--                                                   name="name"-->
+<!--                                                   th:value="${teacher?.name}"-->
+<!--                                                   required>-->
+<!--                                            <hr/>-->
+
+<!--                                            <label for="surname">Презиме</label>-->
+<!--                                            <input class="form-control transparent-input border-bottom"-->
+<!--                                                   type="text"-->
+<!--                                                   id="surname"-->
+<!--                                                   name="surname"-->
+<!--                                                   th:value="${teacher?.surname}"-->
+<!--                                                   required>-->
+<!--                                            <hr/>-->
+<!--                                            <label for="description">Опис</label>-->
+<!--                                            <input class="form-control transparent-input border-bottom"-->
+<!--                                                   type="text"-->
+<!--                                                   id="description"-->
+<!--                                                   name="description"-->
+<!--                                                   th:value="${teacher?.description}"-->
+<!--                                                   required>-->
+<!--                                            <hr/>-->
+<!--                                            <label for="email">Емаил</label>-->
+<!--                                            <input class="form-control transparent-input border-bottom"-->
+<!--                                                   type="text"-->
+<!--                                                   id="email"-->
+<!--                                                   name="email"-->
+<!--                                                   th:value="${teacher?.email}"-->
+<!--                                                   required>-->
+<!--                                            <hr/>-->
+<!--                                            <label for="telephoneNumber">Телефонски Број</label>-->
+<!--                                            <input class="form-control transparent-input border-bottom"-->
+<!--                                                   type="text"-->
+<!--                                                   id="telephoneNumber"-->
+<!--                                                   name="telephoneNumber"-->
+<!--                                                   th:value="${teacher?.telephoneNumber}"-->
+<!--                                                   required>-->
+<!--                                            <hr/>-->
+<!--                                        </div>-->
+<!--                                        <button id="submit" type="submit" class="m-1 btn btn-outline-primary">Зачувај-->
+<!--                                        </button>-->
+<!--                                    </form>-->
+<!--                                </div>-->
+<!--                                <div class="modal-footer">-->
+<!--                                    <a id="back" href="/teachers/showProfile" type="button" class="btn btn-primary">Назад кон профилот</a>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
 
         </div>
